@@ -13,7 +13,7 @@ How to contribute:
     where NAME_OF_THE_BRANCH should look like "your_initials" + "/name-of-the-feature". Example: git checkout -b mv/components
 - Do something on your branch. (Something useful would be nice.)
 - Commit and push your work.
-    ```sh
+    ```
     $ git add .
     $ git commit -am "COMMENT"
     $ git push origin NAME_OF_THE_BRANCH
