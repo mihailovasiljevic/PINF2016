@@ -2,22 +2,13 @@
 
 How to contribute:
     
-  - clone this repository using ssh:
-    ```sh
-    $ git clone git@github.com:remixgit/PINF2016.git
-    ```
-  - clone this repository using https:
-    ```sh
-    $ git clone https://github.com/remixgit/PINF2016.git
-    ```
-  - if you already cloned it go to master:
-    ```sh
-    $ git checkout master
-    ```
-    and pull the latest version:
-    ```sh
-    $ git pull
-    ```   
+  - clone this repository using ssh: $ git clone git@github.com:remixgit/PINF2016.git
+  - clone this repository using https: $ git clone https://github.com/remixgit/PINF2016.git
+
+  - if you already cloned it go to master: $ git checkout master
+  - 
+    and pull the latest version: $ git pull
+
 - [IMPORTANT] everything you do, do on a separate branch, not on master! Create new branch git checkout -b NAME_OF_THE_BRANCH
     where NAME_OF_THE_BRANCH should look like "your_initials" + "/name-of-the-feature". Example: git checkout -b mv/components
 - Do something on your branch. (Something useful would be nice.)
