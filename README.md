@@ -15,7 +15,11 @@ How to contribute:
 - Commit and push your work.
     ```
     $ git add .
-    $ git commit -am "COMMENT"
-    $ git push origin NAME_OF_THE_BRANCH
     ```  
+    ```
+    $ git commit -am "COMMENT"
+    ```
+    ```
+    $ git push origin NAME_OF_THE_BRANCH
+    ```
 - Submit a pull request for review. https://help.github.com/articles/creating-a-pull-request/
