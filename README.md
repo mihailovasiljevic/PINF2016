@@ -3,15 +3,15 @@
 How to contribute:
     
   - clone this repository using ssh:
-  - ```sh
+    ```sh
     $ git clone git@github.com:remixgit/PINF2016.git
     ```
   - clone this repository using https:
-  - ```sh
+    ```sh
     $ git clone https://github.com/remixgit/PINF2016.git
     ```
   - if you already cloned it go to master:
-  - ```sh
+    ```sh
     $ git checkout master
     ```
     and pull the latest version:
