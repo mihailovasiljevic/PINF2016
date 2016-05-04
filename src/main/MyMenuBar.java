@@ -1,16 +1,17 @@
-package manubar;
+package main;
 
 import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import database.DataBase;
+import database.Description;
+import manubar.actions.MenuBarButtonAction;
 
 public class MyMenuBar extends JMenuBar {
-
-	private Vector<MenuBarButton> menuButtons = new Vector<MenuBarButton>();
 	
 	public MyMenuBar() {
 		
@@ -22,13 +23,14 @@ public class MyMenuBar extends JMenuBar {
 			return;
 		}
 		
-		JMenu menu = new JMenu("Jedinica");
-		
-		MenuBarButton button;
+		JMenu menu = new JMenu("Organizaciona sema");
+		JMenuItem button;
+		Description description;
 		for(int i = 0; i < tableCodes.size(); i++) {
-			button = new MenuBarButton(tableCodes.get(i));
-			button.setTableCode(tableCodes.get(i));
-			button.addActionListener(new MenuBarButtonAction());
+			description = new Description();
+			description.setTableCode(tableCodes.get(i));
+			button = new JMenuItem(description.getTableCode());
+			button.addActionListener(new MenuBarButtonAction(description));
 			menu.add(button);
 		}
 		

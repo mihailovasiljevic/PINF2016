@@ -15,10 +15,9 @@ public class MyApp {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		MainFrame frame = new MainFrame();
-		frame.setVisible(true);
-
 		
+		MainFrame frame = MainFrame.getInstance();
+		frame.setVisible(true);
 		
 	}
 	

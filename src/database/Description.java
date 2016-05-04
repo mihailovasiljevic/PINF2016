@@ -1,15 +1,10 @@
-package manubar;
+package database;
 
-import javax.swing.JMenuItem;
-
-public class MenuBarButton extends JMenuItem {
+/** Za skladistenje podataka izvucenih iz baze */
+public class Description {
 
 	private String tableCode;
 
-	public MenuBarButton(String label) {
-		super(label);
-	}
-	
 	public String getTableCode() {
 		return tableCode;
 	}
@@ -17,6 +12,5 @@ public class MenuBarButton extends JMenuItem {
 	public void setTableCode(String tableCode) {
 		this.tableCode = tableCode;
 	}
-	
 	
 }

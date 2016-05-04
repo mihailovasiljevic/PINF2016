@@ -34,9 +34,13 @@ public class DataBase {
 		
 	}
 	
-	public static void close() throws SQLException {
-		System.out.println("close");
-		conn.close();
+	public static void close() {
+		try {
+			if (conn != null)
+				conn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public static Vector<String> getTableCodes() throws SQLException {
