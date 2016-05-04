@@ -28,7 +28,7 @@ public class DataPanel extends JPanel {
 			//DA LI BI DUZINE POLJA TREBALO DA SE RAZLIKUJU?
 			JTextField textField = new JTextField(10);
 			textFields.add(textField);
-			this.add(textField);
+			this.add(textField,"wrap");
 		
 		}
 		
