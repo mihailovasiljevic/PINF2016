@@ -62,6 +62,44 @@ public class DataBase {
 		return tables;
 	}
 	
+	public static Vector<String> getColumnsForTable(String tableName) throws SQLException {
+		
+		String   catalog          = null;
+		String   schemaPattern    = null;
+		String   tableNamePattern = tableName;
+		String columnNamePattern = null;
+
+		ResultSet result = dmeta.getColumns(
+		    catalog, schemaPattern, tableNamePattern, columnNamePattern );
+		
+		Vector<String> columns = new Vector<String>();
+		while(result.next()) {
+		    String columnName = result.getString(4);
+		    columns.add(columnName);
+		    
+		}
+		return columns;
+	}
+	
+public static Vector<String> getForeignColumnsForTable(String tableName) throws SQLException {
+		
+		String   catalog          = null;
+		String   schemaPattern    = null;
+		String   tableNamePattern = tableName;
+	
+
+		ResultSet result = dmeta.getImportedKeys(catalog, schemaPattern, tableNamePattern);
+		
+		Vector<String> columns = new Vector<String>();
+		while(result.next()) {
+		    String columnName = result.getString(4);
+		    columns.add(columnName);
+		    
+		}
+		return columns;
+	}
+	
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
 		DataBase.open();
