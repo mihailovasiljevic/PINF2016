@@ -29,6 +29,17 @@ public class MyMenuBar extends JMenuBar {
 		for(int i = 0; i < tableCodes.size(); i++) {
 			description = new Description();
 			description.setTableCode(tableCodes.get(i));
+			Vector<String> columns = new Vector<String>();
+			Vector<String> foreignColumns = new Vector<String>();
+			try {
+				columns = DataBase.getColumnsForTable(tableCodes.get(i));
+				foreignColumns = DataBase.getForeignColumnsForTable(tableCodes.get(i));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			description.setColumns(columns);
+			description.setForeignColumns(foreignColumns);
 			button = new JMenuItem(description.getTableCode());
 			button.addActionListener(new MenuBarButtonAction(description));
 			menu.add(button);
