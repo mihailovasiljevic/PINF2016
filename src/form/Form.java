@@ -8,17 +8,17 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
-import database.Description;
+import database.TableDescription;
 import main.MainFrame;
 import main.MyToolBar;
 import net.miginfocom.swing.MigLayout;
 
 public class Form extends JDialog {
 
-	private Description description;
+	private TableDescription description;
 	
-	public Form(Window parent, Description description) {
-		super(parent,description.getTableCode());
+	public Form(Window parent, TableDescription description) {
+		super(parent,description.getLabel());
 		
 		setLayout(new MigLayout("fill"));
 		this.setModal(true);
@@ -46,11 +46,11 @@ public class Form extends JDialog {
 	}
 
 	//GETTERS AND SETTERS
-	public Description getDescription() {
+	public TableDescription getDescription() {
 		return description;
 	}
 
-	public void setDescription(Description description) {
+	public void setDescription(TableDescription description) {
 		this.description = description;
 	}
 

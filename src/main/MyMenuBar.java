@@ -1,14 +1,16 @@
 package main;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import database.ColumnDescription;
 import database.DataBase;
-import database.Description;
+import database.TableDescription;
 import manubar.actions.MenuBarButtonAction;
 
 public class MyMenuBar extends JMenuBar {
@@ -16,37 +18,34 @@ public class MyMenuBar extends JMenuBar {
 	public MyMenuBar() {
 		
 		Vector<String> tableCodes = null;
-		try {
-			tableCodes = DataBase.getTableCodes();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return;
-		}
 		
+		tableCodes = DataBase.getTableCodes();
 		JMenu menu = new JMenu("Organizaciona sema");
 		JMenuItem button;
-		Description description;
+		TableDescription tdescription;
+		System.out.println("siz " + tableCodes.size());
 		for(int i = 0; i < tableCodes.size(); i++) {
-			description = new Description();
-			description.setTableCode(tableCodes.get(i));
-			Vector<String> columns = new Vector<String>();
-			Vector<String> foreignColumns = new Vector<String>();
-			try {
-				columns = DataBase.getColumnsForTable(tableCodes.get(i));
-				foreignColumns = DataBase.getForeignColumnsForTable(tableCodes.get(i));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			System.out.println("i" + i);
+			tdescription = new TableDescription();
+			tdescription.setCode(tableCodes.get(i));
+			tdescription.setLabel(tableCodes.get(i)); //za sada je labela ustvari kod
+			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
+			HashMap<String, String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
+			for(int j = 0; j < cdescription.size(); j++) {
+				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
+				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
+				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
+					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
+				} else {
+					cdescription.get(j).setTableParent(null);
+				}
 			}
-			description.setColumns(columns);
-			description.setForeignColumns(foreignColumns);
-			button = new JMenuItem(description.getTableCode());
-			button.addActionListener(new MenuBarButtonAction(description));
+			tdescription.setColumnsDescriptions(cdescription);
+			button = new JMenuItem(tdescription.getLabel());
+			button.addActionListener(new MenuBarButtonAction(tdescription));
 			menu.add(button);
 		}
-		
 		this.add(menu);
-		
 		
 	}
 	
