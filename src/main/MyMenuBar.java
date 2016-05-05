@@ -42,14 +42,17 @@ public class MyMenuBar extends JMenuBar {
 			tdescription.setLabel(bundT.getString(tableCodes.get(i))); //za sada je labela ustvari kod
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
 			HashMap<String, String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
+			
 			for(int j = 0; j < foreignTables.size(); j++) {
 				Iterator it = foreignTables.entrySet().iterator();
 			    while (it.hasNext()) {
 			        Map.Entry pair = (Map.Entry)it.next();
 			        tdescription.addNextTable(pair.getValue().toString());
-			        it.remove();
+			        //it.remove();
+			        //Kada se ovo zakomentarise, proradi postavljanje zoom dugmadi
 			    }
 			}
+			
 			for(int j = 0; j < cdescription.size(); j++) {
 				String key = tableCodes.get(i) + "." + cdescription.get(j).getCode();
 				cdescription.get(j).setLabel(bundC.getString(key));
@@ -57,7 +60,7 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
-				} else {
+				} else {				
 					cdescription.get(j).setTableParent(null);
 				}
 			}
