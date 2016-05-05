@@ -19,7 +19,7 @@ import database.TableDescription;
 @SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {
 	
-	private static Vector<TableDescription> tDescriptions; 
+	public static Vector<TableDescription> tDescriptions; 
 	
 	public MyMenuBar() {
 		System.out.println("MENU BAR!!!");
@@ -65,7 +65,7 @@ public class MyMenuBar extends JMenuBar {
 			button = new JMenuItem(tdescription.getLabel());
 			button.addActionListener(new MenuBarButtonAction(tdescription));
 			menu.add(button);
-			this.tDescriptions.add(tdescription);
+			tDescriptions.add(tdescription);
 		}
 		
 		/*for(int i = 0; i < MyMenuBar.tDescriptions.size(); i++) {
@@ -84,17 +84,7 @@ public class MyMenuBar extends JMenuBar {
 		
 		
 		this.add(menu);	
-	}
-
-	public static Vector<TableDescription> gettDescriptions() {
-		return tDescriptions;
-	}
-
-	public void settDescriptions(Vector<TableDescription> tDescriptions) {
-		this.tDescriptions = tDescriptions;
-	}
-	
-	
+	}	
 	
 	
 }

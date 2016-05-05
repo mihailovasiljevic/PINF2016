@@ -31,8 +31,7 @@ public class DataPanel extends JPanel {
 		
 		Vector<ColumnDescription> columnDescription = new Vector <ColumnDescription>();
 		columnDescription = description.getColumnsDescriptions();
-		MyMenuBar mbar=MainFrame.getInstance().getMbar();
-		int size=mbar.gettDescriptions().size();
+		int size=MyMenuBar.tDescriptions.size();
 		System.out.print(size);
 		
 		
@@ -62,9 +61,9 @@ public class DataPanel extends JPanel {
 		
 				//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
 				JButton zoomBtn = new JButton("...");
-				for(int k=0;k<mbar.gettDescriptions().size();k++){
-					if(mbar.gettDescriptions().get(k).getCode().contains(m)){
-						TableDescription table_zoom=mbar.gettDescriptions().get(k);
+				for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+					if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
+						TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
 						zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
 					}
 
