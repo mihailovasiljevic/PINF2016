@@ -12,11 +12,11 @@ import table.MyTableModel;
 
 
 
-public class MyTable extends JScrollPane {
+public class TablePane extends JScrollPane {
 	
 	private JTable tblGrid = new JTable();
 
-	public MyTable() {
+	public TablePane() {
 		// TODO Auto-generated constructor stub
 		tblGrid = new JTable();
 		this.setViewportView(tblGrid);

@@ -53,8 +53,6 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setLabel(bundC.getString(key));
 				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
-				cdescription.get(j).setNullable(DataBase.isNullable(tableCodes.get(i),cdescription.get(j).getCode()));
-				cdescription.get(j).setLength(DataBase.getColumnSize(tableCodes.get(i), cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
 				} else {				
