@@ -7,7 +7,7 @@ public class TableDescription {
 
 	private String code;
 	private String label;
-	private Vector<String> nextTables;
+	private Vector<String> nextTables = new Vector<String>();
 	private Vector<ColumnDescription> columnsDescriptions;
 	
 	public String getCode() {

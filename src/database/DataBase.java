@@ -166,6 +166,7 @@ public class DataBase {
 			    String columnName = result.getString(7);
 			    columns.add(columnName);
 			    res.put(result.getString(4), result.getString(3));
+			    System.out.println(result.getString(4) + " " + result.getString(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -173,6 +174,29 @@ public class DataBase {
 		return res;
 	}
 	
+	public static Vector<String> getExportedTables(String tableName) {
+		
+		String   catalog          = null;
+		String   schemaPattern    = "dbo";
+		String   tableNamePattern = tableName;
+	
+		Vector<String> columns = new Vector<String>();
+		ResultSet result;
+		try {
+			result = dmeta.getExportedKeys(catalog, schemaPattern, tableNamePattern);
+			while(result.next()) {
+			    String columnName = result.getString(7);
+			    if(!columns.contains(columnName)) {
+			    	columns.add(columnName);
+			    	System.out.println(columnName);
+			    }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return columns;
+		
+	}
 
 	public static void writeForTables(String fileName) {
 		
@@ -223,7 +247,9 @@ public class DataBase {
 		
 	}
 	
-public static boolean isNullable(String tableCode, String columnCode) {
+	
+	
+	public static boolean isNullable(String tableCode, String columnCode) {
 		
 	
 		String   catalog          = null;
@@ -247,8 +273,8 @@ public static boolean isNullable(String tableCode, String columnCode) {
 		return false;
 	}
 
-//OVO VRACA OCEKIVANE VREDNOSTI ZA CHAR I VARCHAR ALI STA CE BITI SA DRUGIM TIPOVIMA PODATAKA?
-public static int getColumnSize(String tableCode, String columnCode) {
+	//OVO VRACA OCEKIVANE VREDNOSTI ZA CHAR I VARCHAR ALI STA CE BITI SA DRUGIM TIPOVIMA PODATAKA?
+	public static int getColumnSize(String tableCode, String columnCode) {
 	
 	
 	String   catalog          = null;
@@ -277,8 +303,8 @@ public static int getColumnSize(String tableCode, String columnCode) {
 		//System.out.println(res.size());
 		//Vector<ColumnDescription> desc = DataBase.getDescriptions("DRZAVA");
 		//System.out.println(desc.size());
-		
-		
+		getExportedTables("naseljeno_mesto");
+		//DataBase.getImportedTables("SLUZBA");
 		//DataBase.writeForTables("tLables.properties");
 		//DataBase.writeForColumns("cLables.properties");
 		
