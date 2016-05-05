@@ -22,6 +22,7 @@ public class DataPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Vector<JTextField> textFields = new Vector<JTextField>();
+	
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
 	@SuppressWarnings({ "static-access", "unused" })
 	public DataPanel(TableDescription description) {
@@ -36,10 +37,21 @@ public class DataPanel extends JPanel {
 		
 		
 		for(int i=0; i<columnDescription.size(); i++){
-			JLabel labela = new JLabel (columnDescription.get(i).getLabel()+":");
+			String lblText = columnDescription.get(i).getLabel()+
+					"["+columnDescription.get(i).getLength()+"]:";
+		
+			if(!columnDescription.get(i).isNullable())
+				lblText+="*";
+			
+			JLabel labela = new JLabel (lblText);
 			this.add(labela);
 			//DA LI BI DUZINE POLJA TREBALO DA SE RAZLIKUJU?
-			JTextField textField = new JTextField(10);
+			int fieldLength=10;
+			//if(columnDescription.get(i).getLength()>20)
+			//	fieldLength=20;
+			//Ispadne skrnavo...
+			JTextField textField = new JTextField(fieldLength);
+			textField.setName(columnDescription.get(i).getCode());
 			textFields.add(textField);
 			
 			if (columnDescription.get(i).getTableParent() != null)
@@ -68,6 +80,13 @@ public class DataPanel extends JPanel {
 			}
 		
 		}
+	}
+	
+	public Vector<JTextField> getTextFields() {
+		return textFields;
+	}
+	public void setTextFields(Vector<JTextField> textFields) {
+		this.textFields = textFields;
 	}
 
 }

@@ -223,6 +223,53 @@ public class DataBase {
 		
 	}
 	
+public static boolean isNullable(String tableCode, String columnCode) {
+		
+	
+		String   catalog          = null;
+		String   schemaPattern    = "dbo";
+		String   tableNamePattern = tableCode;
+		String 	 columnNamePattern = columnCode;
+	
+		ResultSet result;
+		try {
+			result = dmeta.getColumns(catalog, schemaPattern, tableNamePattern,columnNamePattern);
+			while(result.next()) {
+			    if(result.getString(18).equals("YES"))
+			    {
+			    	return true;
+			    }
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+
+//OVO VRACA OCEKIVANE VREDNOSTI ZA CHAR I VARCHAR ALI STA CE BITI SA DRUGIM TIPOVIMA PODATAKA?
+public static int getColumnSize(String tableCode, String columnCode) {
+	
+	
+	String   catalog          = null;
+	String   schemaPattern    = "dbo";
+	String   tableNamePattern = tableCode;
+	String 	 columnNamePattern = columnCode;
+
+	ResultSet result;
+	try {
+		result = dmeta.getColumns(catalog, schemaPattern, tableNamePattern,columnNamePattern);
+		while(result.next()) {
+		    return Integer.parseInt(result.getString(7));
+		}
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return 0;
+}	
+	
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
 		DataBase.open();
