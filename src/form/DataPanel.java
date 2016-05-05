@@ -60,6 +60,7 @@ public class DataPanel extends JPanel {
 				System.out.print(m);
 				System.out.print("aa  "+description.getCode());
 		
+				//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
 				JButton zoomBtn = new JButton("...");
 				for(int k=0;k<mbar.gettDescriptions().size();k++){
 					if(mbar.gettDescriptions().get(k).getCode().contains(m)){
