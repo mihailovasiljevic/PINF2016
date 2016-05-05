@@ -25,7 +25,7 @@ public class DataPanel extends JPanel {
 		
 		
 		for(int i=0; i<columnDescription.size(); i++){
-			JLabel labela = new JLabel (columnDescription.get(i).getCode()+":");
+			JLabel labela = new JLabel (columnDescription.get(i).getLabel()+":");
 			this.add(labela);
 			//DA LI BI DUZINE POLJA TREBALO DA SE RAZLIKUJU?
 			JTextField textField = new JTextField(10);

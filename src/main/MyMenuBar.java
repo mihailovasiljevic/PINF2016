@@ -2,6 +2,7 @@ package main;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.JMenu;
@@ -17,6 +18,12 @@ public class MyMenuBar extends JMenuBar {
 	
 	public MyMenuBar() {
 		
+		ResourceBundle bundT =
+				ResourceBundle.getBundle("database.tLables");
+		ResourceBundle bundC =
+				ResourceBundle.getBundle("database.cLables");
+		
+		
 		Vector<String> tableCodes = null;
 		
 		tableCodes = DataBase.getTableCodes();
@@ -28,10 +35,14 @@ public class MyMenuBar extends JMenuBar {
 			System.out.println("i" + i);
 			tdescription = new TableDescription();
 			tdescription.setCode(tableCodes.get(i));
-			tdescription.setLabel(tableCodes.get(i)); //za sada je labela ustvari kod
+			
+			tdescription.setLabel(bundT.getString(tableCodes.get(i))); //za sada je labela ustvari kod
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
 			HashMap<String, String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
 			for(int j = 0; j < cdescription.size(); j++) {
+				String key = tableCodes.get(i) + "." + cdescription.get(j).getCode();
+				System.out.println("key " + bundC.getString(key));
+				cdescription.get(j).setLabel(bundC.getString(key));
 				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {

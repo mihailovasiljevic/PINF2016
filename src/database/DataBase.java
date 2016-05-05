@@ -1,5 +1,11 @@
 package database;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -21,6 +27,7 @@ public class DataBase {
 			return;
 		ResourceBundle bundle =
 				PropertyResourceBundle.getBundle("database.DataBase");
+		
 		String driver = bundle.getString("driver");
 		String url = bundle.getString("url");
 		String username = bundle.getString("username");  
@@ -80,7 +87,6 @@ public class DataBase {
 				if(rst.getString(3).equalsIgnoreCase(tableCode)) {
 					ColumnDescription desc = new ColumnDescription();
 					desc.setCode(rst.getString(4));
-					desc.setLabel(rst.getString(4)); //za sada je labela ustvari kod
 					String yes_no = rst.getString(7);
 					boolean nullable = false;
 					if(yes_no.equalsIgnoreCase("YES")) {
@@ -146,75 +152,7 @@ public class DataBase {
 		return false;
 		
 	}
-	
 
-	
-	/*public static Vector<String> getTableCodes() throws SQLException {
-
-		String   catalog          = null;
-		String   schemaPattern    = "dbo";
-		String   tableNamePattern = null;
-		String[] types            = {"TABLE"};
-
-		ResultSet result = dmeta.getTables(
-		    catalog, schemaPattern, tableNamePattern, types );
-		
-		Vector<String> tables = new Vector<String>();
-		while(result.next()) {
-		    String tableName = result.getString(3);
-		    tables.add(tableName);
-		    
-		}
-		return tables;
-	}*/
-	
-	
-	
-	
-	public static Vector<String> getColumnsForTable(String tableName) throws SQLException {
-		
-		String   catalog          = null;
-		String   schemaPattern    = "dbo";
-		String   tableNamePattern = tableName;
-		String columnNamePattern = null;
-
-		ResultSet result = dmeta.getColumns(
-		    catalog, schemaPattern, tableNamePattern, columnNamePattern );
-		
-		Vector<String> columns = new Vector<String>();
-		while(result.next()) {
-		    String columnName = result.getString(4);
-		    columns.add(columnName);
-		    
-		}
-		return columns;
-	}
-	
-	public static Vector<String> getForeignColumnsForTable(String tableName) {
-		
-		String   catalog          = null;
-		String   schemaPattern    = "dbo";
-		String   tableNamePattern = tableName;
-	
-
-		Vector<String> columns = new Vector<String>();
-		ResultSet result;
-		try {
-			result = dmeta.getImportedKeys(catalog, schemaPattern, tableNamePattern);
-			while(result.next()) {
-			    String columnName = result.getString(4);
-			    columns.add(columnName);
-			    
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-
-		return columns;
-	}
 	
 	public static HashMap<String,String> getImportedTables(String tableName) {
 		
@@ -234,13 +172,60 @@ public class DataBase {
 			    res.put(result.getString(4), result.getString(3));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return res;
 	}
 	
 
+	public static void writeForTables(String fileName) {
+		
+		Vector<String> tables = DataBase.getTableCodes();
+		
+		try {
+			FileWriter fileWriter = new FileWriter("src\\database\\"+fileName, false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			
+			//printWriter.print("a test");
+			for(int i = 0; i < tables.size(); i++) {
+				printWriter.print(tables.get(i)+" = \n\n");
+			}
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void writeForColumns(String fileName) {
+		
+		Vector<String> tables = DataBase.getTableCodes();
+		Vector<String> columns = new Vector<String>();
+		Vector<String> tab = new Vector<String>();
+		Vector<ColumnDescription> cdesc;
+		
+		for(int i = 0; i < tables.size(); i++) {
+			cdesc = DataBase.getDescriptions(tables.get(i));
+			for(int j = 0; j < cdesc.size(); j++) {
+				columns.add(cdesc.get(j).getCode());
+				tab.add(tables.get(i));
+			}
+		}
+		
+		try {
+			FileWriter fileWriter = new FileWriter("src\\database\\"+fileName, false);
+			PrintWriter printWriter = new PrintWriter(fileWriter);
+			for(int i = 0; i < columns.size(); i++) {
+				printWriter.print(tab.get(i)+"."+columns.get(i)+" = \n\n");
+			}
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
@@ -251,8 +236,11 @@ public class DataBase {
 		//System.out.println(desc.size());
 		
 		
+		//DataBase.writeForTables("tLables.properties");
+		//DataBase.writeForColumns("cLables.properties");
 		
 		DataBase.close();
+		
 	}
 	
 }
