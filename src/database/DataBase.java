@@ -43,7 +43,7 @@ public class DataBase {
 	
 	public static void close() {
 		try {
-			if (conn != null)
+			if (conn != null) //conn
 				conn.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
