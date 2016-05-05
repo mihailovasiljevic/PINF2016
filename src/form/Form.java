@@ -17,22 +17,26 @@ public class Form extends JDialog {
 
 	private TableDescription description;
 	
-	public Form(Window parent, TableDescription description) {
-		super(parent,description.getLabel());
+	public Form(Window parent, TableDescription tdescription) {
+		super(parent,tdescription.getLabel());
+		
+		//System.out.println(tdescription.getColumnsDescriptions().size());
 		
 		setLayout(new MigLayout("fill"));
 		this.setModal(true);
-		this.description = description;
+		this.description = tdescription;
 		
-		this.init();
+		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
 	}
 	
-	private void init() {
+	private void init(TableDescription tdescription) {
 		
-		setSize(500, 400);
+		int width = 500 + (tdescription.getColumnsDescriptions().size()-2)*50;
+		
+		setSize(width, 400);
 		this.add(new MyToolBar(this),"dock north");
-		this.add(new TablePane(),"grow, wrap");
+		this.add(new TablePane(tdescription),"grow, wrap");
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
 		bottomPanel.add(new DataPanel(description));
