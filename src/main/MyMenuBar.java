@@ -2,6 +2,8 @@ package main;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -16,6 +18,8 @@ import manubar.actions.MenuBarButtonAction;
 
 public class MyMenuBar extends JMenuBar {
 	
+	private static Vector<TableDescription> tDescriptions; 
+	
 	public MyMenuBar() {
 		
 		ResourceBundle bundT =
@@ -23,6 +27,7 @@ public class MyMenuBar extends JMenuBar {
 		ResourceBundle bundC =
 				ResourceBundle.getBundle("database.cLables");
 		
+		tDescriptions = new Vector<TableDescription>();
 		
 		Vector<String> tableCodes = null;
 		
@@ -37,6 +42,14 @@ public class MyMenuBar extends JMenuBar {
 			tdescription.setLabel(bundT.getString(tableCodes.get(i))); //za sada je labela ustvari kod
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
 			HashMap<String, String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
+			for(int j = 0; j < foreignTables.size(); j++) {
+				Iterator it = foreignTables.entrySet().iterator();
+			    while (it.hasNext()) {
+			        Map.Entry pair = (Map.Entry)it.next();
+			        tdescription.addNextTable(pair.getValue().toString());
+			        it.remove();
+			    }
+			}
 			for(int j = 0; j < cdescription.size(); j++) {
 				String key = tableCodes.get(i) + "." + cdescription.get(j).getCode();
 				cdescription.get(j).setLabel(bundC.getString(key));
@@ -52,9 +65,20 @@ public class MyMenuBar extends JMenuBar {
 			button = new JMenuItem(tdescription.getLabel());
 			button.addActionListener(new MenuBarButtonAction(tdescription));
 			menu.add(button);
+			this.tDescriptions.add(tdescription);
 		}
-		this.add(menu);
-		
+		this.add(menu);	
 	}
+
+	public static Vector<TableDescription> gettDescriptions() {
+		return tDescriptions;
+	}
+
+	public static void settDescriptions(Vector<TableDescription> tDescriptions) {
+		MyMenuBar.tDescriptions = tDescriptions;
+	}
+	
+	
+	
 	
 }

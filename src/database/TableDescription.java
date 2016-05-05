@@ -35,6 +35,11 @@ public class TableDescription {
 		this.columnsDescriptions = columnsDescriptions;
 	}
 	
-	
+	public void addNextTable(String tableCode) {
+		if(nextTables == null) {
+			nextTables = new Vector<String>();
+		}
+		nextTables.add(tableCode);
+	}
 
 }
