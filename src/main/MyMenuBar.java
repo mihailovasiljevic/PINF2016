@@ -11,15 +11,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import button.actions.MenuBarButtonAction;
 import database.ColumnDescription;
 import database.DataBase;
 import database.TableDescription;
-import manubar.actions.MenuBarButtonAction;
+import form.Form;
 
 public class MyMenuBar extends JMenuBar {
 	
 	private static Vector<TableDescription> tDescriptions; 
 	
+	@SuppressWarnings("static-access")
 	public MyMenuBar() {
 		
 		ResourceBundle bundT =
@@ -28,6 +30,7 @@ public class MyMenuBar extends JMenuBar {
 				ResourceBundle.getBundle("database.cLables");
 		
 		tDescriptions = new Vector<TableDescription>();
+		
 		
 		Vector<String> tableCodes = null;
 		
