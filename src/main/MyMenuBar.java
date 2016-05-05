@@ -1,6 +1,5 @@
 package main;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,14 +14,15 @@ import button.actions.MenuBarButtonAction;
 import database.ColumnDescription;
 import database.DataBase;
 import database.TableDescription;
-import form.Form;
 
+
+@SuppressWarnings("serial")
 public class MyMenuBar extends JMenuBar {
 	
-	private static Vector<TableDescription> tDescriptions; 
+	private Vector<TableDescription> tDescriptions; 
 	
-	@SuppressWarnings("static-access")
 	public MyMenuBar() {
+		System.out.println("MENU BAR!!!");
 		ResourceBundle bundT =
 				ResourceBundle.getBundle("database.tLables");
 		ResourceBundle bundC =
@@ -77,12 +77,12 @@ public class MyMenuBar extends JMenuBar {
 		this.add(menu);	
 	}
 
-	public static Vector<TableDescription> gettDescriptions() {
+	public Vector<TableDescription> gettDescriptions() {
 		return tDescriptions;
 	}
 
-	public static void settDescriptions(Vector<TableDescription> tDescriptions) {
-		MyMenuBar.tDescriptions = tDescriptions;
+	public void settDescriptions(Vector<TableDescription> tDescriptions) {
+		this.tDescriptions = tDescriptions;
 	}
 	
 	

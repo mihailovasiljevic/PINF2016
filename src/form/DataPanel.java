@@ -12,6 +12,7 @@ import button.actions.MenuBarButtonAction;
 import button.actions.ZoomButtonAction;
 import database.ColumnDescription;
 import database.TableDescription;
+import main.MainFrame;
 import main.MyMenuBar;
 import net.miginfocom.swing.MigLayout;
 
@@ -24,14 +25,13 @@ public class DataPanel extends JPanel {
 	private Vector<JTextField> textFields = new Vector<JTextField>();
 	
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
-	@SuppressWarnings({ "static-access", "unused" })
 	public DataPanel(TableDescription description) {
 		
 		this.setLayout(new MigLayout("gapx 15px"));
 		
 		Vector<ColumnDescription> columnDescription = new Vector <ColumnDescription>();
 		columnDescription = description.getColumnsDescriptions();
-		MyMenuBar mbar=new MyMenuBar();
+		MyMenuBar mbar=MainFrame.getInstance().getMbar();
 		int size=mbar.gettDescriptions().size();
 		System.out.print(size);
 		
@@ -65,7 +65,6 @@ public class DataPanel extends JPanel {
 				for(int k=0;k<mbar.gettDescriptions().size();k++){
 					if(mbar.gettDescriptions().get(k).getCode().contains(m)){
 						TableDescription table_zoom=mbar.gettDescriptions().get(k);
-						System.out.print(table_zoom.getCode());
 						zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
 					}
 
