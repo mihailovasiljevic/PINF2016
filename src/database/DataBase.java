@@ -247,6 +247,7 @@ public static boolean isNullable(String tableCode, String columnCode) {
 		return false;
 	}
 
+//OVO VRACA OCEKIVANE VREDNOSTI ZA CHAR I VARCHAR ALI STA CE BITI SA DRUGIM TIPOVIMA PODATAKA?
 public static int getColumnSize(String tableCode, String columnCode) {
 	
 	

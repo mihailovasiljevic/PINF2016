@@ -26,8 +26,8 @@ public class DataPanel extends JPanel {
 		
 		
 		for(int i=0; i<columnDescription.size(); i++){
-			String lblText = columnDescription.get(i).getLabel()+":"+
-					"["+columnDescription.get(i).getLength()+"]";
+			String lblText = columnDescription.get(i).getLabel()+
+					"["+columnDescription.get(i).getLength()+"]:";
 		
 			if(!columnDescription.get(i).isNullable())
 				lblText+="*";
