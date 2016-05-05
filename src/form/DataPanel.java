@@ -15,6 +15,7 @@ import net.miginfocom.swing.MigLayout;
 public class DataPanel extends JPanel {
 	
 	private Vector<JTextField> textFields = new Vector<JTextField>();
+	
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
 	public DataPanel(TableDescription description) {
 		
@@ -29,6 +30,7 @@ public class DataPanel extends JPanel {
 			this.add(labela);
 			//DA LI BI DUZINE POLJA TREBALO DA SE RAZLIKUJU?
 			JTextField textField = new JTextField(10);
+			textField.setName(columnDescription.get(i).getCode());
 			textFields.add(textField);
 			
 			if (columnDescription.get(i).getTableParent() != null)
@@ -44,6 +46,13 @@ public class DataPanel extends JPanel {
 			}
 		
 		}
+	}
+	
+	public Vector<JTextField> getTextFields() {
+		return textFields;
+	}
+	public void setTextFields(Vector<JTextField> textFields) {
+		this.textFields = textFields;
 	}
 
 }
