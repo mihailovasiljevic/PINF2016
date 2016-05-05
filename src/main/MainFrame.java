@@ -13,7 +13,6 @@ public class MainFrame extends JFrame {
 	private static MainFrame frame = null;
 	
 	private MainFrame() {
-		
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) (screen.getWidth() * 0.75);
 		int height = (int) (screen.getHeight() * 0.75);
@@ -34,7 +33,7 @@ public class MainFrame extends JFrame {
 	
 	public static MainFrame getInstance() {
 		if(frame == null) {
-			return new MainFrame();
+			frame = new MainFrame();
 		}
 		return frame;
 	}
