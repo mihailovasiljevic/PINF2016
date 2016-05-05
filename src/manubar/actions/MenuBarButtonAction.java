@@ -17,8 +17,6 @@ public class MenuBarButtonAction  implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//System.out.println("Pritisnuto dugme tabele " + description.getTableCode());
-		System.out.println("ulaz");
 		Form form = new Form(MainFrame.getInstance(),description);
 		form.setVisible(true);
 	}

@@ -30,9 +30,7 @@ public class MyMenuBar extends JMenuBar {
 		JMenu menu = new JMenu("Organizaciona sema");
 		JMenuItem button;
 		TableDescription tdescription;
-		System.out.println("siz " + tableCodes.size());
 		for(int i = 0; i < tableCodes.size(); i++) {
-			System.out.println("i" + i);
 			tdescription = new TableDescription();
 			tdescription.setCode(tableCodes.get(i));
 			
@@ -41,7 +39,6 @@ public class MyMenuBar extends JMenuBar {
 			HashMap<String, String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
 			for(int j = 0; j < cdescription.size(); j++) {
 				String key = tableCodes.get(i) + "." + cdescription.get(j).getCode();
-				System.out.println("key " + bundC.getString(key));
 				cdescription.get(j).setLabel(bundC.getString(key));
 				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));

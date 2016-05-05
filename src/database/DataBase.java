@@ -33,8 +33,6 @@ public class DataBase {
 		String username = bundle.getString("username");  
 		String password = bundle.getString("password");
 		
-		System.out.println(driver + " " + url + " " + username + " " + password);
-		
 		Class.forName(driver);
 		conn = DriverManager.getConnection(url, username, password);
 		conn.setAutoCommit(false);
@@ -62,7 +60,6 @@ public class DataBase {
 			stmt.executeQuery(query);
 			ResultSet rst = stmt.getResultSet();
 			while(rst.next()) {
-				System.out.println(rst.getString(3));
 				result.add(rst.getString(3));
 			}
 			stmt.close();
@@ -168,7 +165,6 @@ public class DataBase {
 			while(result.next()) {
 			    String columnName = result.getString(7);
 			    columns.add(columnName);
-			    System.out.println(result.getString(3) + " " + result.getString(4));
 			    res.put(result.getString(4), result.getString(3));
 			}
 		} catch (SQLException e) {

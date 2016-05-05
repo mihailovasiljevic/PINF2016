@@ -37,7 +37,6 @@ public class MyTable extends JScrollPane {
 			        public void valueChanged(ListSelectionEvent e) {
 			          if (e.getValueIsAdjusting())
 						 return;
-			          //sync();
 			        }
 			     });
 		
