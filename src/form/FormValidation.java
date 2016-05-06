@@ -21,9 +21,21 @@ private String message;
 		this.setTxtFields(txtFields);
 		formValid=true;
 		message="";
-		//KONTROLA VELICINE STRINGOVA
+		
 		for(int i=0; i<txtFields.size(); i++)
 		{
+		
+			//KONTROLA DA LI JE NULL
+			if(!colDescs.get(i).isNullable())
+			{
+				if(txtFields.get(i).getText().equals("") || txtFields.get(i).getText().equals(null))
+				{
+					message+="Mora se nesto uneti u polje "+txtFields.get(i).getName()+System.lineSeparator();
+					invalidFields.add(txtFields.get(i));
+					formValid = false;
+				}
+			}
+			//KONTROLA VELICINE STRINGOVA
 			if(colDescs.get(i).getType().equalsIgnoreCase("CHAR") 
 					|| colDescs.get(i).getType().equalsIgnoreCase("VARCHAR"))
 			{
