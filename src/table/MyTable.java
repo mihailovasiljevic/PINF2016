@@ -17,6 +17,7 @@ public class MyTable extends JTable {
 		 this.setColumnSelectionAllowed(false);
 		 //Dozvoljeno selektovanje samo jednog reda u jedinici vremena 
 		 this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		 
 		 this.setFillsViewportHeight(true);
 		
 	}

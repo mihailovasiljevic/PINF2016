@@ -16,6 +16,7 @@ import net.miginfocom.swing.MigLayout;
 public class Form extends JDialog {
 
 	private TableDescription description;
+	private DataPanel dataPanel;
 	
 	public Form(Window parent, TableDescription tdescription) {
 		super(parent,tdescription.getLabel());
@@ -25,7 +26,7 @@ public class Form extends JDialog {
 		setLayout(new MigLayout("fill"));
 		this.setModal(true);
 		this.description = tdescription;
-		
+		this.dataPanel=new DataPanel(description);
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
 	}
@@ -39,8 +40,8 @@ public class Form extends JDialog {
 		this.add(new TablePane(tdescription),"grow, wrap");
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
-		bottomPanel.add(new DataPanel(description));
-		bottomPanel.add(new ButtonsPanel(),"dock east");
+		bottomPanel.add(dataPanel);
+		bottomPanel.add(new ButtonsPanel(this),"dock east");
 		
 		add(bottomPanel, "grow, wrap");
 	
@@ -56,6 +57,14 @@ public class Form extends JDialog {
 
 	public void setDescription(TableDescription description) {
 		this.description = description;
+	}
+
+	public DataPanel getDataPanel() {
+		return dataPanel;
+	}
+
+	public void setDataPanel(DataPanel dataPanel) {
+		this.dataPanel = dataPanel;
 	}
 
 }

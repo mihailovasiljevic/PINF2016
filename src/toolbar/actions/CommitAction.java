@@ -1,10 +1,18 @@
 package toolbar.actions;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
+import database.ColumnDescription;
+import form.Form;
+import form.FormValidation;
 
 
 
@@ -19,7 +27,35 @@ public class CommitAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
+		if(standardForm instanceof Form)
+		{
+			Vector<JTextField> txtFields=((Form)standardForm).getDataPanel().getTextFields();
+			Vector<ColumnDescription> colDescs = ((Form)standardForm).getDataPanel().getColumnDescription();
+		
+			for(int i=0; i<txtFields.size(); i++)
+			{
+				txtFields.get(i).setBackground(Color.white);
+			}
+			
+			FormValidation frmVldtn=new FormValidation(standardForm,txtFields,colDescs);
+			if(frmVldtn.isFormValid())
+			{
+				
+				JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");
+			}
+			
+			else
+			{
+				
+				for(int i=0; i<frmVldtn.getInvalidFields().size(); i++)
+				{
+					frmVldtn.getInvalidFields().get(i).setBackground(Color.RED);
+				}
+				JOptionPane.showMessageDialog(standardForm, frmVldtn.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
 	}
 }
 

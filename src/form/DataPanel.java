@@ -23,13 +23,14 @@ public class DataPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Vector<JTextField> textFields = new Vector<JTextField>();
+	private Vector<ColumnDescription> columnDescription=new Vector<ColumnDescription>();
 	
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
 	public DataPanel(TableDescription description) {
 		
 		this.setLayout(new MigLayout("gapx 15px"));
 		
-		Vector<ColumnDescription> columnDescription = new Vector <ColumnDescription>();
+		
 		columnDescription = description.getColumnsDescriptions();
 		int size=MyMenuBar.tDescriptions.size();
 		System.out.print(size);
@@ -87,5 +88,12 @@ public class DataPanel extends JPanel {
 	public void setTextFields(Vector<JTextField> textFields) {
 		this.textFields = textFields;
 	}
+	
+	public Vector<ColumnDescription> getColumnDescription() {
+		return columnDescription;
+	}
 
+	public void setColumnDescription(Vector<ColumnDescription> columnDescription) {
+		this.columnDescription = columnDescription;
+	}
 }
