@@ -22,7 +22,6 @@ public class MyMenuBar extends JMenuBar {
 	public static Vector<TableDescription> tDescriptions; 
 	
 	public MyMenuBar() {
-		System.out.println("MENU BAR!!!");
 		ResourceBundle bundT =
 				ResourceBundle.getBundle("database.tLables");
 		ResourceBundle bundC =
