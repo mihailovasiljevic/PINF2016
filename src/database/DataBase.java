@@ -166,7 +166,6 @@ public class DataBase {
 			    String columnName = result.getString(7);
 			    columns.add(columnName);
 			    res.put(result.getString(4), result.getString(3));
-			    System.out.println(result.getString(4) + " " + result.getString(3));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -188,7 +187,6 @@ public class DataBase {
 			    String columnName = result.getString(7);
 			    if(!columns.contains(columnName)) {
 			    	columns.add(columnName);
-			    	System.out.println(columnName);
 			    }
 			}
 		} catch (SQLException e) {
@@ -304,6 +302,7 @@ public class DataBase {
 		//Vector<ColumnDescription> desc = DataBase.getDescriptions("DRZAVA");
 		//System.out.println(desc.size());
 		getExportedTables("naseljeno_mesto");
+		
 		//DataBase.getImportedTables("SLUZBA");
 		//DataBase.writeForTables("tLables.properties");
 		//DataBase.writeForColumns("cLables.properties");

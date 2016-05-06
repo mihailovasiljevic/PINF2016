@@ -18,23 +18,18 @@ public class TablePane extends JScrollPane {
 	
 	private JTable tblGrid = new JTable();
 
-	public TablePane(TableDescription tdescription) {
-		// TODO Auto-generated constructor stub
-		//tblGrid = new JTable();
-		MyTable tblGrid = new MyTable(tdescription); 
+	public TablePane(JTable table) {
+
+		this.tblGrid = table;
 		this.setViewportView(tblGrid);
-		
-		 //MyTableModel tableModel = new MyTableModel();
-		      //tblGrid.setModel(tableModel);
 
-		      //tableModel.open(); 
 
-			  tblGrid.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			        public void valueChanged(ListSelectionEvent e) {
-			          if (e.getValueIsAdjusting())
-						 return;
-			        }
-			     });
+		tblGrid.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+	        public void valueChanged(ListSelectionEvent e) {
+	          if (e.getValueIsAdjusting())
+				 return;
+	        }
+	     });
 		
 		
 	}

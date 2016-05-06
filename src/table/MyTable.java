@@ -1,5 +1,7 @@
 package table;
 
+import java.util.Vector;
+
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
@@ -7,9 +9,12 @@ import database.TableDescription;
 
 public class MyTable extends JTable {
 
+	private MyTableModel model;
+	
 	public MyTable(TableDescription tdescription) {
 		
-		this.setModel(new MyTableModel(tdescription));
+		this.model = new MyTableModel(tdescription);
+		this.setModel(this.model);
 		
 		 //Dozvoljeno selektovanje redova
 		 this.setRowSelectionAllowed(true);
@@ -19,7 +24,13 @@ public class MyTable extends JTable {
 		 this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		 
 		 this.setFillsViewportHeight(true);
-		
+		 this.getTableHeader().setReorderingAllowed(false);
+		 //this.setCellSelectionEnabled(false);
+		 
+	}
+	
+	public void addInTable(Vector rowData) {
+		model.addRow(rowData);
 	}
 	
 }
