@@ -13,7 +13,7 @@ import database.TableDescription;
 
 public class Form extends JDialog {
 
-	private TableDescription description;
+	public static TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
 	
@@ -26,6 +26,10 @@ public class Form extends JDialog {
 		this.dataPanel=new DataPanel(description);
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
+	}
+	
+	public Form(){
+		super();
 	}
 	
 	private void init(TableDescription tdescription) {

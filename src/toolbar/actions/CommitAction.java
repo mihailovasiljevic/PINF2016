@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 
 import database.ColumnDescription;
 import form.Form;
-import form.FormValidation;
 
 
 
@@ -38,7 +37,7 @@ public class CommitAction extends AbstractAction {
 				txtFields.get(i).setBackground(Color.white);
 			}
 			
-			FormValidation frmVldtn=new FormValidation(standardForm,txtFields,colDescs);
+			/*FormValidation frmVldtn=new FormValidation(standardForm,txtFields,colDescs);
 			if(frmVldtn.isFormValid())
 			{
 				
@@ -53,7 +52,7 @@ public class CommitAction extends AbstractAction {
 					frmVldtn.getInvalidFields().get(i).setBackground(Color.RED);
 				}
 				JOptionPane.showMessageDialog(standardForm, frmVldtn.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
-			}
+			}*/
 			
 		}
 	}
