@@ -43,9 +43,6 @@ public class MyToolBar extends JToolBar {
 
 		JButton button;
 
-		//	form = new Form(dialog, this);
-
-
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/search.gif")));
 		button.addActionListener(new SearchAction(dialog));
 		this.add(button);
@@ -116,7 +113,11 @@ public class MyToolBar extends JToolBar {
 						
 						String tabele=mbar.gettDescriptions().get(k).getCode();
 						System.out.print("r"+tabele);
-						menu.add(tabele);
+						JMenuItem tab = new JMenuItem(tabele.toString());
+						//otvaranje tabela iz padajuceg menija
+						tab.addActionListener(new NextFormAction(tabele));
+						menu.add(tab);
+					
 					}
 				}
 			}
@@ -125,23 +126,13 @@ public class MyToolBar extends JToolBar {
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
 					menu.show(button1, button1.getWidth()/2, button1.getHeight()/2);
-					button1.addActionListener(new NextFormAction(dialog));
 				}
 			} );
 		}
 
 
-	
-		
-		//      JOptionPane.showMessageDialog(null,button1);
-
-		//		button1.addActionListener(new NextFormAction(dialog));
 		this.add(button);
 		this.add(button1);
-
-
-
-
 
 
 		this.setFloatable(false);
