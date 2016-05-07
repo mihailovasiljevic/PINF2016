@@ -1,11 +1,12 @@
 package form.data;
 
+import java.awt.Component;
 import java.util.HashMap;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public interface IDataGetter {
 	HashMap<String, String> getData(JPanel dataPanel);
-	JComponent getComponent(JComponent comp);
+
+	Component getComponent(Component comp, @SuppressWarnings("rawtypes") Class c);
 }
