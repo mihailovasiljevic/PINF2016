@@ -38,7 +38,7 @@ public class Form extends JDialog {
 		
 		setSize(width, 400);
 		this.add(new MyToolBar(this),"dock north");
-		this.table = new MyTable(this.description);
+		this.table = new MyTable(this);
 
 		this.add(new TablePane(this.table),"grow, wrap");
 		JPanel bottomPanel = new JPanel();
@@ -47,9 +47,9 @@ public class Form extends JDialog {
 		bottomPanel.add(new ButtonsPanel(this),"dock east");
 		
 		add(bottomPanel, "grow, wrap");
-		/*Vector vect = new Vector();
+		Vector vect = new Vector();
 		vect.add("A"); vect.add("B");
-		table.addInTable(vect);*/
+		table.addInTable(vect);
 		
 	}
 

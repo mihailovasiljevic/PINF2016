@@ -31,14 +31,16 @@ public class MyMenuBar extends JMenuBar {
 		Vector<String> tableCodes = null;
 		
 		tableCodes = DataBase.getTableCodes();
+		System.out.println(tableCodes.size());
 		JMenu menu = new JMenu("Organizaciona sema");
 		JMenuItem button;
 		TableDescription tdescription;
 		for(int i = 0; i < tableCodes.size(); i++) {
 			tdescription = new TableDescription();
 			tdescription.setCode(tableCodes.get(i));
+			System.out.println(tableCodes.get(i));
+			tdescription.setLabel(bundT.getString(tableCodes.get(i)));
 			
-			tdescription.setLabel(bundT.getString(tableCodes.get(i))); //za sada je labela ustvari kod
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
 			Vector<String> nextTables = DataBase.getExportedTables(tableCodes.get(i));
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));

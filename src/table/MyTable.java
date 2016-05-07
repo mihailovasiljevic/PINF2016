@@ -7,14 +7,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumnModel;
 
 import database.TableDescription;
+import form.Form;
 
 public class MyTable extends JTable {
 
 	private MyTableModel model;
 	
-	public MyTable(TableDescription tdescription) {
+	public MyTable(Form form) {
 		
-		this.model = new MyTableModel(tdescription);
+		this.model = new MyTableModel(form.getDescription());
 		this.setModel(this.model);
 		
 		 //Dozvoljeno selektovanje redova
@@ -27,7 +28,7 @@ public class MyTable extends JTable {
 		 this.setFillsViewportHeight(true);
 		 this.getTableHeader().setReorderingAllowed(false);
 		 //this.setCellSelectionEnabled(false);
-		 
+		 this.setDefaultRenderer(Object.class, new MyTableRenderer(form));
 		
 		 
 	}
