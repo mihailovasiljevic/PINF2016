@@ -111,8 +111,7 @@ public class MyToolBar extends JToolBar {
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
 						System.out.print(cdescription.get(j).getCode());
 						
-						String tabele=mbar.gettDescriptions().get(k).getCode();
-						System.out.print("r"+tabele);
+						String tabele=mbar.gettDescriptions().get(k).getLabel();
 						JMenuItem tab = new JMenuItem(tabele.toString());
 						//otvaranje tabela iz padajuceg menija
 						tab.addActionListener(new NextFormAction(tabele));
