@@ -2,9 +2,10 @@ package form.data;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.util.HashMap;
 
 public abstract class DataGetter implements IDataGetter {
-
+	
 	@Override
 	public Component getComponent(Component component, @SuppressWarnings("rawtypes") Class c) {
 		if (c.isInstance(component))
@@ -20,5 +21,6 @@ public abstract class DataGetter implements IDataGetter {
 		}
 		return null;
 	}
+	
 
 }

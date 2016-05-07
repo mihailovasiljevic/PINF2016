@@ -2,6 +2,7 @@ package toolbar.actions;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -13,6 +14,8 @@ import javax.swing.JTextField;
 import database.ColumnDescription;
 import form.Form;
 import form.FormValidation;
+import form.data.ConcreteDataGetter;
+import form.data.IDataGetter;
 
 
 
@@ -41,6 +44,9 @@ public class CommitAction extends AbstractAction {
 			FormValidation frmVldtn=new FormValidation(standardForm,txtFields,colDescs);
 			if(frmVldtn.isFormValid())
 			{
+				//TODO 1.0 COMMIT
+				IDataGetter data = new ConcreteDataGetter();
+				HashMap<String, String> formattedData = data.getData(((Form)standardForm).getDataPanel());
 				
 				JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");
 			}
