@@ -97,25 +97,18 @@ public class MyToolBar extends JToolBar {
 		form=new Form();
 
 		String trenutna=form.getDescription().getCode();
-		System.out.print("z"+trenutna);
 
 		int size=mbar.gettDescriptions().size();
 		for(int k=0;k<mbar.gettDescriptions().size();k++){
-			System.out.print("usao1,");
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(mbar.gettDescriptions().get(k).getCode());
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(mbar.gettDescriptions().get(k).getCode());
 			for(int j = 0; j < cdescription.size(); j++) {
-				System.out.print("usao2,");
 				//		String key = trenutna + "." + cdescription.get(j).getCode();
 				boolean primarni_kljuc=DataBase.isPrimaryKey(trenutna,cdescription.get(j).getCode());
 				
 				if(primarni_kljuc){
-					System.out.print("usao3,");
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
-						System.out.print(cdescription.get(j).getCode());
-						System.out.print("usao4,");
-						String tabele=mbar.gettDescriptions().get(k).getCode();
-						System.out.print("r"+tabele);
+						String tabele=mbar.gettDescriptions().get(k).getLabel();
 						menu.add(tabele);
 					}
 				}
