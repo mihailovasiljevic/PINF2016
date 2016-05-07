@@ -16,6 +16,8 @@ public class Form extends JDialog {
 	public static TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
+	private StatusBar statusBar;
+	
 	
 	public Form(Window parent, TableDescription tdescription) {
 		super(parent,tdescription.getLabel());
@@ -24,11 +26,13 @@ public class Form extends JDialog {
 		this.setModal(true);
 		this.description = tdescription;
 		this.dataPanel=new DataPanel(description);
+		this.statusBar = new StatusBar();
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
+		
 	}
 	
-	public Form(){
+	public Form() {
 		super();
 	}
 	
@@ -47,9 +51,14 @@ public class Form extends JDialog {
 		bottomPanel.add(new ButtonsPanel(this),"dock east");
 		
 		add(bottomPanel, "grow, wrap");
+
 		Vector vect = new Vector();
+
+		add(statusBar, "dock south");
+		statusBar.getStatLab1().setText(description.getCode());
+		/*Vector vect = new Vector();
 		vect.add("A"); vect.add("B");
-		table.addInTable(vect);
+		table.addInTable(vect);*/
 		
 	}
 
