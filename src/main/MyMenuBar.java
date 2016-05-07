@@ -31,14 +31,14 @@ public class MyMenuBar extends JMenuBar {
 		Vector<String> tableCodes = null;
 		
 		tableCodes = DataBase.getTableCodes();
-		System.out.println(tableCodes.size());
+
 		JMenu menu = new JMenu("Organizaciona sema");
 		JMenuItem button;
 		TableDescription tdescription;
 		for(int i = 0; i < tableCodes.size(); i++) {
 			tdescription = new TableDescription();
 			tdescription.setCode(tableCodes.get(i));
-			System.out.println(tableCodes.get(i));
+
 			tdescription.setLabel(bundT.getString(tableCodes.get(i)));
 			
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
@@ -56,7 +56,9 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
+					cdescription.get(j).setTableParent(cdescription.get(j).getCode());
 				} else {				
+					cdescription.get(j).setTableParent(null);
 					cdescription.get(j).setTableParent(null);
 				}
 			}

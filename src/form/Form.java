@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import main.MyToolBar;
 import net.miginfocom.swing.MigLayout;
@@ -17,19 +18,25 @@ public class Form extends JDialog {
 	private DataPanel dataPanel;
 	private MyTable table;
 	private StatusBar statusBar;
+	private JTextField field;
+	private String code;
 	
+	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
+		super(parent,tdescription.getLabel());
+		this.setModal(true);
+		this.description = tdescription;
+		this.field = field;
+		this.code = code;
+		this.init(tdescription);
+		this.setLocationRelativeTo(parent);
+	}
 	
 	public Form(Window parent, TableDescription tdescription) {
 		super(parent,tdescription.getLabel());
-		
-		setLayout(new MigLayout("fill"));
 		this.setModal(true);
 		this.description = tdescription;
-		this.dataPanel=new DataPanel(description);
-		this.statusBar = new StatusBar();
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
-		
 	}
 	
 	public Form() {
@@ -41,10 +48,15 @@ public class Form extends JDialog {
 		int width = 500 + (tdescription.getColumnsDescriptions().size()-2)*50;
 		
 		setSize(width, 400);
+		setLayout(new MigLayout("fill"));
 		this.add(new MyToolBar(this),"dock north");
 		this.table = new MyTable(this);
 
 		this.add(new TablePane(this.table),"grow, wrap");
+		
+		this.dataPanel=new DataPanel(description);
+		this.statusBar = new StatusBar();
+		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
 		bottomPanel.add(dataPanel);
@@ -53,7 +65,9 @@ public class Form extends JDialog {
 		add(bottomPanel, "grow, wrap");
 
 		Vector vect = new Vector();
+		
 
+		
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getCode());
 		/*Vector vect = new Vector();
@@ -88,7 +102,32 @@ public class Form extends JDialog {
 
 	public void setTable(MyTable table) {
 		this.table = table;
-
 	}
+
+	public StatusBar getStatusBar() {
+		return statusBar;
+	}
+
+	public void setStatusBar(StatusBar statusBar) {
+		this.statusBar = statusBar;
+	}
+
+	public JTextField getField() {
+		return field;
+	}
+
+	public void setField(JTextField field) {
+		this.field = field;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	
 
 }
