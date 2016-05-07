@@ -15,7 +15,9 @@ public class MyTableModel extends DefaultTableModel{
 			System.out.println("null");
 		}
 		for(int i = 0; i < tdescription.getColumnsDescriptions().size(); i++) {
+			
 			this.addColumn(tdescription.getColumnsDescriptions().get(i).getLabel());
+			
 		}
 		
 	}

@@ -94,36 +94,32 @@ public class MyToolBar extends JToolBar {
 		form=new Form();
 
 		String trenutna=form.getDescription().getCode();
+		System.out.print("z"+trenutna);
 
-		int meni_pop=0;
-
+		int size=mbar.gettDescriptions().size();
 		for(int k=0;k<mbar.gettDescriptions().size();k++){
-
+			
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(mbar.gettDescriptions().get(k).getCode());
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(mbar.gettDescriptions().get(k).getCode());
 			for(int j = 0; j < cdescription.size(); j++) {
-
+				
 				boolean primarni_kljuc=DataBase.isPrimaryKey(trenutna,cdescription.get(j).getCode());
 				boolean strani_kljuc=DataBase.isForeignKey(trenutna,cdescription.get(j).getCode());
-
+				
 				if(primarni_kljuc && strani_kljuc==false){
-
+					
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
 						System.out.print(cdescription.get(j).getCode());
-
-						String tabela=mbar.gettDescriptions().get(k).getCode();
-						JMenuItem tab = new JMenuItem(tabela);
+						
+						String tabele=mbar.gettDescriptions().get(k).getLabel();
+						JMenuItem tab = new JMenuItem(tabele.toString());
 						//otvaranje tabela iz padajuceg menija
-						tab.addActionListener(new NextFormAction(tabela));
+						tab.addActionListener(new NextFormAction(tabele));
 						menu.add(tab);
-						meni_pop++;
-
+					
 					}
 				}
 			}
-		}
-
-		if(meni_pop>0){
 			button1.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -131,11 +127,7 @@ public class MyToolBar extends JToolBar {
 					menu.show(button1, button1.getWidth()/2, button1.getHeight()/2);
 				}
 			} );
-		}else{
-			button1.addActionListener(new NextFormAction(null));
 		}
-
-
 
 
 		this.add(button);

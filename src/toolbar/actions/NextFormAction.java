@@ -29,6 +29,7 @@ public class NextFormAction extends AbstractAction {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 
 		mbar=new MyMenuBar();
 
