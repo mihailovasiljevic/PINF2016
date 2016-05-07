@@ -43,9 +43,6 @@ public class MyToolBar extends JToolBar {
 
 		JButton button;
 
-		//	form = new Form(dialog, this);
-
-
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/search.gif")));
 		button.addActionListener(new SearchAction(dialog));
 		this.add(button);
@@ -97,51 +94,52 @@ public class MyToolBar extends JToolBar {
 		form=new Form();
 
 		String trenutna=form.getDescription().getCode();
-		System.out.print("z"+trenutna);
 
-		int size=mbar.gettDescriptions().size();
+		int meni_pop=0;
+
 		for(int k=0;k<mbar.gettDescriptions().size();k++){
-			
+
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(mbar.gettDescriptions().get(k).getCode());
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(mbar.gettDescriptions().get(k).getCode());
 			for(int j = 0; j < cdescription.size(); j++) {
-				
+
 				boolean primarni_kljuc=DataBase.isPrimaryKey(trenutna,cdescription.get(j).getCode());
 				boolean strani_kljuc=DataBase.isForeignKey(trenutna,cdescription.get(j).getCode());
-				
+
 				if(primarni_kljuc && strani_kljuc==false){
-					
+
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
 						System.out.print(cdescription.get(j).getCode());
-						
-						String tabele=mbar.gettDescriptions().get(k).getCode();
-						System.out.print("r"+tabele);
-						menu.add(tabele);
+
+						String tabela=mbar.gettDescriptions().get(k).getCode();
+						JMenuItem tab = new JMenuItem(tabela);
+						//otvaranje tabela iz padajuceg menija
+						tab.addActionListener(new NextFormAction(tabela));
+						menu.add(tab);
+						meni_pop++;
+
 					}
 				}
 			}
+		}
+
+		if(meni_pop>0){
 			button1.addActionListener( new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
 					menu.show(button1, button1.getWidth()/2, button1.getHeight()/2);
-					button1.addActionListener(new NextFormAction(dialog));
 				}
 			} );
+		}else{
+			button1.addActionListener(new NextFormAction(null));
 		}
 
 
-	
-		
-		//      JOptionPane.showMessageDialog(null,button1);
 
-		//		button1.addActionListener(new NextFormAction(dialog));
+
 		this.add(button);
 		this.add(button1);
-
-
-
-
 
 
 		this.setFloatable(false);

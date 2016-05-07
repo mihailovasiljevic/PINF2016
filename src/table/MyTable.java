@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumnModel;
 
 import database.TableDescription;
 
@@ -26,6 +27,8 @@ public class MyTable extends JTable {
 		 this.setFillsViewportHeight(true);
 		 this.getTableHeader().setReorderingAllowed(false);
 		 //this.setCellSelectionEnabled(false);
+		 
+		
 		 
 	}
 	

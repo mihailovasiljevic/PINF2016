@@ -247,7 +247,7 @@ public class DataBase {
 	
 	
 	
-	public static boolean isNullable(String tableCode, String columnCode) {
+	/*public static boolean isNullable(String tableCode, String columnCode) {
 		
 	
 		String   catalog          = null;
@@ -291,7 +291,7 @@ public class DataBase {
 	}
 	
 	return 0;
-}	
+	}	*/
 	
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {

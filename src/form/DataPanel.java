@@ -57,8 +57,6 @@ public class DataPanel extends JPanel {
 			if (columnDescription.get(i).getTableParent() != null)
 			{
 				String m=columnDescription.get(i).getTableParent();
-				System.out.print(m);
-				System.out.print("aa  "+description.getCode());
 		
 				//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
 				JButton zoomBtn = new JButton("...");
