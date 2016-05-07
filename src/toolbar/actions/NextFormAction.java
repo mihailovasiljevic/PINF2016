@@ -29,22 +29,20 @@ public class NextFormAction extends AbstractAction {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 
 		mbar=new MyMenuBar();
 
-		if(standardForm==null){
-			JOptionPane.showMessageDialog(null, "Primarni kljuc ove tabele ne postoji kao strani kljuc u drugim tabelama ! ");
-		}else{
-			for(int k=0;k<mbar.gettDescriptions().size();k++){
 
-				if(mbar.gettDescriptions().get(k).getCode().contains(standardForm)){
+		for(int k=0;k<mbar.gettDescriptions().size();k++){
 
-					Form form = new Form(MainFrame.getInstance(),mbar.gettDescriptions().get(k));
-					form.setVisible(true);
-				}
+			if(mbar.gettDescriptions().get(k).getLabel().contains(standardForm)){
+
+				Form form = new Form(MainFrame.getInstance(),mbar.gettDescriptions().get(k));
+				form.setVisible(true);
 			}
 		}
+
 
 
 
