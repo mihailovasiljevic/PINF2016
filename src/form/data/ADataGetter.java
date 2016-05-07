@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.util.HashMap;
 
-public abstract class DataGetter implements IDataGetter {
+public abstract class ADataGetter implements IDataGetter {
 	
 	@Override
 	public Component getComponent(Component component, @SuppressWarnings("rawtypes") Class c) {

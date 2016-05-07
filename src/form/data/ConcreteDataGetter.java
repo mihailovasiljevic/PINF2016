@@ -6,7 +6,7 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class ConcreteDataGetter extends DataGetter {
+public class ConcreteDataGetter extends ADataGetter {
 
 	private HashMap<String, String> data;
 

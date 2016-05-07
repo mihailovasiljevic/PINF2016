@@ -24,7 +24,7 @@ public interface IDataGetter {
 	/**
 	 * This method is intended to be used as a component finder. 
 	 * Finding is based on in which component it should be done and what component is somebody looking for.
-	 * For implementation details @see {@link DataGetter}
+	 * For implementation details @see {@link ADataGetter}
 	 * @param comp
 	 * @param c
 	 * @return component that is somebody looked for.
