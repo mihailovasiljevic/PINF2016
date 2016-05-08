@@ -19,7 +19,14 @@ public class MyTableModel extends DefaultTableModel{
 			this.addColumn(tdescription.getColumnsDescriptions().get(i).getLabel());
 			
 		}
-		
+
 	}
+	
+    @Override
+    public boolean isCellEditable(int row, int column) {
+       //all cells false
+       return false;
+    }
+	
 	
 }
