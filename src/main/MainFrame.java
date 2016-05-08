@@ -5,14 +5,19 @@ import java.awt.Toolkit;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import database.DataBase;
+import states.Context;
 
 public class MainFrame extends JFrame {
 
 	private static MainFrame frame = null;
 	private MyMenuBar mbar=null;
-	
+	private Context context;
+	private JPanel statusBar;
+	private JLabel statusLabel;
 	private MainFrame() {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) (screen.getWidth() * 0.75);
@@ -30,7 +35,13 @@ public class MainFrame extends JFrame {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		this.context = new Context();
+		this.statusBar = new JPanel();
+		this.statusBar.setLocation(this.getHeight()-100, 0);
+		this.statusBar.setSize(this.getWidth(), 100);
+		this.statusLabel = new JLabel("STATUSNA LINIJA");
+		this.statusBar.add(this.statusLabel);
+		this.add(this.statusBar);
 	}
 	
 	public MyMenuBar getMbar() {
@@ -47,5 +58,22 @@ public class MainFrame extends JFrame {
 		}
 		return frame;
 	}
+
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
+	}
+
+	public JLabel getStatusLabel() {
+		return statusLabel;
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+		this.statusLabel = statusLabel;
+	}
+	
 	
 }

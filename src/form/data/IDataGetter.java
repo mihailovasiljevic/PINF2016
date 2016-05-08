@@ -1,7 +1,7 @@
 package form.data;
 
 import java.awt.Component;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.JPanel;
 /**
@@ -19,7 +19,7 @@ public interface IDataGetter {
 	 * @param dataPanel
 	 * @return pairs COLUMN_NAME:COLUMN_VALUE.
 	 */
-	HashMap<String, String> getData(JPanel dataPanel);
+	LinkedHashMap<String, String> getData(JPanel dataPanel);
 	
 	/**
 	 * This method is intended to be used as a component finder. 

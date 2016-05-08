@@ -2,19 +2,20 @@ package form.data;
 
 import java.awt.Component;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConcreteDataGetter extends ADataGetter {
 
-	private HashMap<String, String> data;
+	private LinkedHashMap<String, String> data;
 
 	public ConcreteDataGetter() {
-		data = new HashMap<>();
+		data = new LinkedHashMap<>();
 	}
 
-	public ConcreteDataGetter(HashMap<String, String> data) {
+	public ConcreteDataGetter(LinkedHashMap<String, String> data) {
 		super();
 		this.data = data;
 	}
@@ -23,12 +24,12 @@ public class ConcreteDataGetter extends ADataGetter {
 		return data;
 	}
 
-	public void setData(HashMap<String, String> data) {
+	public void setData(LinkedHashMap<String, String> data) {
 		this.data = data;
 	}
 
 	@Override
-	public HashMap<String, String> getData(JPanel dataPanel) {
+	public LinkedHashMap<String, String> getData(JPanel dataPanel) {
 		
 		for (Component component : dataPanel.getComponents()) {
 			if (component instanceof JTextField) {
