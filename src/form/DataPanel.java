@@ -28,6 +28,8 @@ public class DataPanel extends JPanel {
 	private Vector<ColumnDescription> columnDescription=new Vector<ColumnDescription>();
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
 	private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
+	
+
 	public DataPanel(TableDescription description) {
 		
 		this.setLayout(new MigLayout("gapx 15px"));
@@ -120,5 +122,13 @@ public class DataPanel extends JPanel {
 
 	public void setColumnDescription(Vector<ColumnDescription> columnDescription) {
 		this.columnDescription = columnDescription;
+	}
+	
+	public Vector<ButtonGroup> getBtnGroups() {
+		return btnGroups;
+	}
+
+	public void setBtnGroups(Vector<ButtonGroup> btnGroups) {
+		this.btnGroups = btnGroups;
 	}
 }
