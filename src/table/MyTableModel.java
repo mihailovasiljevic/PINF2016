@@ -82,5 +82,21 @@ public class MyTableModel extends DefaultTableModel {
 		//checkRow(index)
 		
 	}
+	
+	public int insertRow(LinkedHashMap<String, String> data) throws SQLException{
+		return -1;
+	}
+	
+	public void updateRow(int index, LinkedHashMap<String, String> data) throws SQLException{
+		
+	}
+	
+	private void checkRow(int index) throws SQLException {
+		
+	}
+	
+	private int sortedInsert(LinkedHashMap<String, String> data){
+		return -1;
+	}
 
 }

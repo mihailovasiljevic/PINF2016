@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 
 import database.DataBase;
+import states.Context;
 
 public class MainFrame extends JFrame {
 
 	private static MainFrame frame = null;
 	private MyMenuBar mbar=null;
+	private Context context;
 	
 	private MainFrame() {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,7 +32,7 @@ public class MainFrame extends JFrame {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		this.context = new Context();
 	}
 	
 	public MyMenuBar getMbar() {
@@ -46,6 +48,14 @@ public class MainFrame extends JFrame {
 			frame = new MainFrame();
 		}
 		return frame;
+	}
+
+	public Context getContext() {
+		return context;
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
 	}
 	
 }

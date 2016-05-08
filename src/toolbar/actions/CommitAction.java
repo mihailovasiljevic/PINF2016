@@ -16,6 +16,10 @@ import form.Form;
 import form.FormValidation;
 import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
+import main.MainFrame;
+import states.Context;
+import states.InsertState;
+import sun.applet.Main;
 
 
 
@@ -45,8 +49,9 @@ public class CommitAction extends AbstractAction {
 			if(frmVldtn.isFormValid())
 			{
 				//TODO 1.0 COMMIT
-				IDataGetter data = new ConcreteDataGetter();
-				HashMap<String, String> formattedData = data.getData(((Form)standardForm).getDataPanel());
+				InsertState insertState = new InsertState();
+				insertState.doAction(MainFrame.getInstance().getContext(), (Form)standardForm);
+
 				
 				JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");
 			}
