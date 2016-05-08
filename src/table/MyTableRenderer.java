@@ -20,6 +20,7 @@ public class MyTableRenderer extends DefaultTableCellRenderer {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		 
 		setBorder(noFocusBorder);
+		
 		return this;
 	 }
 	
