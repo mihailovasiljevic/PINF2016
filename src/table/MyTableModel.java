@@ -80,68 +80,93 @@ public class MyTableModel extends DefaultTableModel {
 	}
 
 	public void deleteRow(int index) throws SQLException {
-		// checkRow(index)
+		checkRow(index);
+		// assumption: first column in list of column is always primary key or
+		// semantic unique identifier!
+		String query = "DELETE FROM " + tdescription.getCode() + " WHERE "
+				+ tdescription.getColumnsDescriptions().get(0).getCode() + " = ?";
+		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
+		String _id = (String) getValueAt(index, 0);
+		// Deleting from the database
+		int rowsAffected = stmt.executeUpdate();
+		stmt.close();
+		DataBase.getConnection().commit();
+		// Delete from the table model only if deletion from the database was
+		// successful.
+		if (rowsAffected > 0) {
+			removeRow(index);
+			fireTableDataChanged();
+		}
 
 	}
 
 	public int insertRow(LinkedHashMap<String, String> data) throws SQLException {
-		return -1;
+		int retVal = 0;
+		String query = makeInsertQuery();
+		return retVal;
+	}
+	
+	private String makeInsertQuery(){
+		return null;
 	}
 
 	public void updateRow(int index, LinkedHashMap<String, String> data) throws SQLException {
 
 	}
-	
+
 	private static final int CUSTOM_ERROR_CODE = 50000;
 	private static final String ERROR_RECORD_WAS_CHANGED = "Slog je promenjen od strane drugog korisnika. Molim vas, pogledajte njegovu trenutnu vrednost";
 	private static final String ERROR_RECORD_WAS_DELETED = "Slog je obrisan od strane drugog korisnika";
+
 	private void checkRow(int index) throws SQLException {
 		DataBase.getConnection().setTransactionIsolation(DataBase.getConnection().TRANSACTION_REPEATABLE_READ);
 		// assumption: first column in list of column is always primary key or
 		// semantic unique identifier!
 		String sql = query + " WHERE " + tdescription.getColumnsDescriptions().get(0).getCode() + " = ?";
 		PreparedStatement selectStmt = DataBase.getConnection().prepareStatement(sql);
-		String _id = (String)getValueAt(index, 0);
+		String _id = (String) getValueAt(index, 0);
 		selectStmt.setString(1, _id);
-		
+
 		ResultSet rset = selectStmt.executeQuery();
 		String[] newValues = new String[tdescription.getColumnsDescriptions().size()];
 		Boolean exists = false;
 		String errorMsg = "";
-		
-		while(rset.next()){
+
+		while (rset.next()) {
 			for (int i = 0; i < tdescription.getColumnsDescriptions().size(); i++) {
 				newValues[i] = rset.getString(tdescription.getColumnsDescriptions().get(i).getCode());
 			}
 			exists = true;
 		}
-		if(!exists){
+		if (!exists) {
 			removeRow(index);
 			fireTableDataChanged();
 			errorMsg = ERROR_RECORD_WAS_DELETED;
-		}else if(!identicalValues(newValues, index)){
-			for(int i = 0; i < newValues.length; i++){
+		} else if (!identicalValues(newValues, index)) {
+			for (int i = 0; i < newValues.length; i++) {
 				setValueAt(newValues[i], index, i);
 			}
 		}
 		rset.close();
 		selectStmt.close();
 		DataBase.getConnection().setTransactionIsolation(DataBase.getConnection().TRANSACTION_READ_COMMITTED);
-		if(errorMsg != ""){
+		if (errorMsg != "") {
 			DataBase.getConnection().commit();
 			throw new SQLException(errorMsg, "", CUSTOM_ERROR_CODE);
 		}
 	}
-	private Boolean identicalValues(String[] newValues, int index){
+
+	private Boolean identicalValues(String[] newValues, int index) {
 		boolean retVal = true;
-		for(int i = 0; i < newValues.length; i++){
-			if((SortUtils.getLatCyrCollator().compare(newValues[i], ((String)getValueAt(index, i)).trim()) != 0)){
+		for (int i = 0; i < newValues.length; i++) {
+			if ((SortUtils.getLatCyrCollator().compare(newValues[i], ((String) getValueAt(index, i)).trim()) != 0)) {
 				retVal = false;
 				break;
 			}
 		}
 		return retVal;
 	}
+
 	private int sortedInsert(LinkedHashMap<String, String> data) {
 		return -1;
 	}
