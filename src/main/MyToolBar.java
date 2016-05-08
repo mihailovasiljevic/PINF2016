@@ -109,9 +109,8 @@ public class MyToolBar extends JToolBar {
 				if(primarni_kljuc && strani_kljuc==false){
 
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
-						System.out.print(cdescription.get(j).getCode());
 
-						String tabela=mbar.gettDescriptions().get(k).getCode();
+						String tabela=mbar.gettDescriptions().get(k).getLabel();
 						JMenuItem tab = new JMenuItem(tabela);
 						//otvaranje tabela iz padajuceg menija
 						tab.addActionListener(new NextFormAction(tabela));
@@ -132,7 +131,7 @@ public class MyToolBar extends JToolBar {
 				}
 			} );
 		}else{
-			button1.addActionListener(new NextFormAction(null));
+			button1.setEnabled(false);
 		}
 
 
