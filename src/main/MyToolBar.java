@@ -113,7 +113,7 @@ public class MyToolBar extends JToolBar {
 						String tabela=mbar.gettDescriptions().get(k).getLabel();
 						JMenuItem tab = new JMenuItem(tabela);
 						//otvaranje tabela iz padajuceg menija
-						tab.addActionListener(new NextFormAction(tabela));
+						tab.addActionListener(new NextFormAction(dialog,tabela));
 						menu.add(tab);
 						meni_pop++;
 

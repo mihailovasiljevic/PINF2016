@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
+import form.Form;
+
 public class RollbackAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +20,6 @@ public class RollbackAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
 	}
 }

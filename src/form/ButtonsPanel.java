@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import toolbar.actions.CommitAction;
+import toolbar.actions.RollbackAction;
 
 @SuppressWarnings("serial")
 public class ButtonsPanel extends JPanel {
@@ -20,14 +21,7 @@ public class ButtonsPanel extends JPanel {
 		btnCommit.addActionListener(new CommitAction((JDialog) form));
 		
 		btnRollback = new JButton(new ImageIcon(getClass().getResource("/slike/remove.gif")));
-		btnRollback.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		btnRollback.addActionListener(new RollbackAction((JDialog) form));
 		
 		this.setLayout(new MigLayout("wrap"));
 		this.add(btnCommit);

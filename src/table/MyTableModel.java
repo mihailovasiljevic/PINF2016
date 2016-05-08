@@ -25,6 +25,10 @@ public class MyTableModel extends DefaultTableModel {
 	private String orderBy;
 	private TableDescription tdescription;
 	private String query;
+	
+	public MyTableModel(Object[] colNames, int rowCount) {
+		super(colNames, rowCount);
+	}
 
 	public MyTableModel(TableDescription tdescription) {
 		
