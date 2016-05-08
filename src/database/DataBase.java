@@ -61,6 +61,7 @@ public class DataBase {
 			ResultSet rst = stmt.getResultSet();
 			while(rst.next()) {
 				result.add(rst.getString(3));
+				
 			}
 			stmt.close();
 		} catch (SQLException e) {
@@ -292,6 +293,18 @@ public class DataBase {
 	
 	return 0;
 	}	*/
+
+	
+	private static final String LOCK_TIMEOUT_INTERVAL = "5000"; 
+	public static Connection getConnection() {
+		if (conn == null)
+			try {
+				open();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		return conn;
+	}
 	
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -301,7 +314,7 @@ public class DataBase {
 		//System.out.println(res.size());
 		//Vector<ColumnDescription> desc = DataBase.getDescriptions("DRZAVA");
 		//System.out.println(desc.size());
-		getExportedTables("naseljeno_mesto");
+		//getExportedTables("naseljeno_mesto");
 		
 		//DataBase.getImportedTables("SLUZBA");
 		//DataBase.writeForTables("tLables.properties");

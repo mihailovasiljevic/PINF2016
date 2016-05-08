@@ -10,6 +10,7 @@ public class ColumnDescription {
 	private boolean foreign_key;
 	private boolean nullable;
 	private String tableParent;
+	private String codeInParent;
 	
 	
 	public String getCode() {

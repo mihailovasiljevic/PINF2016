@@ -14,3 +14,6 @@ hs_err_pid*
 # Folders
 bin/*
 /bin/
+
+#Properties
+/src/database/database.properties
