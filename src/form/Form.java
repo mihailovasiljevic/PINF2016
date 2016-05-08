@@ -20,6 +20,7 @@ public class Form extends JDialog {
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
+	private FormState state;
 	
 	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -64,15 +65,11 @@ public class Form extends JDialog {
 		
 		add(bottomPanel, "grow, wrap");
 
-		Vector vect = new Vector();
-		
-
+		this.state = FormState.Izmena;
 		
 		add(statusBar, "dock south");
-		statusBar.getStatLab1().setText(description.getCode());
-		/*Vector vect = new Vector();
-		vect.add("A"); vect.add("B");
-		table.addInTable(vect);*/
+		statusBar.getStatLab1().setText(description.getLabel());
+
 		
 	}
 
@@ -126,6 +123,14 @@ public class Form extends JDialog {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public FormState getState() {
+		return state;
+	}
+
+	public void setState(FormState state) {
+		this.state = state;
 	}
 	
 	
