@@ -1,6 +1,6 @@
 package states;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import form.Form;
 import form.data.ConcreteDataGetter;
@@ -14,7 +14,7 @@ public class InsertState implements State{
 		MainFrame.getInstance().getContext().setState(this);
 		
 		IDataGetter data = new ConcreteDataGetter();
-		HashMap<String, String> formattedData = data.getData(form.getDataPanel());
+		LinkedHashMap<String, String> formattedData = data.getData(form.getDataPanel());
 	}
 
 }
