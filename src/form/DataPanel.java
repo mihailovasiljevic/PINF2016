@@ -3,9 +3,11 @@ package form;
 import java.awt.Component;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import button.actions.MenuBarButtonAction;
@@ -24,8 +26,10 @@ public class DataPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private Vector<JTextField> textFields = new Vector<JTextField>();
 	private Vector<ColumnDescription> columnDescription=new Vector<ColumnDescription>();
-	
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
+	private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
+	
+
 	public DataPanel(TableDescription description) {
 		
 		this.setLayout(new MigLayout("gapx 15px"));
@@ -50,33 +54,58 @@ public class DataPanel extends JPanel {
 			//if(columnDescription.get(i).getLength()>20)
 			//	fieldLength=20;
 			//Ispadne skrnavo...
-			JTextField textField = new JTextField(fieldLength);
-			textField.setName(columnDescription.get(i).getCode());
-			textFields.add(textField);
 			
-			if (columnDescription.get(i).getTableParent() != null)
+			if(columnDescription.get(i).getType().equalsIgnoreCase("bit"))
 			{
-				String m=columnDescription.get(i).getTableParent();
-		
-				//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
-				JButton zoomBtn = new JButton("...");
-				for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
-					if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
-						TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-						zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
+				ButtonGroup btnGroup = new ButtonGroup();
+				JRadioButton rBtnTrue = new JRadioButton();
+				rBtnTrue.setText("Da");
+				JRadioButton rBtnFalse = new JRadioButton();
+				rBtnFalse.setText("Ne");
+				rBtnTrue.setName(columnDescription.get(i).getCode());
+				btnGroup.add(rBtnTrue);
+				btnGroup.add(rBtnFalse);
+				btnGroups.add(btnGroup);
+				if(!columnDescription.get(i).isNullable())
+				{
+					rBtnTrue.setSelected(true);
+				}
+				this.add(rBtnTrue);
+				this.add(rBtnFalse, "wrap");
+				
+			}
+			
+			else{
+			
+				JTextField textField = new JTextField(fieldLength);
+				textField.setName(columnDescription.get(i).getCode());
+				textFields.add(textField);
+				
+				if (columnDescription.get(i).getTableParent() != null)
+				{
+					String m=columnDescription.get(i).getTableParent();
+			
+					//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
+					JButton zoomBtn = new JButton("...");
+					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
+							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
+							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
+						}
+	
 					}
-
+					
+					zoomBtns.add(zoomBtn);
+					this.add(textField);
+					this.add(zoomBtn,"wrap");
 				}
 				
-				zoomBtns.add(zoomBtn);
-				this.add(textField);
-				this.add(zoomBtn,"wrap");
-			}
+				else {
+					
+					this.add(textField,"wrap");
+				}
 			
-			else {
-				this.add(textField,"wrap");
 			}
-		
 		}
 	}
 	
@@ -93,5 +122,13 @@ public class DataPanel extends JPanel {
 
 	public void setColumnDescription(Vector<ColumnDescription> columnDescription) {
 		this.columnDescription = columnDescription;
+	}
+	
+	public Vector<ButtonGroup> getBtnGroups() {
+		return btnGroups;
+	}
+
+	public void setBtnGroups(Vector<ButtonGroup> btnGroups) {
+		this.btnGroups = btnGroups;
 	}
 }

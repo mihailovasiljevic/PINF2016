@@ -1,5 +1,7 @@
 package form;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -46,8 +48,54 @@ private String message;
 					formValid=false;
 				}
 			}
+			
+			
+			//KONTROLA TIPA
+			Set<String> numberTypesInt = new HashSet<String>();
+			Set<String> numberTypesDec = new HashSet<String>();
+			numberTypesInt.add("tinyint");
+			numberTypesInt.add("int");
+			numberTypesInt.add("bigint");
+			numberTypesDec.add("numeric");
+			numberTypesDec.add("real");
+			numberTypesDec.add("float");
+			numberTypesDec.add("double");
+			numberTypesDec.add("decimal");
+			System.out.println(colDescs.get(i).getType());
+			//DA LI JE CEO BROJ
+			if(numberTypesInt.contains(colDescs.get(i).getType()))
+			{
+				
+				if(!isInteger(txtFields.get(i).getText())){
+					message += "Nije unet ceo broj u polje "+txtFields.get(i).getName()+System.lineSeparator();
+					invalidFields.add(txtFields.get(i));
+					formValid=false;
+				}
+			}
+			
+			if(numberTypesDec.contains(colDescs.get(i).getType()))
+			{
+				if(!isDecimal(txtFields.get(i).getText())){
+					message += "Nije unet broj u polje "+txtFields.get(i).getName()+System.lineSeparator();
+					invalidFields.add(txtFields.get(i));
+					formValid=false;
+				}
+			}
 		}
 		
+	}
+	
+	private boolean isInteger(String str)
+	{
+		if(str.equals(null) || str.equals(""))
+			return true;
+		return str.matches("-?\\d+");
+	}
+	
+	private boolean isDecimal(String str){
+		if(str.equals(null) || str.equals(""))
+			return true;
+	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
 	}
 
 	public Vector<ColumnDescription> getColDescs() {
