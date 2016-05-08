@@ -91,9 +91,8 @@ public class MyToolBar extends JToolBar {
 		final JPopupMenu menu = new JPopupMenu("Menu");
 
 		mbar=new MyMenuBar();
-		form=new Form();
-
-		String trenutna=form.getDescription().getCode();
+		
+		String trenutna=((Form)dialog).getDescription().getCode();
 
 		int meni_pop=0;
 

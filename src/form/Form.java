@@ -14,7 +14,7 @@ import database.TableDescription;
 
 public class Form extends JDialog {
 
-	public static TableDescription description;
+	private TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
 	private StatusBar statusBar;
