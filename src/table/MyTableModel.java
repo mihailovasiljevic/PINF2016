@@ -102,7 +102,8 @@ public class MyTableModel extends DefaultTableModel {
 
 	public int insertRow(LinkedHashMap<String, String> data) throws SQLException {
 		int retVal = 0;
-		String query = makeInsertQuery(data, tdescription.getCode());
+		final String TYPE = "INSERT";
+		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 
 		int i = 1;
@@ -116,52 +117,97 @@ public class MyTableModel extends DefaultTableModel {
 		// inserting into database
 		DataBase.getConnection().commit();
 		// if it is inserted into database make changes to tablemodel
-		if(rowsAffected > 0){
+		if (rowsAffected > 0) {
 			retVal = sortedInsert(data);
 			fireTableDataChanged();
 		}
 		return retVal;
 	}
 
-	private String makeInsertQuery(LinkedHashMap<String, String> data, String tableName) {
-		String query = "INSERT INTO " + tableName + " ( ";
-		for (String key : data.keySet()) {
-			query += key + ", ";
+	private String makeInsertQuery(LinkedHashMap<String, String> data, String tableName, String type) {
+		if (type.equals("INSERT")) {
+			String query = "INSERT INTO " + tableName + " ( ";
+			for (String key : data.keySet()) {
+				query += key + ", ";
+			}
+			query = query.substring(0, query.length() - 2);
+			query += " ) VALUES ( ";
+			for (int i = 0; i < data.keySet().size(); i++) {
+				query += "?, ";
+			}
+			query = query.substring(0, query.length() - 2);
+			query += " );";
+			return query;
+		} else {
+			String query = "UPDATE " + tableName + " SET ";
+			boolean isFirst = true;
+			String _id = "";
+			for (String key : data.keySet()) {
+				if (isFirst) {
+					_id = data.get(key);
+					isFirst = false;
+					continue;
+				}
+				query += key + " = ?, ";
+			}
+			query = query.substring(0, query.length() - 2);
+			query += " WHERE " + _id + " = ?";
+
+			return query;
 		}
-		query = query.substring(0, query.length() - 2);
-		query += " ) VALUES ( ";
-		for (int i = 0; i < data.keySet().size(); i++) {
-			query += "?, ";
-		}
-		query = query.substring(0, query.length() - 2);
-		query += " );";
-		return query;
 	}
-	
+
 	private int sortedInsert(LinkedHashMap<String, String> data) {
+		LinkedHashMap<String, String> dataCopy = new LinkedHashMap<>();
+		dataCopy.putAll(data);		
+		String _id = dataCopy.keySet().iterator().next();
 		int left = 0;
 		int right = getRowCount() - 1;
 		int mid = (left + right) / 2;
-		while(left <= right){
+		while (left <= right) {
 			mid = (left + right) / 2;
-			String _aID = (String)getValueAt(mid, 0);
-			if(SortUtils.getLatCyrCollator().compare(data.keySet().iterator().next(), _aID) > 0)
+			String _aID = (String) getValueAt(mid, 0);
+			if (SortUtils.getLatCyrCollator().compare(_id, _aID) > 0)
 				left = mid + 1;
-			else if(SortUtils.getLatCyrCollator().compare(data.keySet().iterator().next(), _aID) < 0)
+			else if (SortUtils.getLatCyrCollator().compare(_id, _aID) < 0)
 				right = mid - 1;
 			break;
 		}
 		String[] colValues = new String[data.size()];
 		int i = 0;
-		for(String key : data.keySet()){
+		for (String key : data.keySet()) {
 			colValues[i] = data.get(key);
 			i++;
 		}
 		insertRow(left, prepareRow(colValues));
-		return left;		
+		return left;
 	}
-	public void updateRow(int index, LinkedHashMap<String, String> data) throws SQLException {
 
+	public void updateRow(int index, LinkedHashMap<String, String> data) throws SQLException {
+		checkRow(index);
+		final String TYPE = "UPDATE";
+		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
+		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
+		
+		boolean isFirst = true;
+		int i = 1;
+		String _id = "";
+		for (String key : data.keySet()) {
+			if(isFirst){
+				_id = data.get(key);
+				isFirst = false;
+				continue;
+			}
+			stmt.setString(i, data.get(key));
+			i++;
+		}
+		stmt.setString(i, _id);
+		int rowsAffected = stmt.executeUpdate();
+		stmt.close();
+		DataBase.getConnection().commit();
+		//check if update successfuly passed
+		if(rowsAffected > 0)
+			fireTableDataChanged();
 	}
 
 	private static final int CUSTOM_ERROR_CODE = 50000;
@@ -217,13 +263,13 @@ public class MyTableModel extends DefaultTableModel {
 		return retVal;
 	}
 
-
 	// method tester
 	/*
-	 * public static void main(String[] args){ LinkedHashMap<String, String>
-	 * data = new LinkedHashMap<>(); data.put("DRZAVA", "SRB");
-	 * data.put("NAZIV", "SRBIJA"); System.out.println(makeInsertQuery(data,
-	 * "DRZAVA")); }
+	public static void main(String[] args) {
+		LinkedHashMap<String, String> data = new LinkedHashMap<>();
+		data.put("DRZAVA", "SRB");
+		data.put("NAZIV", "SRBIJA");
+		System.out.println(makeInsertQuery(data, "DRZAVA_TABLE", "UPDATE"));
+	}
 	 */
-
 }
