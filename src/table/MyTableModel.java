@@ -41,10 +41,20 @@ public class MyTableModel extends DefaultTableModel {
 			this.addColumn(tdescription.getColumnsDescriptions().get(i).getLabel());
 
 		}
+
 		this.tdescription = tdescription;
 		this.tableName = tdescription.getCode();
 		this.query = "SELECT * FROM " + tableName;
 	}
+
+	
+    @Override
+    public boolean isCellEditable(int row, int column) {
+       //all cells false
+       return false;
+    }
+	
+
 
 	// otvaranje upita
 	public void open() throws SQLException {

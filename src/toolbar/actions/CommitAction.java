@@ -45,7 +45,7 @@ public class CommitAction extends AbstractAction {
 				txtFields.get(i).setBackground(Color.white);
 			}
 			
-			FormValidation frmVldtn=new FormValidation(standardForm,txtFields,colDescs);
+			FormValidation frmVldtn=new FormValidation(standardForm);
 			if(frmVldtn.isFormValid())
 			{
 				//TODO 1.0 COMMIT

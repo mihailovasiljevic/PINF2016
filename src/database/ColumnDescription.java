@@ -10,6 +10,7 @@ public class ColumnDescription {
 	private boolean foreign_key;
 	private boolean nullable;
 	private String tableParent;
+	private String codeInParent;
 	
 	
 	public String getCode() {
@@ -59,6 +60,12 @@ public class ColumnDescription {
 	}
 	public void setTableParent(String tableParent) {
 		this.tableParent = tableParent;
+	}
+	public String getCodeInParent() {
+		return codeInParent;
+	}
+	public void setCodeInParent(String codeInParent) {
+		this.codeInParent = codeInParent;
 	}
 	
 }

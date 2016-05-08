@@ -61,6 +61,7 @@ public class DataBase {
 			ResultSet rst = stmt.getResultSet();
 			while(rst.next()) {
 				result.add(rst.getString(3));
+				
 			}
 			stmt.close();
 		} catch (SQLException e) {
@@ -313,7 +314,7 @@ public class DataBase {
 		//System.out.println(res.size());
 		//Vector<ColumnDescription> desc = DataBase.getDescriptions("DRZAVA");
 		//System.out.println(desc.size());
-		getExportedTables("naseljeno_mesto");
+		//getExportedTables("naseljeno_mesto");
 		
 		//DataBase.getImportedTables("SLUZBA");
 		//DataBase.writeForTables("tLables.properties");

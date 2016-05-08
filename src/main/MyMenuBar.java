@@ -31,14 +31,16 @@ public class MyMenuBar extends JMenuBar {
 		Vector<String> tableCodes = null;
 		
 		tableCodes = DataBase.getTableCodes();
+
 		JMenu menu = new JMenu("Organizaciona sema");
 		JMenuItem button;
 		TableDescription tdescription;
 		for(int i = 0; i < tableCodes.size(); i++) {
 			tdescription = new TableDescription();
 			tdescription.setCode(tableCodes.get(i));
+
+			tdescription.setLabel(bundT.getString(tableCodes.get(i)));
 			
-			tdescription.setLabel(bundT.getString(tableCodes.get(i))); //za sada je labela ustvari kod
 			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(tableCodes.get(i));
 			Vector<String> nextTables = DataBase.getExportedTables(tableCodes.get(i));
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(tableCodes.get(i));
@@ -54,8 +56,11 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
+					//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
+					cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
 				} else {				
 					cdescription.get(j).setTableParent(null);
+					cdescription.get(j).setCodeInParent(null);
 				}
 			}
 			tdescription.setColumnsDescriptions(cdescription);

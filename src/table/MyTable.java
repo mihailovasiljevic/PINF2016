@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import database.TableDescription;
+import form.Form;
 
 public class MyTable extends JTable {
 
