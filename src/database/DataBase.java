@@ -61,7 +61,7 @@ public class DataBase {
 			ResultSet rst = stmt.getResultSet();
 			while(rst.next()) {
 				result.add(rst.getString(3));
-				System.out.println(rst.getString(3));
+				
 			}
 			stmt.close();
 		} catch (SQLException e) {
