@@ -51,7 +51,7 @@ public class Form extends JDialog {
 		setSize(width, 400);
 		setLayout(new MigLayout("fill"));
 		this.add(new MyToolBar(this),"dock north");
-		this.table = new MyTable(this);
+		this.table = new MyTable(this.getDescription());
 
 		this.add(new TablePane(this.table),"grow, wrap");
 		

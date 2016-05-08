@@ -1,11 +1,13 @@
 package database.crud;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public interface IQueryCreator {
-	int read(String tableName, HashMap<String, String> whereCond, String orderByCond) throws SQLException;
+	LinkedHashMap<String, String> read(String tableName, String whereCond, String orderByCond) throws SQLException;
 
 	int create(HashMap<String, String> data) throws SQLException;
 
