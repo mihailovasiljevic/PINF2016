@@ -56,10 +56,11 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
-					cdescription.get(j).setTableParent(cdescription.get(j).getCode());
+					//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
+					cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
 				} else {				
 					cdescription.get(j).setTableParent(null);
-					cdescription.get(j).setTableParent(null);
+					cdescription.get(j).setCodeInParent(null);
 				}
 			}
 			tdescription.setColumnsDescriptions(cdescription);

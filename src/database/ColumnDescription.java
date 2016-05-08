@@ -61,5 +61,11 @@ public class ColumnDescription {
 	public void setTableParent(String tableParent) {
 		this.tableParent = tableParent;
 	}
+	public String getCodeInParent() {
+		return codeInParent;
+	}
+	public void setCodeInParent(String codeInParent) {
+		this.codeInParent = codeInParent;
+	}
 	
 }
