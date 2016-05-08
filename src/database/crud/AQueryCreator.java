@@ -28,47 +28,5 @@ public abstract class AQueryCreator implements IQueryCreator {
 		return null;
 	}
 
-	@Override
-	public ArrayList<String> getColumnNames(String tableName) throws SQLException {
-
-		ArrayList<String> columnNames = new ArrayList<>();
-		DatabaseMetaData dbMetaData = DataBase.getConnection().getMetaData();
-		ResultSet rset = dbMetaData.getColumns(null, null, tableName, null);
-
-		while (rset.next()) {
-			String columnName = rset.getString("COLUMN_NAME");
-			columnNames.add(columnName);
-		}
-		rset.close();
-		return columnNames;
-	}
-
-	@Override
-	public ArrayList<String> getColumnTypes(String tableName) throws SQLException {
-		ArrayList<String> columnTypes = new ArrayList<>();
-		DatabaseMetaData dbMetaData = DataBase.getConnection().getMetaData();
-		ResultSet rset = dbMetaData.getColumns(null, null, tableName, null);
-
-		while (rset.next()) {
-			String columnType = rset.getString("TYPE_NAME");
-			columnTypes.add(columnType);
-		}
-		rset.close();
-		return columnTypes;
-	}
-
-	@Override
-	public ArrayList<Integer> getColumnSizes(String tableName) throws SQLException {
-		ArrayList<Integer> columnSizes = new ArrayList<>();
-		DatabaseMetaData dbMetaData = DataBase.getConnection().getMetaData();
-		ResultSet rset = dbMetaData.getColumns(null, null, tableName, null);
-
-		while (rset.next()) {
-			Integer columnSize = Integer.parseInt(rset.getString("COLUMN_SIZE"));
-			columnSizes.add(columnSize);
-		}
-		rset.close();
-		return columnSizes;
-	}
 
 }

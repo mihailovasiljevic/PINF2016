@@ -77,5 +77,10 @@ public class MyTableModel extends DefaultTableModel {
 		}
 		return row;
 	}
+	
+	public void deleteRow(int index) throws SQLException{
+		//checkRow(index)
+		
+	}
 
 }

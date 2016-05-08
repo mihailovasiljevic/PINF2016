@@ -19,7 +19,4 @@ public interface IQueryCreator {
 			int index) throws SQLException;
 	
 	String whereStatementMaker(LinkedHashMap<String, Object> whereCond);
-	ArrayList<String> getColumnNames(String tableName) throws SQLException;
-	ArrayList<String> getColumnTypes(String tableName) throws SQLException;
-	ArrayList<Integer> getColumnSizes(String tableName) throws SQLException;
 }
