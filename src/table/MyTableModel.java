@@ -102,14 +102,64 @@ public class MyTableModel extends DefaultTableModel {
 
 	public int insertRow(LinkedHashMap<String, String> data) throws SQLException {
 		int retVal = 0;
-		String query = makeInsertQuery();
+		String query = makeInsertQuery(data, tdescription.getCode());
+		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
+
+		int i = 1;
+		for (String key : data.keySet()) {
+			stmt.setString(i, data.get(key));
+			i++;
+		}
+
+		int rowsAffected = stmt.executeUpdate();
+		stmt.close();
+		// inserting into database
+		DataBase.getConnection().commit();
+		// if it is inserted into database make changes to tablemodel
+		if(rowsAffected > 0){
+			retVal = sortedInsert(data);
+			fireTableDataChanged();
+		}
 		return retVal;
 	}
-	
-	private String makeInsertQuery(){
-		return null;
-	}
 
+	private String makeInsertQuery(LinkedHashMap<String, String> data, String tableName) {
+		String query = "INSERT INTO " + tableName + " ( ";
+		for (String key : data.keySet()) {
+			query += key + ", ";
+		}
+		query = query.substring(0, query.length() - 2);
+		query += " ) VALUES ( ";
+		for (int i = 0; i < data.keySet().size(); i++) {
+			query += "?, ";
+		}
+		query = query.substring(0, query.length() - 2);
+		query += " );";
+		return query;
+	}
+	
+	private int sortedInsert(LinkedHashMap<String, String> data) {
+		int left = 0;
+		int right = getRowCount() - 1;
+		int mid = (left + right) / 2;
+		while(left <= right){
+			mid = (left + right) / 2;
+			String _aID = (String)getValueAt(mid, 0);
+			if(SortUtils.getLatCyrCollator().compare(data.keySet().iterator().next(), _aID) > 0)
+				left = mid + 1;
+			else if(SortUtils.getLatCyrCollator().compare(data.keySet().iterator().next(), _aID) < 0)
+				right = mid - 1;
+			break;
+		}
+		String[] colValues = new String[data.size()];
+		int i = 0;
+		for(String key : data.keySet()){
+			colValues[i] = data.get(key);
+			i++;
+		}
+		insertRow(left, prepareRow(colValues));
+		return left;		
+	}
 	public void updateRow(int index, LinkedHashMap<String, String> data) throws SQLException {
 
 	}
@@ -167,8 +217,13 @@ public class MyTableModel extends DefaultTableModel {
 		return retVal;
 	}
 
-	private int sortedInsert(LinkedHashMap<String, String> data) {
-		return -1;
-	}
+
+	// method tester
+	/*
+	 * public static void main(String[] args){ LinkedHashMap<String, String>
+	 * data = new LinkedHashMap<>(); data.put("DRZAVA", "SRB");
+	 * data.put("NAZIV", "SRBIJA"); System.out.println(makeInsertQuery(data,
+	 * "DRZAVA")); }
+	 */
 
 }
