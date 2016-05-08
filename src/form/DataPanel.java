@@ -63,13 +63,10 @@ public class DataPanel extends JPanel {
 				JRadioButton rBtnFalse = new JRadioButton();
 				rBtnFalse.setText("Ne");
 				rBtnTrue.setName(columnDescription.get(i).getCode());
+				rBtnFalse.setName(columnDescription.get(i).getCode());
 				btnGroup.add(rBtnTrue);
 				btnGroup.add(rBtnFalse);
 				btnGroups.add(btnGroup);
-				if(!columnDescription.get(i).isNullable())
-				{
-					rBtnTrue.setSelected(true);
-				}
 				this.add(rBtnTrue);
 				this.add(rBtnFalse, "wrap");
 				

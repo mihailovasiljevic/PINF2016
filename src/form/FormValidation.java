@@ -1,11 +1,15 @@
 package form;
 
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import database.ColumnDescription;
@@ -16,19 +20,35 @@ private Vector<ColumnDescription> colDescs = new Vector<ColumnDescription>();
 private Vector<JTextField> txtFields = new Vector<JTextField>();
 private boolean formValid;
 private Vector<JTextField> invalidFields = new Vector<JTextField>();
+private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
+
+
 private String message;
 
-	public FormValidation(JDialog form,Vector<JTextField> txtFields, Vector<ColumnDescription> colDescs){
-		this.setColDescs(colDescs);
-		this.setTxtFields(txtFields);
+	public FormValidation(JDialog form){
+		if(form instanceof Form)
+		{
+			this.setTxtFields(((Form) form).getDataPanel().getTextFields());
+			this.setColDescs(((Form) form).getDataPanel().getColumnDescription());
+			this.setBtnGroups(((Form) form).getDataPanel().getBtnGroups());
+		}
+		
+		int k=0;
 		formValid=true;
 		message="";
 		
 		for(int i=0; i<txtFields.size(); i++)
 		{
-		
+			System.out.println(colDescs.get(k).getCode());
+			//System.out.println(colDescs.get(k).getType());
+			while(colDescs.get(k).getType().equalsIgnoreCase("bit"))
+			{
+				//pomeramo brojac za colDescs
+				k++;
+			}
+				
 			//KONTROLA DA LI JE NULL
-			if(!colDescs.get(i).isNullable())
+			if(!colDescs.get(k).isNullable())
 			{
 				if(txtFields.get(i).getText().equals("") || txtFields.get(i).getText().equals(null))
 				{
@@ -38,17 +58,19 @@ private String message;
 				}
 			}
 			//KONTROLA VELICINE STRINGOVA
-			if(colDescs.get(i).getType().equalsIgnoreCase("CHAR") 
-					|| colDescs.get(i).getType().equalsIgnoreCase("VARCHAR"))
+			if(colDescs.get(k).getType().equalsIgnoreCase("CHAR") 
+					|| colDescs.get(k).getType().equalsIgnoreCase("VARCHAR"))
 			{
-				if(txtFields.get(i).getText().length()>colDescs.get(i).getLength())
+				if(txtFields.get(i).getText().length()>colDescs.get(k).getLength())
 				{
+					System.out.println(colDescs.get(k).getCode());
+					System.out.println(colDescs.get(k).getLength());
+					
 					message += "Doslo je do prekoracenja broja karaktera u polju "+txtFields.get(i).getName()+System.lineSeparator();
 					invalidFields.add(txtFields.get(i));
 					formValid=false;
 				}
 			}
-			
 			
 			//KONTROLA TIPA
 			Set<String> numberTypesInt = new HashSet<String>();
@@ -61,9 +83,9 @@ private String message;
 			numberTypesDec.add("float");
 			numberTypesDec.add("double");
 			numberTypesDec.add("decimal");
-			System.out.println(colDescs.get(i).getType());
+			
 			//DA LI JE CEO BROJ
-			if(numberTypesInt.contains(colDescs.get(i).getType()))
+			if(numberTypesInt.contains(colDescs.get(k).getType()))
 			{
 				
 				if(!isInteger(txtFields.get(i).getText())){
@@ -73,7 +95,7 @@ private String message;
 				}
 			}
 			
-			if(numberTypesDec.contains(colDescs.get(i).getType()))
+			if(numberTypesDec.contains(colDescs.get(k).getType()))
 			{
 				if(!isDecimal(txtFields.get(i).getText())){
 					message += "Nije unet broj u polje "+txtFields.get(i).getName()+System.lineSeparator();
@@ -81,9 +103,42 @@ private String message;
 					formValid=false;
 				}
 			}
+			
+			k++;
 		}
+		k=0;
 		
+		for(int i=0; i<btnGroups.size();i++)
+		{
+			while(!colDescs.get(k).getType().equalsIgnoreCase("bit"))
+			{
+				//pomeramo brojac za colDescs
+				k++;
+			}
+	
+			Enumeration<AbstractButton> btns = btnGroups.get(i).getElements();
+				
+			boolean selected = false;
+			String name = "";
+			while(btns.hasMoreElements())
+			{	
+				JRadioButton btn = (JRadioButton) btns.nextElement(); 
+				name=btn.getName();
+				if(btn.isSelected())
+				{
+					selected = true;
+				}
+			}
+				
+			if(!selected)
+			{
+				message += "Nije obelezemo dugme za "+name+System.lineSeparator();
+				formValid=false;
+			}
+		}
 	}
+		
+
 	
 	private boolean isInteger(String str)
 	{
@@ -136,5 +191,13 @@ private String message;
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public Vector<ButtonGroup> getBtnGroups() {
+		return btnGroups;
+	}
+
+	public void setBtnGroups(Vector<ButtonGroup> btnGroups) {
+		this.btnGroups = btnGroups;
 	}
 }
