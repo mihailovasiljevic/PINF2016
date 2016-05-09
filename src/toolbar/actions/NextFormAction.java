@@ -37,10 +37,6 @@ public class NextFormAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-
-		mbar=new MyMenuBar();
-
-
 		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
 			if(MyMenuBar.tDescriptions.get(k).getLabel().contains(string)){
