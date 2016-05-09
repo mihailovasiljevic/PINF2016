@@ -63,7 +63,7 @@ public class DataPanel extends JPanel {
 			JTextField textField;
 			
 			//POSTOJE LI JOS NEKI DATUMSKI TIPOVI?
-			if(columnDescription.get(i).getType().equalsIgnoreCase("datetime"))
+			if(columnDescription.get(i).getType().equalsIgnoreCase("datetime") || columnDescription.get(i).getType().equalsIgnoreCase("date"))
 			{
 				textField = new JTextField(fieldLength-3);
 				textField.setName(columnDescription.get(i).getCode());
