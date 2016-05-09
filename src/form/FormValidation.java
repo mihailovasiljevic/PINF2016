@@ -1,5 +1,6 @@
 package form;
 
+import java.awt.Component;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +25,7 @@ private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
 
 
 private String message;
-
+	
 	public FormValidation(JDialog form){
 		if(form instanceof Form)
 		{
