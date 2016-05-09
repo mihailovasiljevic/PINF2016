@@ -24,7 +24,7 @@ public class NextFormAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	private JDialog standardForm;
 	private String string;
-///	MyMenuBar mbar;
+	MyMenuBar mbar;
 	TableDescription tdb;
 
 	public NextFormAction(JDialog standardForm,String string) {
@@ -36,10 +36,6 @@ public class NextFormAction extends AbstractAction {
 	@SuppressWarnings("static-access")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-
-	//	mbar=new MyMenuBar();
-
 
 		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
