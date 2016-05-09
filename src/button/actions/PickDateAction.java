@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import org.jdatepicker.JDatePicker;
 
 
 public class PickDateAction implements ActionListener{
