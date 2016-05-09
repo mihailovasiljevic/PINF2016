@@ -25,7 +25,8 @@ public class Form extends JDialog {
 	private JTextField field;
 	private String code;
 	private FormState state;
-
+	private Form parentForm;
+	
 	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);

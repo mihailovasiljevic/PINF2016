@@ -106,6 +106,15 @@ public class DataPanel extends JPanel {
 		}
 	}
 	
+	public JTextField getField(String code) {
+		for(int i = 0; i < textFields.size(); i++) {
+			if(textFields.get(i).getName().equals(code)) {
+				return textFields.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public Vector<JTextField> getTextFields() {
 		return textFields;
 	}
