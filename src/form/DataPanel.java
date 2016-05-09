@@ -2,6 +2,9 @@ package form;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.text.Format;
+import java.util.Formatter;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -11,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+
 import button.actions.MenuBarButtonAction;
+import button.actions.PickDateAction;
 import button.actions.ZoomButtonAction;
 import database.ColumnDescription;
 import database.TableDescription;
@@ -64,7 +69,9 @@ public class DataPanel extends JPanel {
 				textField.setName(columnDescription.get(i).getCode());
 				textFields.add(textField);
 				JButton datePickBtn = new JButton ("...");
-			
+				datePickBtn.addActionListener(new PickDateAction(textField));
+				
+			          
 				
 				
 				if (columnDescription.get(i).getTableParent() != null)
@@ -76,19 +83,19 @@ public class DataPanel extends JPanel {
 					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
+							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField));
 						}
 	
 					}
 					
 					zoomBtns.add(zoomBtn);
-					this.add(textField);
-					this.add(datePickBtn,"w 20!, h 20!");
+					this.add(textField,"split 2");
+					this.add(datePickBtn,"w 22!, h 22!");
 					this.add(zoomBtn,"wrap");
 			}
 				else {
-					this.add(textField);
-					this.add(datePickBtn,"wrap, w 20!, h 20!");
+					this.add(textField,"split 2");
+					this.add(datePickBtn,"wrap, w 22!, h 22!");
 				}
 			}
 				
@@ -127,7 +134,7 @@ public class DataPanel extends JPanel {
 						for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 							if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 								TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
+								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField));
 							}
 		
 						}
