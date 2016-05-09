@@ -16,13 +16,13 @@ import states.Context;
 import states.State;
 import states.UpdateState;
 import table.MyTable;
-<<<<<<< HEAD
+
 import table.TableSelection;
-=======
+
 import table.MyTableModel;
 import database.ColumnDescription;
 import database.DataBase;
->>>>>>> origin/master
+
 import database.TableDescription;
 
 public class Form extends JDialog {
@@ -33,14 +33,14 @@ public class Form extends JDialog {
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
-<<<<<<< HEAD
+
 	//private FormState state;
-=======
+
 	private FormState state;
 	private Form parentForm;
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
->>>>>>> origin/master
+
 	
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -88,7 +88,7 @@ public class Form extends JDialog {
 
 		add(bottomPanel, "grow, wrap");
 
-<<<<<<< HEAD
+
 	//	this.state = FormState.Izmena;
 		
 		add(statusBar, "dock south");
@@ -105,14 +105,9 @@ public class Form extends JDialog {
 		}
 		
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
-=======
-		this.state = FormState.Izmena;
-
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
 
-
->>>>>>> origin/master
 	}
 
 	public void nextFilter(String sifra){
@@ -216,8 +211,6 @@ public class Form extends JDialog {
 <<<<<<< HEAD
 */	
 	
-=======
-
 	public void refresh() throws SQLException{
 
 		MyTableModel tableModel = new MyTableModel(description);
@@ -234,6 +227,5 @@ public class Form extends JDialog {
 
 
 
->>>>>>> origin/master
 
 }
