@@ -37,7 +37,7 @@ public class PickupAction extends AbstractAction {
 				System.out.println("ulaz");
 				String name = form.getDataPanel().getTextFields().get(i).getName();
 				System.out.println("hej");
-				System.out.println("n " + name);
+				System.out.println("n " + code);
 				if(code.equals(form.getDataPanel().getTextFields().get(i).getName())) {
 					Object obj = datas.get(i);
 					JTextField field = form.getDataPanel().getTextFields().get(i);

@@ -89,18 +89,16 @@ public class MyToolBar extends JToolBar {
 		final JButton button1 = new JButton(new ImageIcon(getClass().getResource("/slike/nextForm.gif")));
 
 		final JPopupMenu menu = new JPopupMenu("Menu");
-
-		mbar=new MyMenuBar();
 		
 
 		String trenutna=((Form)dialog).getDescription().getCode();
 
 		int meni_pop=0;
 
-		for(int k=0;k<mbar.gettDescriptions().size();k++){
+		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
-			HashMap<String,String> foreignTables = DataBase.getImportedTables(mbar.gettDescriptions().get(k).getCode());
-			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(mbar.gettDescriptions().get(k).getCode());
+			HashMap<String,String> foreignTables = DataBase.getImportedTables(MyMenuBar.tDescriptions.get(k).getCode());
+			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(MyMenuBar.tDescriptions.get(k).getCode());
 			for(int j = 0; j < cdescription.size(); j++) {
 
 				boolean primarni_kljuc=DataBase.isPrimaryKey(trenutna,cdescription.get(j).getCode());
@@ -110,7 +108,7 @@ public class MyToolBar extends JToolBar {
 
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
 
-						String tabela=mbar.gettDescriptions().get(k).getLabel();
+						String tabela=MyMenuBar.tDescriptions.get(k).getLabel();
 						JMenuItem tab = new JMenuItem(tabela);
 						//otvaranje tabela iz padajuceg menija
 						tab.addActionListener(new NextFormAction(tabela));

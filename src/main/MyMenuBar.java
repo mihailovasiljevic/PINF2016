@@ -88,13 +88,6 @@ public class MyMenuBar extends JMenuBar {
 		this.add(menu);	
 	}	
 	
-	public static Vector<TableDescription> gettDescriptions() {
-		return tDescriptions;
-	}
-
-	public void settDescriptions(Vector<TableDescription> tDescriptions) {
-		this.tDescriptions = tDescriptions;
-	}
 
 	
 }

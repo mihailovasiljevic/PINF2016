@@ -18,7 +18,6 @@ public class NextFormAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private String standardForm;
-	MyMenuBar mbar;
 	TableDescription tdb;
 
 	public NextFormAction(String string) {
@@ -31,14 +30,13 @@ public class NextFormAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 
 
-		mbar=new MyMenuBar();
 
 
-		for(int k=0;k<mbar.gettDescriptions().size();k++){
+		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
-			if(mbar.gettDescriptions().get(k).getLabel().contains(standardForm)){
+			if(MyMenuBar.tDescriptions.get(k).getLabel().contains(standardForm)){
 
-				Form form = new Form(MainFrame.getInstance(),mbar.gettDescriptions().get(k));
+				Form form = new Form(MainFrame.getInstance(),MyMenuBar.tDescriptions.get(k));
 				form.setVisible(true);
 			}
 		}
