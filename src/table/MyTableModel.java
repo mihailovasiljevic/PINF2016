@@ -95,6 +95,7 @@ public class MyTableModel extends DefaultTableModel {
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 		String _id = (String) getValueAt(index, 0);
 		// Deleting from the database
+		stmt.setString(1,_id);
 		int rowsAffected = stmt.executeUpdate();
 		stmt.close();
 		DataBase.getConnection().commit();
