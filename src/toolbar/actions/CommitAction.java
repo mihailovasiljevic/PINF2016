@@ -53,7 +53,7 @@ public class CommitAction extends AbstractAction {
 				insertState.doAction(MainFrame.getInstance().getContext(), (Form)standardForm);
 
 				
-				JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");
+				/*JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");*/
 			}
 			
 			else

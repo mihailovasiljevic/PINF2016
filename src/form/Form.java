@@ -18,15 +18,16 @@ import database.TableDescription;
 
 public class Form extends JDialog {
 
-	public static TableDescription description;
+	private TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
 	private FormState state;
-
-	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
+	private Form parentForm;
+	
+	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);
 		this.description = tdescription;
@@ -34,6 +35,7 @@ public class Form extends JDialog {
 		this.code = code;
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
+		
 	}
 
 	public Form(Window parent, TableDescription tdescription) {

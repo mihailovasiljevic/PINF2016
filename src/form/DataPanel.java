@@ -81,7 +81,7 @@ public class DataPanel extends JPanel {
 					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField));
+							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 						}
 	
 					}
@@ -132,7 +132,7 @@ public class DataPanel extends JPanel {
 						for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 							if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 								TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField));
+								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 							}
 		
 						}
@@ -150,6 +150,15 @@ public class DataPanel extends JPanel {
 				}
 			}
 		}
+	}
+	
+	public JTextField getField(String code) {
+		for(int i = 0; i < textFields.size(); i++) {
+			if(textFields.get(i).getName().equals(code)) {
+				return textFields.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public Vector<JTextField> getTextFields() {
