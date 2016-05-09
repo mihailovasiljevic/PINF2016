@@ -28,6 +28,7 @@ public class Form extends JDialog {
 	private FormState state;
 	private Form parentForm;
 	private MyTableModel mytmod;
+	private MyToolBar toolbar;
 	
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -45,6 +46,7 @@ public class Form extends JDialog {
 		this.setModal(true);
 		this.description = tdescription;
 		this.init(tdescription);
+		this.toolbar.disablePick();
 		this.setLocationRelativeTo(parent);
 	}
 
@@ -58,7 +60,8 @@ public class Form extends JDialog {
 
 		setSize(width, 400);
 		setLayout(new MigLayout("fill"));
-		this.add(new MyToolBar(this),"dock north");
+		this.toolbar = new MyToolBar(this);
+		this.add(this.toolbar,"dock north");
 		this.table = new MyTable(this.getDescription());
 
 		this.add(new TablePane(this.table),"grow, wrap");

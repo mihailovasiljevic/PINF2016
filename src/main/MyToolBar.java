@@ -37,6 +37,8 @@ public class MyToolBar extends JToolBar {
 
 	public static Form form;
 	MyMenuBar mbar;
+	
+	private JButton pickButton;
 
 	@SuppressWarnings("static-access")
 	public MyToolBar(JDialog dialog) {
@@ -53,6 +55,7 @@ public class MyToolBar extends JToolBar {
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/zoom-pickup.gif")));
 		button.addActionListener(new PickupAction(dialog));
+		this.pickButton = button;
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/help.gif")));
@@ -141,6 +144,10 @@ public class MyToolBar extends JToolBar {
 
 		this.setFloatable(false);
 
+	}
+	
+	public void disablePick() {
+		this.pickButton.setEnabled(false);
 	}
 
 }
