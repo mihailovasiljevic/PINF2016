@@ -35,7 +35,10 @@ public class ConcreteDataGetter extends ADataGetter {
 		for (Component component : dataPanel.getComponents()) {
 			if (component instanceof JTextField) {
 				JTextField txtField = (JTextField) component;
-				if (txtField.getName() != null) {
+				if(txtField.getText().trim().equals("") && txtField.getName() != null){
+					data.put(txtField.getName(),null);
+				}
+				if (!txtField.getText().trim().equals("") && txtField.getName() != null) {
 					data.put(txtField.getName(), txtField.getText());
 				}
 			}else if(component instanceof JRadioButton){
