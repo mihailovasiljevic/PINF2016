@@ -10,6 +10,17 @@ public class TableDescription {
 	private Vector<String> nextTables = new Vector<String>();
 	private Vector<ColumnDescription> columnsDescriptions;
 	
+	
+	public ColumnDescription getColumnDescription(String code) {
+		for(int i = 0; i < columnsDescriptions.size(); i++) {
+			if(columnsDescriptions.get(i).getCode().equals(code)) {
+				return columnsDescriptions.get(i);
+			}
+		}
+		return null;
+	}
+	
+	
 	public String getCode() {
 		return code;
 	}
@@ -41,5 +52,7 @@ public class TableDescription {
 		}
 		nextTables.add(tableCode);
 	}
-
+	
+	
+	
 }

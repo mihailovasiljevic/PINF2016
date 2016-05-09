@@ -37,6 +37,8 @@ public class MyToolBar extends JToolBar {
 
 	public static Form form;
 	MyMenuBar mbar;
+	
+	private JButton pickButton;
 
 	@SuppressWarnings("static-access")
 	public MyToolBar(JDialog dialog) {
@@ -53,6 +55,7 @@ public class MyToolBar extends JToolBar {
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/zoom-pickup.gif")));
 		button.addActionListener(new PickupAction(dialog));
+		this.pickButton = button;
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/help.gif")));
@@ -89,18 +92,16 @@ public class MyToolBar extends JToolBar {
 		final JButton button1 = new JButton(new ImageIcon(getClass().getResource("/slike/nextForm.gif")));
 
 		final JPopupMenu menu = new JPopupMenu("Menu");
+		
 
-		mbar=new MyMenuBar();
-		form=new Form();
-
-		String trenutna=form.getDescription().getCode();
+		String trenutna=((Form)dialog).getDescription().getCode();
 
 		int meni_pop=0;
 
-		for(int k=0;k<mbar.gettDescriptions().size();k++){
+		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
-			HashMap<String,String> foreignTables = DataBase.getImportedTables(mbar.gettDescriptions().get(k).getCode());
-			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(mbar.gettDescriptions().get(k).getCode());
+			HashMap<String,String> foreignTables = DataBase.getImportedTables(MyMenuBar.tDescriptions.get(k).getCode());
+			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(MyMenuBar.tDescriptions.get(k).getCode());
 			for(int j = 0; j < cdescription.size(); j++) {
 
 				boolean primarni_kljuc=DataBase.isPrimaryKey(trenutna,cdescription.get(j).getCode());
@@ -110,10 +111,10 @@ public class MyToolBar extends JToolBar {
 
 					if(foreignTables.containsKey(cdescription.get(j).getCode())){
 
-						String tabela=mbar.gettDescriptions().get(k).getLabel();
+						String tabela=MyMenuBar.tDescriptions.get(k).getLabel();
 						JMenuItem tab = new JMenuItem(tabela);
 						//otvaranje tabela iz padajuceg menija
-						tab.addActionListener(new NextFormAction(tabela));
+						tab.addActionListener(new NextFormAction(dialog,tabela));
 						menu.add(tab);
 						meni_pop++;
 
@@ -143,6 +144,10 @@ public class MyToolBar extends JToolBar {
 
 		this.setFloatable(false);
 
+	}
+	
+	public void disablePick() {
+		this.pickButton.setEnabled(false);
 	}
 
 }

@@ -63,7 +63,7 @@ public class CommitAction extends AbstractAction {
 				}
 
 				
-				JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");
+				/*JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");*/
 			}
 			
 			else

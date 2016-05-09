@@ -1,5 +1,8 @@
 package form;
 
+import java.awt.Component;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +27,7 @@ private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
 
 
 private String message;
-
+	
 	public FormValidation(JDialog form){
 		if(form instanceof Form)
 		{
@@ -39,7 +42,7 @@ private String message;
 		
 		for(int i=0; i<txtFields.size(); i++)
 		{
-			System.out.println(colDescs.get(k).getCode());
+			//System.out.println(colDescs.get(k).getCode());
 			//System.out.println(colDescs.get(k).getType());
 			while(colDescs.get(k).getType().equalsIgnoreCase("bit"))
 			{
@@ -104,6 +107,16 @@ private String message;
 				}
 			}
 			
+			if(colDescs.get(k).getType().equalsIgnoreCase("datetime") || colDescs.get(k).getType().equalsIgnoreCase("date"))
+			{
+				if(!isDate(txtFields.get(i).getText()))
+				{
+					message += "Nije unet korektan datum u polje "+txtFields.get(i).getName()+System.lineSeparator();
+					invalidFields.add(txtFields.get(i));
+					formValid=false;
+				}
+			}
+			
 			k++;
 		}
 		k=0;
@@ -145,6 +158,19 @@ private String message;
 		if(str.equals(null) || str.equals(""))
 			return true;
 		return str.matches("-?\\d+");
+	}
+	
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	boolean isDate(String input) {
+		if(input.equals(null) || input.equals(""))
+			return true;
+	     try {
+	          format.parse(input);
+	          return true;
+	     }
+	     catch(ParseException e){
+	          return false;
+	     }
 	}
 	
 	private boolean isDecimal(String str){

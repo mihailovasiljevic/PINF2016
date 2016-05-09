@@ -26,6 +26,10 @@ public class MyTableModel extends DefaultTableModel {
 	private String orderBy;
 	private TableDescription tdescription;
 	private String query;
+	
+	public MyTableModel(Object[] colNames, int rowCount) {
+		super(colNames, rowCount);
+	}
 
 	public MyTableModel(TableDescription tdescription) {
 
@@ -47,11 +51,15 @@ public class MyTableModel extends DefaultTableModel {
 		this.query = "SELECT * FROM " + tableName;
 	}
 
+
 	@Override
-	public boolean isCellEditable(int row, int column) {
-		// all cells false
-		return false;
-	}
+    public boolean isCellEditable(int row, int column) {
+       //all cells false
+       return false;
+    }
+	
+
+
 
 	// otvaranje upita
 	public void open() throws SQLException {
@@ -270,6 +278,16 @@ public class MyTableModel extends DefaultTableModel {
 		}
 		return retVal;
 	}
+
+	public TableDescription getTdescription() {
+		return tdescription;
+	}
+
+	public void setTdescription(TableDescription tdescription) {
+		this.tdescription = tdescription;
+	}
+	
+	
 
 	// method tester
 	/*

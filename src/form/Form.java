@@ -1,6 +1,8 @@
 package form;
 
+import java.awt.Color;
 import java.awt.Window;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -14,20 +16,33 @@ import states.Context;
 import states.State;
 import states.UpdateState;
 import table.MyTable;
+<<<<<<< HEAD
 import table.TableSelection;
+=======
+import table.MyTableModel;
+import database.ColumnDescription;
+import database.DataBase;
+>>>>>>> origin/master
 import database.TableDescription;
 
 public class Form extends JDialog {
 
-	public static TableDescription description;
+	private TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
+<<<<<<< HEAD
 	//private FormState state;
+=======
+	private FormState state;
+	private Form parentForm;
+	private MyTableModel mytmod;
+	private MyToolBar toolbar;
+>>>>>>> origin/master
 	
-	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
+	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);
 		this.description = tdescription;
@@ -35,41 +50,45 @@ public class Form extends JDialog {
 		this.code = code;
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
+		
 	}
-	
+
 	public Form(Window parent, TableDescription tdescription) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);
 		this.description = tdescription;
 		this.init(tdescription);
+		this.toolbar.disablePick();
 		this.setLocationRelativeTo(parent);
 	}
-	
+
 	public Form() {
 		super();
 	}
-	
+
 	private void init(TableDescription tdescription) {
-		
+
 		int width = 500 + (tdescription.getColumnsDescriptions().size()-2)*50;
-		
+
 		setSize(width, 400);
 		setLayout(new MigLayout("fill"));
-		this.add(new MyToolBar(this),"dock north");
+		this.toolbar = new MyToolBar(this);
+		this.add(this.toolbar,"dock north");
 		this.table = new MyTable(this.getDescription());
 
 		this.add(new TablePane(this.table),"grow, wrap");
-		
-		this.dataPanel=new DataPanel(description);
+
+		this.dataPanel=new DataPanel(description,this);
 		this.statusBar = new StatusBar();
-		
+
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
 		bottomPanel.add(dataPanel);
 		bottomPanel.add(new ButtonsPanel(this),"dock east");
-		
+
 		add(bottomPanel, "grow, wrap");
 
+<<<<<<< HEAD
 	//	this.state = FormState.Izmena;
 		
 		add(statusBar, "dock south");
@@ -86,10 +105,57 @@ public class Form extends JDialog {
 		}
 		
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
+=======
+		this.state = FormState.Izmena;
+
+		add(statusBar, "dock south");
+		statusBar.getStatLab1().setText(description.getLabel());
+
+
+>>>>>>> origin/master
+	}
+
+	public void nextFilter(String sifra){
+
+		int br_redova= this.table.getRowCount();
+
+
+		for(int i=0;i<br_redova;i++){
+			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(description.getCode());
+			for(int j = 0; j < cdescription.size(); j++) {
+				String provera = (String) this.table.getValueAt(i, j);
+				System.out.print("  PRV:"+provera);
+				boolean primarni_kljuc=DataBase.isPrimaryKey(description.getCode(),cdescription.get(j).getCode());
+				boolean strani_kljuc=DataBase.isForeignKey(description.getCode(),cdescription.get(j).getCode());
+
+				if(strani_kljuc && primarni_kljuc==false){
+
+					if(provera!=null){
+						if(!provera.contains(sifra)){
+							System.out.print("remove ");
+							MyTableModel dtm = this.table.getModel();
+							dtm.removeRow(i);
+							i--;
+							br_redova--;
+							break;
+						}
+					}
+				}
+
+				int rowCount = this.table.getRowCount();
+
+				if(rowCount>0){
+					this.table.setRowSelectionInterval(0,0);
+				}
+
+			}
+		}
 	}
 
 
-	
+
+
+
 	//GETTERS AND SETTERS
 	public TableDescription getDescription() {
 		return description;
@@ -107,7 +173,7 @@ public class Form extends JDialog {
 	public void setDataPanel(DataPanel dataPanel) {
 		this.dataPanel = dataPanel;
 	}
-	
+
 	public MyTable getTable() {
 		return table;
 	}
@@ -147,7 +213,27 @@ public class Form extends JDialog {
 	public void setState(FormState state) {
 		this.state = state;
 	}
+<<<<<<< HEAD
 */	
 	
+=======
+
+	public void refresh() throws SQLException{
+
+		MyTableModel tableModel = new MyTableModel(description);
+		table.setModel(tableModel);
+
+		try {
+			tableModel.open();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+
+	}
+
+
+
+>>>>>>> origin/master
 
 }

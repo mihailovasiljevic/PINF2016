@@ -57,7 +57,9 @@ public class MyMenuBar extends JMenuBar {
 				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
 					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
 					//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
+					//Milos2: koji je smisao ovoga? uzmemo neku kolonu i setujemo joj njen sopstveni Code kao codeInParent?
 					cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
+					
 				} else {				
 					cdescription.get(j).setTableParent(null);
 					cdescription.get(j).setCodeInParent(null);
@@ -88,13 +90,6 @@ public class MyMenuBar extends JMenuBar {
 		this.add(menu);	
 	}	
 	
-	public static Vector<TableDescription> gettDescriptions() {
-		return tDescriptions;
-	}
-
-	public void settDescriptions(Vector<TableDescription> tDescriptions) {
-		this.tDescriptions = tDescriptions;
-	}
 
 	
 }
