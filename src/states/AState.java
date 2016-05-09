@@ -63,7 +63,22 @@ public abstract class AState implements State{
 		for(JTextField txtField : form.getDataPanel().getTextFields()){
 			txtField.setText(values.get(i));
 			i++;
-		}		
+		}	
+		/*
+		 * 		for(Component c : form.getDataPanel().getComponents()){
+			if(c instanceof JTextField){
+				((JTextField) c).setText(values.get(i));
+			}else if (c instanceof JRadioButton){
+				JRadioButton rb = (JRadioButton)c;
+				if(Integer.parseInt(values.get(i)) == 1 && rb.getText().equalsIgnoreCase("da")){
+					rb.setSelected(true);
+				}else if(Integer.parseInt(values.get(i)) == 0 && rb.getText().equalsIgnoreCase("ne")){
+					rb.setSelected(true);
+				}
+			}
+			i++;
+		}	
+		 */
 	}
 
 	@Override
