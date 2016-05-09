@@ -11,6 +11,7 @@ import table.MyTableModel;
 
 import com.sun.jmx.snmp.Timestamp;
 
+import database.ColumnDescription;
 import form.Form;
 
 public class PickupAction extends AbstractAction {
@@ -25,7 +26,7 @@ public class PickupAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+		/*
 		if(standardForm instanceof Form) {
 			Form form = ((Form)standardForm);
 			MyTableModel model = form.getTable().getModel();
@@ -50,9 +51,40 @@ public class PickupAction extends AbstractAction {
 					}
 					field.setText(value);
 				}
+			}		
+			*/
+			
+		if(standardForm instanceof Form) {
+			Form form = ((Form)standardForm);
+			MyTableModel model = form.getTable().getModel();
+			Vector<ColumnDescription> colDescs = form.getDataPanel().getColumnDescription();
+			JTextField textField = form.getField();
+			Vector datas = model.getDataVector();
+			String code = form.getCode();
+			System.out.println(code);
+			
+			for(int i=0; i<colDescs.size(); i++){
+				if(colDescs.get(i).getCode().equalsIgnoreCase(code))
+				{
+					
+					Object obj = ((Vector)datas.get(form.getTable().getSelectedRow())).get(i);
+					String value = "";
+					System.out.println(datas.get(i).toString());
+						if(obj instanceof String) {
+							value = (String)obj;
+						}
+						if(obj instanceof Timestamp) {
+							
+						}
+						System.out.println(value);
+						textField.setText(value);
+				}
+		
 			}
 			
 			
-		}
+			
+		
 	}
+}
 }

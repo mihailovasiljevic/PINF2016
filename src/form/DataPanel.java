@@ -132,7 +132,9 @@ public class DataPanel extends JPanel {
 						for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 							if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 								TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
+								//Milos: Kakve veze sa kolonama ima brojac koji se odnosi na tabele? Izmenicu to.
+								//zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
+								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
 							}
 		
 						}
