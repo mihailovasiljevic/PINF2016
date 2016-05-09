@@ -2,6 +2,7 @@ package form;
 
 import java.awt.Color;
 import java.awt.Window;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JDialog;
@@ -26,6 +27,7 @@ public class Form extends JDialog {
 	private String code;
 	private FormState state;
 	private Form parentForm;
+	private MyTableModel mytmod;
 	
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -106,11 +108,11 @@ public class Form extends JDialog {
 					}
 				}
 
-				/*int rowCount = this.table.getRowCount();
+				int rowCount = this.table.getRowCount();
 
 				if(rowCount>0){
 					this.table.setRowSelectionInterval(0,0);
-				}*/
+				}
 
 			}
 		}
@@ -177,6 +179,21 @@ public class Form extends JDialog {
 	public void setState(FormState state) {
 		this.state = state;
 	}
+
+	public void refresh() throws SQLException{
+
+		MyTableModel tableModel = new MyTableModel(description);
+		table.setModel(tableModel);
+
+		try {
+			tableModel.open();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+
+	}
+
 
 
 

@@ -52,7 +52,9 @@ public class MyTableModel extends DefaultTableModel {
 	}
 
 	
-    @Override
+
+
+	@Override
     public boolean isCellEditable(int row, int column) {
        //all cells false
        return false;
@@ -62,10 +64,12 @@ public class MyTableModel extends DefaultTableModel {
 
 	// otvaranje upita
 	public void open() throws SQLException {
+		System.out.print("J");
 		fillData(tableName);
 	}
 
 	private void fillData(String tableName) throws SQLException {
+		System.out.print("K");
 		String[] colValues = new String[tdescription.getColumnsDescriptions().size()];
 		setRowCount(0);
 
@@ -75,6 +79,7 @@ public class MyTableModel extends DefaultTableModel {
 		while (rset.next()) {
 			for (int i = 0; i < tdescription.getColumnsDescriptions().size(); i++) {
 				colValues[i] = rset.getString(tdescription.getColumnsDescriptions().get(i).getCode());
+				System.out.print(colValues[i]);
 			}
 			addRow(prepareRow(colValues));
 		}
@@ -276,6 +281,16 @@ public class MyTableModel extends DefaultTableModel {
 		}
 		return retVal;
 	}
+
+	public TableDescription getTdescription() {
+		return tdescription;
+	}
+
+	public void setTdescription(TableDescription tdescription) {
+		this.tdescription = tdescription;
+	}
+	
+	
 
 	// method tester
 	/*

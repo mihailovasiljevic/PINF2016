@@ -82,9 +82,10 @@ public class PickupAction extends AbstractAction {
 		
 			}
 			
-			
+			standardForm.dispose();
 			
 		
 	}
+		
 }
 }
