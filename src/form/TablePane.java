@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import database.TableDescription;
 import table.MyTable;
 import table.MyTableModel;
+import table.TableSelection;
 
 
 
@@ -23,14 +24,6 @@ public class TablePane extends JScrollPane {
 		this.tblGrid = table;
 		this.setViewportView(tblGrid);
 
-
-		tblGrid.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-	        public void valueChanged(ListSelectionEvent e) {
-	          if (e.getValueIsAdjusting())
-				 return;
-	        }
-	     });
-		
 		
 	}
 

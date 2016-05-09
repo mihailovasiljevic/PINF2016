@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import database.DataBase;
 import states.Context;
+import states.InsertState;
 
 public class MainFrame extends JFrame {
 

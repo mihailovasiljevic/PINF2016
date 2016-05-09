@@ -7,9 +7,14 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import main.MainFrame;
 import main.MyToolBar;
 import net.miginfocom.swing.MigLayout;
+import states.Context;
+import states.State;
+import states.UpdateState;
 import table.MyTable;
+import table.TableSelection;
 import database.TableDescription;
 
 public class Form extends JDialog {
@@ -20,7 +25,7 @@ public class Form extends JDialog {
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
-	private FormState state;
+	//private FormState state;
 	
 	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -65,12 +70,22 @@ public class Form extends JDialog {
 		
 		add(bottomPanel, "grow, wrap");
 
-		this.state = FormState.Izmena;
+	//	this.state = FormState.Izmena;
 		
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
 
+		//select first row, that will be starting state
+		try{
+			this.table.addRowSelectionInterval(0, 0);
+			Context context = MainFrame.getInstance().getContext();
+			State updateState = new UpdateState();
+			updateState.sync(context, this);
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
 		
+		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
 	}
 
 
@@ -124,7 +139,7 @@ public class Form extends JDialog {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
+/*
 	public FormState getState() {
 		return state;
 	}
@@ -132,7 +147,7 @@ public class Form extends JDialog {
 	public void setState(FormState state) {
 		this.state = state;
 	}
-	
+*/	
 	
 
 }
