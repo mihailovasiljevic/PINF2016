@@ -6,15 +6,24 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import main.MainFrame;
 import main.MyToolBar;
 import net.miginfocom.swing.MigLayout;
+import states.Context;
+import states.State;
+import states.UpdateState;
 import table.MyTable;
+
+import table.TableSelection;
+
 import table.MyTableModel;
 import database.ColumnDescription;
 import database.DataBase;
+
 import database.TableDescription;
 
 public class Form extends JDialog {
@@ -25,10 +34,14 @@ public class Form extends JDialog {
 	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
+
+	//private FormState state;
+
 	private FormState state;
 	private Form parentForm;
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
+
 	
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -76,11 +89,27 @@ public class Form extends JDialog {
 
 		add(bottomPanel, "grow, wrap");
 
-		this.state = FormState.Izmena;
 
+	//	this.state = FormState.Izmena;
+		
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
 
+		//select first row, that will be starting state
+		try{
+			this.table.addRowSelectionInterval(0, 0);
+			Context context = MainFrame.getInstance().getContext();
+			State updateState = new UpdateState();
+			updateState.sync(context, this);
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+			Context context = MainFrame.getInstance().getContext();
+			context.getState().setEditable(this, false);
+		}
+		
+		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
+		add(statusBar, "dock south");
+		statusBar.getStatLab1().setText(description.getLabel());
 
 	}
 
@@ -174,7 +203,7 @@ public class Form extends JDialog {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
+/*
 	public FormState getState() {
 		return state;
 	}
@@ -182,16 +211,20 @@ public class Form extends JDialog {
 	public void setState(FormState state) {
 		this.state = state;
 	}
+<<<<<<< HEAD
+*/	
+	
+	public void refresh(int index) throws SQLException{
 
-	public void refresh() throws SQLException{
-
-		MyTableModel tableModel = new MyTableModel(description);
+		MyTableModel tableModel = (MyTableModel)table.getModel();
 		table.setModel(tableModel);
 
 		try {
 			tableModel.open();
+			MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), this);
+			table.setRowSelectionInterval(index, index);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "GRESKA", JOptionPane.ERROR_MESSAGE);			
 		} 
 
 

@@ -8,6 +8,8 @@ import javax.swing.event.ListSelectionListener;
 
 import form.Form;
 import form.FormState;
+import main.MainFrame;
+import states.UpdateState;
 
 public class TableSelection implements ListSelectionListener {
 
@@ -22,13 +24,16 @@ public class TableSelection implements ListSelectionListener {
 	public void valueChanged(ListSelectionEvent e) {
 		
 		Vector<String> values;
-		if(!e.getValueIsAdjusting() && form.getState() == FormState.Izmena) {
+		if(!e.getValueIsAdjusting() && (MainFrame.getInstance().getContext().getState() instanceof UpdateState)) {
+			/*
 			for(int i = 0; i < form.getTable().getColumnCount(); i++) {
 				Object val = form.getTable().getModel().getValueAt(form.getTable().getSelectedRow(), i);
 				String value = val.toString();
 				Vector<JTextField> fields = form.getDataPanel().getTextFields();
 				fields.get(i).setText(value);
 			}
+			*/
+			MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 		}
 
 	}

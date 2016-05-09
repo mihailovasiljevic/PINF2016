@@ -7,6 +7,8 @@ import javax.swing.JDialog;
 
 import form.Form;
 import form.FormState;
+import main.MainFrame;
+import states.UpdateState;
 
 
 public class FirstAction extends AbstractAction {
@@ -22,7 +24,7 @@ public class FirstAction extends AbstractAction {
 	public void actionPerformed(ActionEvent arg0) {
 		if(standardForm instanceof Form) {
 			Form form = ((Form)standardForm);
-			if(form.getState() == FormState.Izmena && form.getTable().getRowCount() > 0) {
+			if((MainFrame.getInstance().getContext().getState() instanceof UpdateState) && form.getTable().getRowCount() > 0) {
 				form.getTable().setRowSelectionInterval(0, 0);
 			}
 		}

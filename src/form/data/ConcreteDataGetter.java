@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class ConcreteDataGetter extends ADataGetter {
@@ -36,6 +37,14 @@ public class ConcreteDataGetter extends ADataGetter {
 				JTextField txtField = (JTextField) component;
 				if (txtField.getName() != null) {
 					data.put(txtField.getName(), txtField.getText());
+				}
+			}else if(component instanceof JRadioButton){
+				JRadioButton rb = (JRadioButton)component;
+				if(rb.isSelected()){
+					if(rb.getText().equalsIgnoreCase("da"))
+						data.put(rb.getName(), "true");
+					else
+						data.put(rb.getName(), "false");
 				}
 			}
 		}

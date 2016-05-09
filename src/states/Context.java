@@ -6,9 +6,13 @@ public class Context {
 	private State state;
 	
 	public Context(){
-		state = new UpdateState();
-	}
+		this.state = new UpdateState();
 
+	}
+	public Context(Context context){
+		this.state = context.getState();
+
+	}
 	public State getState() {
 		return state;
 	}

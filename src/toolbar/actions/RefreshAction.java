@@ -30,7 +30,7 @@ public class RefreshAction extends AbstractAction {
 		if(standardForm instanceof Form){
 			System.out.print("ref");
 			try {
-				((Form) standardForm).refresh();
+				((Form) standardForm).refresh(0);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

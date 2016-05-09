@@ -81,6 +81,7 @@ public class DataPanel extends JPanel {
 					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
+							
 							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 						}
 	
@@ -185,4 +186,13 @@ public class DataPanel extends JPanel {
 	public void setBtnGroups(Vector<ButtonGroup> btnGroups) {
 		this.btnGroups = btnGroups;
 	}
+
+	public Vector<JButton> getZoomBtns() {
+		return zoomBtns;
+	}
+
+	public void setZoomBtns(Vector<JButton> zoomBtns) {
+		this.zoomBtns = zoomBtns;
+	}
+	
 }

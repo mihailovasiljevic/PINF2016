@@ -51,8 +51,6 @@ public class MyTableModel extends DefaultTableModel {
 		this.query = "SELECT * FROM " + tableName;
 	}
 
-	
-
 
 	@Override
     public boolean isCellEditable(int row, int column) {
@@ -60,6 +58,7 @@ public class MyTableModel extends DefaultTableModel {
        return false;
     }
 	
+
 
 
 	// otvaranje upita
@@ -104,6 +103,7 @@ public class MyTableModel extends DefaultTableModel {
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 		String _id = (String) getValueAt(index, 0);
 		// Deleting from the database
+		stmt.setString(1,_id);
 		int rowsAffected = stmt.executeUpdate();
 		stmt.close();
 		DataBase.getConnection().commit();
@@ -160,7 +160,7 @@ public class MyTableModel extends DefaultTableModel {
 			String _id = "";
 			for (String key : data.keySet()) {
 				if (isFirst) {
-					_id = data.get(key);
+					_id = key;
 					isFirst = false;
 					continue;
 				}
@@ -175,7 +175,7 @@ public class MyTableModel extends DefaultTableModel {
 
 	private int sortedInsert(LinkedHashMap<String, String> data) {
 		LinkedHashMap<String, String> dataCopy = new LinkedHashMap<>();
-		dataCopy.putAll(data);		
+		dataCopy.putAll(data);
 		String _id = dataCopy.keySet().iterator().next();
 		int left = 0;
 		int right = getRowCount() - 1;
@@ -204,12 +204,12 @@ public class MyTableModel extends DefaultTableModel {
 		final String TYPE = "UPDATE";
 		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
-		
+
 		boolean isFirst = true;
 		int i = 1;
 		String _id = "";
 		for (String key : data.keySet()) {
-			if(isFirst){
+			if (isFirst) {
 				_id = data.get(key);
 				isFirst = false;
 				continue;
@@ -221,8 +221,8 @@ public class MyTableModel extends DefaultTableModel {
 		int rowsAffected = stmt.executeUpdate();
 		stmt.close();
 		DataBase.getConnection().commit();
-		//check if update successfuly passed
-		if(rowsAffected > 0)
+		// check if update successfuly passed
+		if (rowsAffected > 0)
 			fireTableDataChanged();
 	}
 
@@ -291,11 +291,9 @@ public class MyTableModel extends DefaultTableModel {
 
 	// method tester
 	/*
-	public static void main(String[] args) {
-		LinkedHashMap<String, String> data = new LinkedHashMap<>();
-		data.put("DRZAVA", "SRB");
-		data.put("NAZIV", "SRBIJA");
-		System.out.println(makeInsertQuery(data, "DRZAVA_TABLE", "UPDATE"));
-	}
+	 * public static void main(String[] args) { LinkedHashMap<String, String>
+	 * data = new LinkedHashMap<>(); data.put("DRZAVA", "SRB");
+	 * data.put("NAZIV", "SRBIJA"); System.out.println(makeInsertQuery(data,
+	 * "DRZAVA_TABLE", "UPDATE")); }
 	 */
 }

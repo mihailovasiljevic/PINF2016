@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import main.MainFrame;
+import states.Context;
+import states.InsertState;
 import database.ColumnDescription;
 import database.TableDescription;
 import form.Form;
@@ -27,6 +29,7 @@ public class ZoomButtonAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(cdesc.getCode() + " h" +  cdesc.getCodeInParent());
 		Form form = new Form(MainFrame.getInstance(),description,txtField,cdesc.getCodeInParent());
+		MainFrame.getInstance().getContext().setState(new InsertState());
 		form.setVisible(true);
 	}
 }

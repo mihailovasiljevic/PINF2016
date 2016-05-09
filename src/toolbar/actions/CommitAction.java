@@ -19,6 +19,8 @@ import form.data.IDataGetter;
 import main.MainFrame;
 import states.Context;
 import states.InsertState;
+import states.State;
+import states.UpdateState;
 import sun.applet.Main;
 
 
@@ -48,9 +50,18 @@ public class CommitAction extends AbstractAction {
 			FormValidation frmVldtn=new FormValidation(standardForm);
 			if(frmVldtn.isFormValid())
 			{
-				//TODO 1.0 COMMIT
-				InsertState insertState = new InsertState();
-				insertState.doAction(MainFrame.getInstance().getContext(), (Form)standardForm);
+				Context context = MainFrame.getInstance().getContext();
+				
+				if(context.getState() instanceof InsertState){
+					InsertState insertState = new InsertState();
+					insertState.doAction(context, (Form)standardForm);
+					insertState.sync(context, (Form)standardForm);
+				}else if (context.getState() instanceof UpdateState){
+					UpdateState udateState = new UpdateState();
+					udateState.doAction(context, (Form)standardForm);					
+				}else{
+					//search mode
+				}
 
 				
 				/*JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");*/
