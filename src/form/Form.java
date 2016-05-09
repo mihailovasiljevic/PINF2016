@@ -59,7 +59,7 @@ public class Form extends JDialog {
 
 		this.add(new TablePane(this.table),"grow, wrap");
 
-		this.dataPanel=new DataPanel(description);
+		this.dataPanel=new DataPanel(description,this);
 		this.statusBar = new StatusBar();
 
 		JPanel bottomPanel = new JPanel();

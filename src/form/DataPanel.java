@@ -36,7 +36,7 @@ public class DataPanel extends JPanel {
 	private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
 	
 
-	public DataPanel(TableDescription description) {
+	public DataPanel(TableDescription description, Form form) {
 		
 		this.setLayout(new MigLayout("gapx 15px"));
 		
@@ -69,9 +69,7 @@ public class DataPanel extends JPanel {
 				textField.setName(columnDescription.get(i).getCode());
 				textFields.add(textField);
 				JButton datePickBtn = new JButton ("...");
-				datePickBtn.addActionListener(new PickDateAction(textField));
-				
-			          
+				datePickBtn.addActionListener(new PickDateAction(form,textField));
 				
 				
 				if (columnDescription.get(i).getTableParent() != null)
@@ -91,7 +89,7 @@ public class DataPanel extends JPanel {
 					zoomBtns.add(zoomBtn);
 					this.add(textField,"split 2");
 					this.add(datePickBtn,"w 22!, h 22!");
-					this.add(zoomBtn,"wrap");
+					this.add(zoomBtn,"wrap, w 25!, h 22!");
 			}
 				else {
 					this.add(textField,"split 2");
@@ -141,7 +139,7 @@ public class DataPanel extends JPanel {
 						
 						zoomBtns.add(zoomBtn);
 						this.add(textField);
-						this.add(zoomBtn,"wrap");
+						this.add(zoomBtn,"wrap, w 25!, h 22!");
 					}
 					
 					else {
