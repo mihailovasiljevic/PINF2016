@@ -64,8 +64,8 @@ public class DataPanel extends JPanel {
 				textField.setName(columnDescription.get(i).getCode());
 				textFields.add(textField);
 				JButton datePickBtn = new JButton ("...");
-			//	datePickBtn.setSize((int)0.3*datePickBtn.getWidth(), (int)0.3*datePickBtn.getHeight());
-				datePickBtn.setPreferredSize(new Dimension(2,2));
+			
+				
 				
 				if (columnDescription.get(i).getTableParent() != null)
 				{
@@ -83,12 +83,12 @@ public class DataPanel extends JPanel {
 					
 					zoomBtns.add(zoomBtn);
 					this.add(textField);
-					this.add(datePickBtn);
+					this.add(datePickBtn,"w 20!, h 20!");
 					this.add(zoomBtn,"wrap");
 			}
 				else {
 					this.add(textField);
-					this.add(datePickBtn,"wrap");
+					this.add(datePickBtn,"wrap, w 20!, h 20!");
 				}
 			}
 				
