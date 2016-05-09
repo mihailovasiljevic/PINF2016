@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import form.Form;
@@ -36,7 +38,16 @@ public abstract class AState implements State{
 	public void setEditable(Form form, boolean isEditable) {
 		for(JTextField txtField : form.getDataPanel().getTextFields()){
 			txtField.setEditable(isEditable);
-		}		
+		}
+		for(Component c : form.getDataPanel().getComponents()){
+			if(c instanceof JRadioButton){
+				JRadioButton rb = (JRadioButton)c;
+				rb.setEnabled(isEditable);
+			}
+		}
+		for(JButton btn : form.getDataPanel().getZoomBtns()){
+			btn.setEnabled(isEditable);
+		}
 	}
 
 	@Override

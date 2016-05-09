@@ -28,7 +28,8 @@ public class InsertState extends AState{
 			int index = mtm.insertRow(formattedData);
 			form.getTable().setRowSelectionInterval(index, index);
 		}catch(SQLException ex){
-			JOptionPane.showMessageDialog(null, ex.getMessage(), "GRESKA", JOptionPane.ERROR_MESSAGE);			
+			JOptionPane.showMessageDialog(null, ex.getMessage(), "GRESKA", JOptionPane.ERROR_MESSAGE);	
+
 		}
 	}
 	

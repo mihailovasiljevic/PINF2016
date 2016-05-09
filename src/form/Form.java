@@ -103,6 +103,8 @@ public class Form extends JDialog {
 			updateState.sync(context, this);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
+			Context context = MainFrame.getInstance().getContext();
+			context.getState().setEditable(this, false);
 		}
 		
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));

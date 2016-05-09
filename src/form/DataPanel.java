@@ -186,4 +186,13 @@ public class DataPanel extends JPanel {
 	public void setBtnGroups(Vector<ButtonGroup> btnGroups) {
 		this.btnGroups = btnGroups;
 	}
+
+	public Vector<JButton> getZoomBtns() {
+		return zoomBtns;
+	}
+
+	public void setZoomBtns(Vector<JButton> zoomBtns) {
+		this.zoomBtns = zoomBtns;
+	}
+	
 }
