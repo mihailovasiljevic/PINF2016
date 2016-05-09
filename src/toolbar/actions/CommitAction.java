@@ -55,6 +55,7 @@ public class CommitAction extends AbstractAction {
 				if(context.getState() instanceof InsertState){
 					InsertState insertState = new InsertState();
 					insertState.doAction(context, (Form)standardForm);
+					insertState.sync(context, (Form)standardForm);
 				}else if (context.getState() instanceof UpdateState){
 					UpdateState udateState = new UpdateState();
 					udateState.doAction(context, (Form)standardForm);					

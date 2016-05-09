@@ -9,7 +9,10 @@ public class Context {
 		this.state = new UpdateState();
 
 	}
+	public Context(Context context){
+		this.state = context.getState();
 
+	}
 	public State getState() {
 		return state;
 	}

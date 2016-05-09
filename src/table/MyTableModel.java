@@ -160,7 +160,7 @@ public class MyTableModel extends DefaultTableModel {
 			String _id = "";
 			for (String key : data.keySet()) {
 				if (isFirst) {
-					_id = data.get(key);
+					_id = key;
 					isFirst = false;
 					continue;
 				}

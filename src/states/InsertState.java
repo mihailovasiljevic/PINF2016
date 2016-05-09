@@ -18,9 +18,8 @@ public class InsertState extends AState{
 
 	@Override
 	public void doAction(Context context, Form form) {
-		//prepareAddRow(form);
 		
-		MainFrame.getInstance().getContext().setState(this);
+		MainFrame.getInstance().getContext().setState(new UpdateState());
 		
 		IDataGetter data = new ConcreteDataGetter();
 		LinkedHashMap<String, String> formattedData = data.getData(form.getDataPanel());
@@ -33,12 +32,4 @@ public class InsertState extends AState{
 		}
 	}
 	
-	private void prepareAddRow(Form form){
-		for(Component c : form.getDataPanel().getComponents()){
-			if(c instanceof JTextField){
-				((JTextField) c).setText("");
-			}
-		}
-	}
-
 }

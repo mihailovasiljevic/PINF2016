@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -211,15 +212,17 @@ public class Form extends JDialog {
 <<<<<<< HEAD
 */	
 	
-	public void refresh() throws SQLException{
+	public void refresh(int index) throws SQLException{
 
-		MyTableModel tableModel = new MyTableModel(description);
+		MyTableModel tableModel = (MyTableModel)table.getModel();
 		table.setModel(tableModel);
 
 		try {
 			tableModel.open();
+			MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), this);
+			table.setRowSelectionInterval(index, index);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "GRESKA", JOptionPane.ERROR_MESSAGE);			
 		} 
 
 
