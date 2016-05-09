@@ -1,6 +1,10 @@
 package form;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.text.Format;
+import java.util.Formatter;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -10,7 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+
 import button.actions.MenuBarButtonAction;
+import button.actions.PickDateAction;
 import button.actions.ZoomButtonAction;
 import database.ColumnDescription;
 import database.TableDescription;
@@ -54,29 +60,19 @@ public class DataPanel extends JPanel {
 			//if(columnDescription.get(i).getLength()>20)
 			//	fieldLength=20;
 			//Ispadne skrnavo...
+			JTextField textField;
 			
-			if(columnDescription.get(i).getType().equalsIgnoreCase("bit"))
+			//POSTOJE LI JOS NEKI DATUMSKI TIPOVI?
+			if(columnDescription.get(i).getType().equalsIgnoreCase("datetime"))
 			{
-				ButtonGroup btnGroup = new ButtonGroup();
-				JRadioButton rBtnTrue = new JRadioButton();
-				rBtnTrue.setText("Da");
-				JRadioButton rBtnFalse = new JRadioButton();
-				rBtnFalse.setText("Ne");
-				rBtnTrue.setName(columnDescription.get(i).getCode());
-				rBtnFalse.setName(columnDescription.get(i).getCode());
-				btnGroup.add(rBtnTrue);
-				btnGroup.add(rBtnFalse);
-				btnGroups.add(btnGroup);
-				this.add(rBtnTrue);
-				this.add(rBtnFalse, "wrap");
-				
-			}
-			
-			else{
-			
-				JTextField textField = new JTextField(fieldLength);
+				textField = new JTextField(fieldLength-3);
 				textField.setName(columnDescription.get(i).getCode());
 				textFields.add(textField);
+				JButton datePickBtn = new JButton ("...");
+				datePickBtn.addActionListener(new PickDateAction(textField));
+				
+			          
+				
 				
 				if (columnDescription.get(i).getTableParent() != null)
 				{
@@ -87,21 +83,73 @@ public class DataPanel extends JPanel {
 					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
 							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom));
+							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 						}
 	
 					}
 					
 					zoomBtns.add(zoomBtn);
-					this.add(textField);
+					this.add(textField,"split 2");
+					this.add(datePickBtn,"w 22!, h 22!");
 					this.add(zoomBtn,"wrap");
+			}
+				else {
+					this.add(textField,"split 2");
+					this.add(datePickBtn,"wrap, w 22!, h 22!");
+				}
+			}
+				
+			
+			else{
+			
+				if(columnDescription.get(i).getType().equalsIgnoreCase("bit"))
+				{
+					ButtonGroup btnGroup = new ButtonGroup();
+					JRadioButton rBtnTrue = new JRadioButton();
+					rBtnTrue.setText("Da");
+					JRadioButton rBtnFalse = new JRadioButton();
+					rBtnFalse.setText("Ne");
+					rBtnTrue.setName(columnDescription.get(i).getCode());
+					rBtnFalse.setName(columnDescription.get(i).getCode());
+					btnGroup.add(rBtnTrue);
+					btnGroup.add(rBtnFalse);
+					btnGroups.add(btnGroup);
+					this.add(rBtnTrue);
+					this.add(rBtnFalse, "wrap");
+					
 				}
 				
-				else {
+				else{
+				
+					textField = new JTextField(fieldLength);
+					textField.setName(columnDescription.get(i).getCode());
+					textFields.add(textField);
 					
-					this.add(textField,"wrap");
+					if (columnDescription.get(i).getTableParent() != null)
+					{
+						String m=columnDescription.get(i).getTableParent();
+				
+						//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
+						JButton zoomBtn = new JButton("...");
+						for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+							if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
+								TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
+								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
+							}
+		
+						}
+						
+						zoomBtns.add(zoomBtn);
+						this.add(textField);
+						this.add(zoomBtn,"wrap");
+					}
+					
+					else {
+						
+						this.add(textField,"wrap");
+					}
+				
 				}
-			
 			}
 		}
 	}

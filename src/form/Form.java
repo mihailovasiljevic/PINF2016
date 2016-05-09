@@ -27,7 +27,7 @@ public class Form extends JDialog {
 	private FormState state;
 	private Form parentForm;
 	
-	public Form(Form parent, TableDescription tdescription, JTextField field, String code) {
+	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);
 		this.description = tdescription;
@@ -35,6 +35,7 @@ public class Form extends JDialog {
 		this.code = code;
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
+		
 	}
 
 	public Form(Window parent, TableDescription tdescription) {

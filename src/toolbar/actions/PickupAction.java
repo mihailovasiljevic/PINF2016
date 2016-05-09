@@ -31,10 +31,13 @@ public class PickupAction extends AbstractAction {
 			MyTableModel model = form.getTable().getModel();
 			Vector datas = model.getDataVector();
 			String code = form.getCode();
-			
+			System.out.println(code);
+			System.out.println(form.getDataPanel().getTextFields().size());
 			for(int i = 0; i < form.getDataPanel().getTextFields().size(); i++) {
+				System.out.println("ulaz");
 				String name = form.getDataPanel().getTextFields().get(i).getName();
-				System.out.println(name);
+				System.out.println("hej");
+				System.out.println("n " + name);
 				if(code.equals(form.getDataPanel().getTextFields().get(i).getName())) {
 					Object obj = datas.get(i);
 					JTextField field = form.getDataPanel().getTextFields().get(i);
