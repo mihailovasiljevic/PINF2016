@@ -77,7 +77,11 @@ public class CommitAction extends AbstractAction {
 				JOptionPane.showMessageDialog(standardForm, frmVldtn.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
 			}
 			
+			//ako je u rezimu za unos prilikom comita ne vracaj se na rezim izmene
+			if(((Form) standardForm).getMode()!=2)
+			((Form) standardForm).setMode(1);
 		}
+		
 	}
 }
 

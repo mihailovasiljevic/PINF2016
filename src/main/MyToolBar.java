@@ -46,50 +46,61 @@ public class MyToolBar extends JToolBar {
 		JButton button;
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/search.gif")));
+		button.setToolTipText("Pretraga");
 		button.addActionListener(new SearchAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/refresh.gif")));
+		button.setToolTipText("Refresh");
 		button.addActionListener(new RefreshAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/zoom-pickup.gif")));
+		button.setToolTipText("Zoom pickup");
 		button.addActionListener(new PickupAction(dialog));
 		this.pickButton = button;
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/help.gif")));
+		button.setToolTipText("Pomoć");
 		button.addActionListener(new HelpAction(dialog));
 		this.add(button);
 		this.addSeparator();
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/first.gif")));
+		button.setToolTipText("Početak");
 		button.addActionListener(new FirstAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/prev.gif")));
+		button.setToolTipText("Prethodni");
 		button.addActionListener(new PreviousAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/next.gif")));
+		button.setToolTipText("Sledeći");
 		button.addActionListener(new NextAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/last.gif")));
+		button.setToolTipText("Poslednji");
 		button.addActionListener(new LastAction(dialog));
 		this.add(button);
 		this.addSeparator();
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/add.gif")));
+		button.setToolTipText("Dodavanje");
 		button.addActionListener(new AddAction(dialog));
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/remove.gif")));
+		button.setToolTipText("Brisanje");
 		button.addActionListener(new DeleteAction(dialog));
 		this.add(button);
 		this.addSeparator();
 
 		final JButton button1 = new JButton(new ImageIcon(getClass().getResource("/slike/nextForm.gif")));
+		button1.setToolTipText("Sledeća forma");
 
 		final JPopupMenu menu = new JPopupMenu("Menu");
 		

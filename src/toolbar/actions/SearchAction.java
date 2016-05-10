@@ -6,6 +6,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
+import form.Form;
+
 public class SearchAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,10 @@ public class SearchAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if(standardForm instanceof Form){
+			((Form) standardForm).setMode(3);
+		}
 
 	}
 }

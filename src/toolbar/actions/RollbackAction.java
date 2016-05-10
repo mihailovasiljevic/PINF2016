@@ -21,5 +21,9 @@ public class RollbackAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		if(standardForm instanceof Form){
+			((Form) standardForm).setMode(1);
+		}
+		
 	}
 }

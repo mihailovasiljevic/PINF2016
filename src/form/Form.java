@@ -17,13 +17,10 @@ import states.Context;
 import states.State;
 import states.UpdateState;
 import table.MyTable;
-
 import table.TableSelection;
-
 import table.MyTableModel;
 import database.ColumnDescription;
 import database.DataBase;
-
 import database.TableDescription;
 
 public class Form extends JDialog {
@@ -31,11 +28,24 @@ public class Form extends JDialog {
 	private TableDescription description;
 	private DataPanel dataPanel;
 	private MyTable table;
-	private StatusBar statusBar;
+//	private StatusBar statusBar;
 	private JTextField field;
 	private String code;
 
-	//private FormState state;
+	private static final int MODE_EDIT = 1;
+	private static final int MODE_ADD = 2;
+	private static final int MODE_SEARCH = 3;
+	private static int mode;
+	private static StatusBar statusBar;
+
+	public static int getMode() {
+		return mode;
+	}
+	
+	public void setMode(int mode) {
+		this.mode = mode;
+		statusBar.init();
+	}
 
 	private FormState state;
 	private Form parentForm;
@@ -80,7 +90,7 @@ public class Form extends JDialog {
 		this.add(new TablePane(this.table),"grow, wrap");
 
 		this.dataPanel=new DataPanel(description,this);
-		this.statusBar = new StatusBar();
+		statusBar = new StatusBar();
 
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
@@ -92,8 +102,8 @@ public class Form extends JDialog {
 
 		//	this.state = FormState.Izmena;
 
-		add(statusBar, "dock south");
-		statusBar.getStatLab1().setText(description.getLabel());
+		/*add(statusBar, "dock south");
+		statusBar.getStatLab1().setText(description.getLabel());*/
 
 		//select first row, that will be starting state
 		try{
@@ -110,6 +120,7 @@ public class Form extends JDialog {
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
+		statusBar.getStatLab2().setText("Rezim za izmenu");
 
 	}
 

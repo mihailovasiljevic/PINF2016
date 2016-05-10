@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 
+
 import main.MainFrame;
 
 @SuppressWarnings("serial")
@@ -124,6 +125,23 @@ public class StatusBar extends JPanel {
 	public void setStatLab5(JLabel statLab5) {
 		this.statLab5 = statLab5;
 	}
-	
+
+	public void init(){
+		
+		if(Form.getMode()==1){
+			System.out.print("iz");
+			statLab2.setText("Režim za izmenu");
+		}
+
+		if(Form.getMode()==2){
+			System.out.print("iz1");
+			statLab2.setText("Režim za unos");
+		}
+
+		if(Form.getMode()==3){
+			System.out.print("iz2");
+			statLab2.setText("Režim za pretragu");
+		}
+	}
 	
 }

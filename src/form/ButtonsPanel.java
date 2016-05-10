@@ -18,9 +18,11 @@ public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
 	public ButtonsPanel(Form form){
 		btnCommit = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		btnCommit.setToolTipText("Commit");
 		btnCommit.addActionListener(new CommitAction((JDialog) form));
 		
 		btnRollback = new JButton(new ImageIcon(getClass().getResource("/slike/remove.gif")));
+		btnRollback.setToolTipText("Poništi");
 		btnRollback.addActionListener(new RollbackAction((JDialog) form));
 		
 		this.setLayout(new MigLayout("wrap"));
