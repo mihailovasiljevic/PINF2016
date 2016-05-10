@@ -24,8 +24,7 @@ public class NextFormAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	private JDialog standardForm;
 	private String string;
-	MyMenuBar mbar;
-	TableDescription tdb;
+
 
 	public NextFormAction(JDialog standardForm,String string) {
 		this.standardForm  = standardForm;
@@ -41,35 +40,31 @@ public class NextFormAction extends AbstractAction {
 
 			if(MyMenuBar.tDescriptions.get(k).getLabel().contains(string)){
 
-				//	Form form = new Form(MainFrame.getInstance(),MyMenuBar.tDescriptions.get(k));
-				//	Form form=new Form();
-				/*MyTable mt=new MyTable(Form.description);
-				System.out.print(Form.description.getCode());
-				mt.next(MyMenuBar.tDescriptions.get(k));*/
 
 				int red= ((Form)standardForm).getTable().getSelectedRow();
-			/*	int broj_kol= ((Form)standardForm).getTable().getColumnCount();
-				String s=  (String) ((Form) standardForm).getTable().getValueAt(0, 1);*/
-				
-				
 
 				if(red>=0){
 					Form form = null;
 					form = new Form(MainFrame.getInstance(), MyMenuBar.tDescriptions.get(k));
 					
-					/*for(int kol=0;kol<broj_kol;kol++){
-						String sifra = (String) ((Form) standardForm).getTable().getValueAt(red, kol);
-						System.out.print(sifra);*/
-						Vector<ColumnDescription> cdescription = DataBase.getDescriptions(MyMenuBar.tDescriptions.get(k).getCode());
+						Vector<ColumnDescription> cdescription = DataBase.getDescriptions(((Form) standardForm).getDescription().getCode());
 						for(int j = 0; j < cdescription.size(); j++) {
 							String sifra = (String) ((Form) standardForm).getTable().getValueAt(red, j);
-							boolean primarni_kljuc=DataBase.isPrimaryKey(MyMenuBar.tDescriptions.get(k).getCode(),cdescription.get(j).getCode());
-							boolean strani_kljuc=DataBase.isForeignKey(MyMenuBar.tDescriptions.get(k).getCode(),cdescription.get(j).getCode());
+							boolean primarni_kljuc=DataBase.isPrimaryKey(((Form) standardForm).getDescription().getCode(),cdescription.get(j).getCode());
+							boolean strani_kljuc=DataBase.isForeignKey(((Form) standardForm).getDescription().getCode(),cdescription.get(j).getCode());
 
 							if(primarni_kljuc && strani_kljuc==false){
+								
+								String column=DataBase.PrimaryKeyColumnname(((Form) standardForm).getDescription().getCode(), cdescription.get(j).getCode());
+								System.out.print(column);
 
 								System.out.print("SIF:"+sifra);
-								form.nextFilter(sifra);
+								try {
+									form.nextFilter(sifra,column);
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 								form.setVisible(true);
 								break;
 							}
@@ -85,7 +80,7 @@ public class NextFormAction extends AbstractAction {
 				}
 
 			}
-			//	form.setVisible(true);
+
 		}
 	}
 

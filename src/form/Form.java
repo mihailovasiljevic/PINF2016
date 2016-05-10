@@ -42,7 +42,7 @@ public class Form extends JDialog {
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
 
-	
+
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
 		this.setModal(true);
@@ -51,7 +51,7 @@ public class Form extends JDialog {
 		this.code = code;
 		this.init(tdescription);
 		this.setLocationRelativeTo(parent);
-		
+
 	}
 
 	public Form(Window parent, TableDescription tdescription) {
@@ -90,8 +90,8 @@ public class Form extends JDialog {
 		add(bottomPanel, "grow, wrap");
 
 
-	//	this.state = FormState.Izmena;
-		
+		//	this.state = FormState.Izmena;
+
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
 
@@ -106,16 +106,17 @@ public class Form extends JDialog {
 			Context context = MainFrame.getInstance().getContext();
 			context.getState().setEditable(this, false);
 		}
-		
+
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());
 
 	}
 
-	public void nextFilter(String sifra){
+	public void nextFilter(String sifra,String column) throws SQLException{
 
 		int br_redova= this.table.getRowCount();
+		
 
 
 		for(int i=0;i<br_redova;i++){
@@ -123,11 +124,15 @@ public class Form extends JDialog {
 			for(int j = 0; j < cdescription.size(); j++) {
 				String provera = (String) this.table.getValueAt(i, j);
 				System.out.print("  PRV:"+provera);
-				boolean primarni_kljuc=DataBase.isPrimaryKey(description.getCode(),cdescription.get(j).getCode());
-				boolean strani_kljuc=DataBase.isForeignKey(description.getCode(),cdescription.get(j).getCode());
+				
+				boolean strani_kluc=false;
 
-				if(strani_kljuc && primarni_kljuc==false){
+				if(cdescription.get(j).getCode().contains(column))
+				strani_kluc=true;
 
+
+				if(strani_kluc){
+					
 					if(provera!=null){
 						if(!provera.contains(sifra)){
 							System.out.print("remove ");
@@ -137,7 +142,8 @@ public class Form extends JDialog {
 							br_redova--;
 							break;
 						}
-					}
+					}	
+					
 				}
 
 				int rowCount = this.table.getRowCount();
@@ -203,7 +209,7 @@ public class Form extends JDialog {
 	public void setCode(String code) {
 		this.code = code;
 	}
-/*
+	/*
 	public FormState getState() {
 		return state;
 	}
@@ -212,8 +218,8 @@ public class Form extends JDialog {
 		this.state = state;
 	}
 <<<<<<< HEAD
-*/	
-	
+	 */	
+
 	public void refresh(int index) throws SQLException{
 
 		MyTableModel tableModel = (MyTableModel)table.getModel();

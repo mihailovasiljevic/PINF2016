@@ -128,6 +128,30 @@ public class DataBase {
 		
 	}
 	
+	
+	public static String PrimaryKeyColumnname(String tableCode, String columnCode) {
+		
+		String query = "SELECT * from INFORMATION_SCHEMA.KEY_COLUMN_USAGE;";
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			stmt.executeQuery(query);
+			ResultSet rst = stmt.getResultSet();
+			while(rst.next()) {
+				if(rst.getString(6).equalsIgnoreCase(tableCode) 
+						&& rst.getString(7).equalsIgnoreCase(columnCode)
+						&& rst.getString(3).startsWith("PK")) {
+					return columnCode;		
+				}
+					
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+	
 	public static boolean isForeignKey(String tableCode, String columnCode) {
 		
 		String query = "SELECT * from INFORMATION_SCHEMA.KEY_COLUMN_USAGE;";
@@ -150,8 +174,7 @@ public class DataBase {
 		return false;
 		
 	}
-
-	
+		
 	public static HashMap<String,String> getImportedTables(String tableName) {
 		
 		String   catalog          = null;
