@@ -21,6 +21,7 @@ public class DataBase {
 
 	private static Connection conn;
 	private static DatabaseMetaData dmeta;
+	private static Statement stmt;
 	
 	public static void open() throws ClassNotFoundException, SQLException {
 		if (conn != null)
@@ -38,6 +39,7 @@ public class DataBase {
 		conn.setAutoCommit(false);
 		
 		dmeta = conn.getMetaData();
+		stmt=conn.createStatement();
 		
 	}
 	
@@ -346,5 +348,32 @@ public class DataBase {
 		DataBase.close();
 		
 	}
+
+	public static Connection getConn() {
+		return conn;
+	}
+
+	public static void setConn(Connection conn) {
+		DataBase.conn = conn;
+	}
+
+	public static DatabaseMetaData getDmeta() {
+		return dmeta;
+	}
+
+	public static void setDmeta(DatabaseMetaData dmeta) {
+		DataBase.dmeta = dmeta;
+	}
+
+	public static Statement getStmt() {
+		return stmt;
+	}
+
+	public static void setStmt(Statement stmt) {
+		DataBase.stmt = stmt;
+	}
+	
+	
+	
 	
 }

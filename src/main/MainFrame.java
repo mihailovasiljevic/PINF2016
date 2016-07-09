@@ -1,13 +1,18 @@
 package main;
 
+
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import login.PrijavaLogIn;
 import database.DataBase;
 import states.Context;
 import states.InsertState;
@@ -19,6 +24,9 @@ public class MainFrame extends JFrame {
 	private Context context;
 	private JPanel statusBar;
 	private JLabel statusLabel;
+	private PrijavaLogIn plogin;
+	
+	
 	private MainFrame() {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) (screen.getWidth() * 0.75);
@@ -43,6 +51,78 @@ public class MainFrame extends JFrame {
 		this.statusLabel = new JLabel("STATUSNA LINIJA");
 		this.statusBar.add(this.statusLabel);
 		this.add(this.statusBar);
+		
+		System.out.print("Usao");
+		
+		plogin = new PrijavaLogIn();
+		
+		addWindowListener(new MainFrameListener());
+	}
+	
+
+	public static MainFrame getInstance() {
+		if(frame == null) {
+			frame = new MainFrame();
+		}
+		return frame;
+	}
+	
+	
+	public void OtvoriLoginDijalog() throws ClassNotFoundException, SQLException {
+
+		PrijavaLogIn p = PrijavaLogIn.getInstance();
+		p.setVisible(true);
+	}
+	
+	class MainFrameListener implements WindowListener {
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			try {
+				OtvoriLoginDijalog();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
 	public MyMenuBar getMbar() {
@@ -51,13 +131,6 @@ public class MainFrame extends JFrame {
 
 	public void setMbar(MyMenuBar mbar) {
 		this.mbar = mbar;
-	}
-
-	public static MainFrame getInstance() {
-		if(frame == null) {
-			frame = new MainFrame();
-		}
-		return frame;
 	}
 
 	public Context getContext() {
