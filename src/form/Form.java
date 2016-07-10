@@ -247,6 +247,14 @@ public class Form extends JDialog {
 
 	}
 
+	public MyTableModel getMytmod() {
+		return mytmod;
+	}
+
+	public void setMytmod(MyTableModel mytmod) {
+		this.mytmod = mytmod;
+	}
+
 
 
 

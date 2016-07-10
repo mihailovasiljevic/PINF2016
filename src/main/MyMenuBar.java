@@ -90,6 +90,14 @@ public class MyMenuBar extends JMenuBar {
 		this.add(menu);	
 	}	
 	
+	public static String getTableLabel(String tableCode){
+		for(TableDescription td : tDescriptions){
+			if(td.getCode().equalsIgnoreCase(tableCode)){
+				return td.getLabel();
+			}
+		}
+		return "";
+	}
 
 	
 }

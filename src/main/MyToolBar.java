@@ -62,13 +62,13 @@ public class MyToolBar extends JToolBar {
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/help.gif")));
-		button.setToolTipText("Pomoć");
+		button.setToolTipText("PomoÄ‡");
 		button.addActionListener(new HelpAction(dialog));
 		this.add(button);
 		this.addSeparator();
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/first.gif")));
-		button.setToolTipText("Početak");
+		button.setToolTipText("PoÄ�etak");
 		button.addActionListener(new FirstAction(dialog));
 		this.add(button);
 
@@ -78,7 +78,7 @@ public class MyToolBar extends JToolBar {
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/next.gif")));
-		button.setToolTipText("Sledeći");
+		button.setToolTipText("SledeÄ‡i");
 		button.addActionListener(new NextAction(dialog));
 		this.add(button);
 
@@ -100,7 +100,7 @@ public class MyToolBar extends JToolBar {
 		this.addSeparator();
 
 		final JButton button1 = new JButton(new ImageIcon(getClass().getResource("/slike/nextForm.gif")));
-		button1.setToolTipText("Sledeća forma");
+		button1.setToolTipText("SledeÄ‡a forma");
 
 		final JPopupMenu menu = new JPopupMenu("Menu");
 		
@@ -109,6 +109,14 @@ public class MyToolBar extends JToolBar {
 
 		int meni_pop=0;
 
+		Vector<String> foreignTables = DataBase.getExportedTables(trenutna);
+		for(String key : foreignTables){
+			meni_pop++;
+			JMenuItem tab = new JMenuItem(MyMenuBar.getTableLabel(key));
+			tab.addActionListener(new NextFormAction(dialog,MyMenuBar.getTableLabel(key)));
+			menu.add(tab);			
+		}
+/*
 		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
 
 			HashMap<String,String> foreignTables = DataBase.getImportedTables(MyMenuBar.tDescriptions.get(k).getCode());
@@ -133,7 +141,7 @@ public class MyToolBar extends JToolBar {
 				}
 			}
 		}
-
+*/
 		if(meni_pop>0){
 			button1.addActionListener( new ActionListener() {
 				@Override

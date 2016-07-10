@@ -235,9 +235,15 @@ public class MyTableModel extends DefaultTableModel {
 		// assumption: first column in list of column is always primary key or
 		// semantic unique identifier!
 		String sql = query + " WHERE " + tdescription.getColumnsDescriptions().get(0).getCode() + " = ?";
+		
 		PreparedStatement selectStmt = DataBase.getConnection().prepareStatement(sql);
-		String _id = (String) getValueAt(index, 0);
-		selectStmt.setString(1, _id);
+		try{
+			String _id = (String) getValueAt(index, 0);
+			selectStmt.setString(1, _id);
+		}catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("Tabela je prazna nema s cim da se poredi.");
+		}
+		
 
 		ResultSet rset = selectStmt.executeQuery();
 		String[] newValues = new String[tdescription.getColumnsDescriptions().size()];
