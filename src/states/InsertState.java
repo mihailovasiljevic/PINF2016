@@ -11,6 +11,7 @@ import form.Form;
 import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
 import main.MainFrame;
+import main.MyApp;
 import table.MyTable;
 import table.MyTableModel;
 
@@ -27,6 +28,7 @@ public class InsertState extends AState{
 			MyTableModel mtm = (MyTableModel)form.getTable().getModel();
 			int index = mtm.insertRow(formattedData);
 			form.getTable().setRowSelectionInterval(index, index);
+			
 		}catch(SQLException ex){
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "GRESKA", JOptionPane.ERROR_MESSAGE);	
 

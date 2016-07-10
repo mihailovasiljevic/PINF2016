@@ -54,11 +54,21 @@ public class MainFrame extends JFrame {
 		
 		System.out.print("Usao");
 		
-		plogin = new PrijavaLogIn();
+		//plogin = new PrijavaLogIn();
 		
-		addWindowListener(new MainFrameListener());
+		//addWindowListener(new MainFrameListener());
 	}
 	
+
+	public JPanel getStatusBar() {
+		return statusBar;
+	}
+
+
+	public void setStatusBar(JPanel statusBar) {
+		this.statusBar = statusBar;
+	}
+
 
 	public static MainFrame getInstance() {
 		if(frame == null) {
