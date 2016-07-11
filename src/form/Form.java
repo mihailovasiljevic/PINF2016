@@ -95,7 +95,10 @@ public class Form extends JDialog {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new MigLayout("fillx"));
 		bottomPanel.add(dataPanel);
-		bottomPanel.add(new ButtonsPanel(this),"dock east");
+		boolean isPrometni = false;
+		if(tdescription.getCode().equalsIgnoreCase("PROMETNI_DOKUMENT"))
+			isPrometni = true;
+		bottomPanel.add(new ButtonsPanel(this, isPrometni),"dock east");
 
 		add(bottomPanel, "grow, wrap");
 

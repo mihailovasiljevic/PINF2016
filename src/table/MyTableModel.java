@@ -277,9 +277,13 @@ public class MyTableModel extends DefaultTableModel {
 	private Boolean identicalValues(String[] newValues, int index) {
 		boolean retVal = true;
 		for (int i = 0; i < newValues.length; i++) {
-			if ((SortUtils.getLatCyrCollator().compare(newValues[i], ((String) getValueAt(index, i)).trim()) != 0)) {
-				retVal = false;
-				break;
+			try{
+				if ((SortUtils.getLatCyrCollator().compare(newValues[i], ((String) getValueAt(index, i)).trim()) != 0)) {
+					retVal = false;
+					break;
+				}
+			}catch (Exception e) {
+				System.out.println("Null vrednost u koloni: " + e.getMessage());
 			}
 		}
 		return retVal;

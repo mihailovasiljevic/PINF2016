@@ -112,8 +112,9 @@ public class MyToolBar extends JToolBar {
 		Vector<String> foreignTables = DataBase.getExportedTables(trenutna);
 		for(String key : foreignTables){
 			meni_pop++;
-			JMenuItem tab = new JMenuItem(MyMenuBar.getTableLabel(key));
-			tab.addActionListener(new NextFormAction(dialog,MyMenuBar.getTableLabel(key)));
+			String tableLabel = MyMenuBar.getTableLabel(key);
+			JMenuItem tab = new JMenuItem(tableLabel);
+			tab.addActionListener(new NextFormAction(dialog,tableLabel));
 			menu.add(tab);			
 		}
 /*
