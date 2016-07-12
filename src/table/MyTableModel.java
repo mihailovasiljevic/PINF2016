@@ -120,16 +120,32 @@ public class MyTableModel extends DefaultTableModel {
 		int retVal = 0;
 		final String TYPE = "INSERT";
 		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
+		System.out.println("query: " + query);
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 
 		int i = 1;
+		boolean first = true;
 		for (String key : data.keySet()) {
+			if(first){
+				first = false;
+				continue;
+			}	
 			stmt.setString(i, data.get(key));
 			i++;
 		}
 
 		int rowsAffected = stmt.executeUpdate();
+		String select = "SELECT * FROM "+tdescription.getCode()+" WHERE "+tdescription.getColumnsDescriptions().get(0).getCode()+"=(select max("+tdescription.getColumnsDescriptions().get(0).getCode()+") from "+tdescription.getCode()+");";
+		System.out.println("select: " + select);
+		stmt = DataBase.getConnection().prepareStatement(select);
+		ResultSet rs = stmt.executeQuery();
+		String id = null;
+		while(rs.next()){
+			id = rs.getString(1);
+		}
+		data.put(tdescription.getColumnsDescriptions().get(0).getCode(), id);
 		stmt.close();
+		rs.close();
 		// inserting into database
 		DataBase.getConnection().commit();
 		// if it is inserted into database make changes to tablemodel
@@ -143,12 +159,22 @@ public class MyTableModel extends DefaultTableModel {
 	private String makeInsertQuery(LinkedHashMap<String, String> data, String tableName, String type) {
 		if (type.equals("INSERT")) {
 			String query = "INSERT INTO " + tableName + " ( ";
+			boolean isFirst = true;
 			for (String key : data.keySet()) {
+				if (isFirst) {
+					isFirst = false;
+					continue;
+				}
 				query += key + ", ";
 			}
 			query = query.substring(0, query.length() - 2);
 			query += " ) VALUES ( ";
+			isFirst = true;
 			for (int i = 0; i < data.keySet().size(); i++) {
+				if (isFirst) {
+					isFirst = false;
+					continue;
+				}
 				query += "?, ";
 			}
 			query = query.substring(0, query.length() - 2);

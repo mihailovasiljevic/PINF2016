@@ -9,7 +9,7 @@ public class TableDescription {
 	private String label;
 	private Vector<String> nextTables = new Vector<String>();
 	private Vector<ColumnDescription> columnsDescriptions;
-	
+	private int id;
 	
 	public ColumnDescription getColumnDescription(String code) {
 		for(int i = 0; i < columnsDescriptions.size(); i++) {
@@ -19,7 +19,6 @@ public class TableDescription {
 		}
 		return null;
 	}
-	
 	
 	public String getCode() {
 		return code;

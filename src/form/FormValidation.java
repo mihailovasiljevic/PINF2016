@@ -36,11 +36,11 @@ private String message;
 			this.setBtnGroups(((Form) form).getDataPanel().getBtnGroups());
 		}
 		
-		int k=0;
+		int k=1;
 		formValid=true;
 		message="";
 		
-		for(int i=0; i<txtFields.size(); i++)
+		for(int i=1; i<txtFields.size(); i++)
 		{
 			//System.out.println(colDescs.get(k).getCode());
 			//System.out.println(colDescs.get(k).getType());

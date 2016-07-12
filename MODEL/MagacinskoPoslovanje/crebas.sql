@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     7/12/2016 1:17:34 PM                         */
+/* Created on:     12.07.2016. 16:48:15                         */
 /*==============================================================*/
 
 
@@ -174,16 +174,16 @@ go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('ROBNA_KARTICA') and o.name = 'FK_ROBNA_KA_ROBA_CIJA_ROBA')
+   where r.fkeyid = object_id('ROBNA_KARTICA') and o.name = 'FK_ROBNA_KA_RELATIONS_MAGACIN')
 alter table ROBNA_KARTICA
-   drop constraint FK_ROBNA_KA_ROBA_CIJA_ROBA
+   drop constraint FK_ROBNA_KA_RELATIONS_MAGACIN
 go
 
 if exists (select 1
    from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
-   where r.fkeyid = object_id('ROBNA_KARTICA') and o.name = 'FK_ROBNA_KA_SADRZI_MAGACIN')
+   where r.fkeyid = object_id('ROBNA_KARTICA') and o.name = 'FK_ROBNA_KA_ROBA_CIJA_ROBA')
 alter table ROBNA_KARTICA
-   drop constraint FK_ROBNA_KA_SADRZI_MAGACIN
+   drop constraint FK_ROBNA_KA_ROBA_CIJA_ROBA
 go
 
 if exists (select 1
@@ -651,16 +651,16 @@ go
 /* Table: ANALITIKA_MAGACINSKE_KARTICE                          */
 /*==============================================================*/
 create table ANALITIKA_MAGACINSKE_KARTICE (
-   ANALTIKA_ID          int                  not null,
+   ANALTIKA_ID          int                  identity,
    ROB_KART_ID          int                  not null,
    ANALTIKA_RBR         int                  not null,
-   ANALITIKA_SMER       bit                  not null
-      constraint CKC_ANALITIKA_SMER_ANALITIK check (ANALITIKA_SMER in (0,1)),
+   ANALITIKA_SMER       char(1)              not null
+      constraint CKC_ANALITIKA_SMER_ANALITIK check (ANALITIKA_SMER in ('U','I')),
    ANALTIKA_KOL         numeric(14,4)        not null,
    ANALITIKA_CENA       numeric(14,4)        not null,
    ANALITIKA_VRED       numeric(14,4)        not null,
-   ANALITIKA_VRS_PROM   smallint             null
-      constraint CKC_ANALITIKA_VRS_PRO_ANALITIK check (ANALITIKA_VRS_PROM is null or (ANALITIKA_VRS_PROM between 0 and 5 and ANALITIKA_VRS_PROM in (0,1,2,3,4,5))),
+   ANALITIKA_VRS_PROM   char(1)              null
+      constraint CKC_ANALITIKA_VRS_PRO_ANALITIK check (ANALITIKA_VRS_PROM is null or (ANALITIKA_VRS_PROM in ('P','O','M','N','S','K'))),
    constraint PK_ANALITIKA_MAGACINSKE_KARTIC primary key nonclustered (ANALTIKA_ID)
 )
 go
@@ -694,7 +694,7 @@ go
 /* Table: CLAN_KOMISIJE                                         */
 /*==============================================================*/
 create table CLAN_KOMISIJE (
-   CLAN_ID              int                  not null,
+   CLAN_ID              int                  identity,
    RASPORED_ID          int                  not null,
    CLAN_VRSTA           bit                  null
       constraint CKC_CLAN_VRSTA_CLAN_KOM check (CLAN_VRSTA is null or (CLAN_VRSTA in (0,1))),
@@ -714,7 +714,7 @@ go
 /* Table: CLAN_POPISNE_KOMISIJE                                 */
 /*==============================================================*/
 create table CLAN_POPISNE_KOMISIJE (
-   POP_KOM_ID           int                  not null,
+   POP_KOM_ID           int                  identity,
    CLAN_ID              int                  not null,
    constraint PK_CLAN_POPISNE_KOMISIJE primary key (POP_KOM_ID, CLAN_ID)
 )
@@ -740,7 +740,7 @@ go
 /* Table: FUNKCIJA                                              */
 /*==============================================================*/
 create table FUNKCIJA (
-   FUNKCIJA_ID          int                  not null,
+   FUNKCIJA_ID          int                  identity,
    POSL_SIS_ID          int                  not null,
    FUNKCIJA_NAZ         varchar(80)          not null,
    constraint PK_FUNKCIJA primary key nonclustered (FUNKCIJA_ID)
@@ -759,7 +759,7 @@ go
 /* Table: GRUPA_ROBA                                            */
 /*==============================================================*/
 create table GRUPA_ROBA (
-   GRUPA_ID             int                  not null,
+   GRUPA_ID             int                  identity,
    POSL_SIS_ID          int                  not null,
    GRUPA_NAZ            varchar(80)          not null,
    constraint PK_GRUPA_ROBA primary key nonclustered (GRUPA_ID)
@@ -778,7 +778,7 @@ go
 /* Table: JEDINICA_MERE                                         */
 /*==============================================================*/
 create table JEDINICA_MERE (
-   JEDINICA_ID          int                  not null,
+   JEDINICA_ID          int                  identity,
    JEDINICA_NAZ         varchar(80)          not null,
    constraint PK_JEDINICA_MERE primary key nonclustered (JEDINICA_ID)
 )
@@ -788,7 +788,7 @@ go
 /* Table: MAGACIN                                               */
 /*==============================================================*/
 create table MAGACIN (
-   MAG_ID               int                  not null,
+   MAG_ID               int                  identity,
    SEKT_ID              int                  not null,
    MAG_NAZ              varchar(120)         not null,
    constraint PK_MAGACIN primary key nonclustered (MAG_ID)
@@ -807,7 +807,7 @@ go
 /* Table: MESTO                                                 */
 /*==============================================================*/
 create table MESTO (
-   MESTO_ID             int                  not null,
+   MESTO_ID             int                  identity,
    MESTO_NAZ            varchar(60)          not null,
    MESTO_PTT            varchar(20)          null,
    constraint PK_MESTO primary key nonclustered (MESTO_ID)
@@ -818,7 +818,7 @@ go
 /* Table: POPISNA_KOMISIJA                                      */
 /*==============================================================*/
 create table POPISNA_KOMISIJA (
-   POP_KOM_ID           int                  not null,
+   POP_KOM_ID           int                  identity,
    POP_KOM_OBAV         bit                  null,
    constraint PK_POPISNA_KOMISIJA primary key nonclustered (POP_KOM_ID)
 )
@@ -828,7 +828,7 @@ go
 /* Table: POPISNI_DOKUMENT                                      */
 /*==============================================================*/
 create table POPISNI_DOKUMENT (
-   POP_DOK_ID           int                  not null,
+   POP_DOK_ID           int                  identity,
    MAG_ID               int                  not null,
    POSL_SIS_ID          int                  not null,
    POP_KOM_ID           int                  not null,
@@ -874,7 +874,7 @@ go
 /* Table: POSLOVNA_GODINA                                       */
 /*==============================================================*/
 create table POSLOVNA_GODINA (
-   POSL_GOD_ID          int                  not null,
+   POSL_GOD_ID          int                  identity,
    POSL_SIS_ID          int                  not null,
    POSL_GOD_GOD         char(4)              not null,
    POSL_GOD_DAT_ID      datetime             not null,
@@ -896,7 +896,7 @@ go
 /* Table: POSLOVNI_PARTNER                                      */
 /*==============================================================*/
 create table POSLOVNI_PARTNER (
-   POS_POSL_SIS_ID      int                  not null,
+   POS_POSL_SIS_ID      int                  identity,
    POSL_SIS_ID          int                  not null,
    constraint PK_POSLOVNI_PARTNER primary key (POS_POSL_SIS_ID, POSL_SIS_ID)
 )
@@ -922,7 +922,7 @@ go
 /* Table: POSLOVNI_SISTEM                                       */
 /*==============================================================*/
 create table POSLOVNI_SISTEM (
-   POSL_SIS_ID          int                  not null,
+   POSL_SIS_ID          int                  identity,
    MESTO_ID             int                  not null,
    POSL_SIS_NAZ         varchar(100)         not null,
    POSL_SIS_PIB         char(10)             not null,
@@ -948,7 +948,7 @@ go
 /* Table: PROMETNI_DOKUMENT                                     */
 /*==============================================================*/
 create table PROMETNI_DOKUMENT (
-   PROM_DOK_ID          int                  not null,
+   PROM_DOK_ID          int                  identity,
    POSL_SIS_ID          int                  not null,
    MAG_ID               int                  not null,
    POSL_GOD_ID          int                  not null,
@@ -956,10 +956,10 @@ create table PROMETNI_DOKUMENT (
    PROM_DOK_RBR         int                  not null,
    PROM_DOK_DAT_FORM    datetime             null,
    PROM_DOK_DAT_KNJIZ   datetime             null,
-   PROM_DOK_STAT        smallint             null
-      constraint CKC_PROM_DOK_STAT_PROMETNI check (PROM_DOK_STAT is null or (PROM_DOK_STAT between 0 and 2 and PROM_DOK_STAT in (0,1,2))),
-   PROM_DOK_VRST        smallint             null
-      constraint CKC_PROM_DOK_VRST_PROMETNI check (PROM_DOK_VRST is null or (PROM_DOK_VRST between 0 and 2 and PROM_DOK_VRST in (0,1,2))),
+   PROM_DOK_STAT        char(1)              null
+      constraint CKC_PROM_DOK_STAT_PROMETNI check (PROM_DOK_STAT is null or (PROM_DOK_STAT in ('F','P','S'))),
+   PROM_DOK_VRST        char(1)              null
+      constraint CKC_PROM_DOK_VRST_PROMETNI check (PROM_DOK_VRST is null or (PROM_DOK_VRST in ('P','O','M'))),
    constraint PK_PROMETNI_DOKUMENT primary key nonclustered (PROM_DOK_ID)
 )
 go
@@ -992,7 +992,7 @@ go
 /* Table: RADNIK                                                */
 /*==============================================================*/
 create table RADNIK (
-   RADNIK_ID            int                  not null,
+   RADNIK_ID            int                  identity,
    FUNKCIJA_ID          int                  not null,
    RADNIK_RBR           int                  not null,
    RADNIK_IME           varchar(120)         not null,
@@ -1014,7 +1014,7 @@ go
 /* Table: RASPORED_NA_RADNA_MESTA                               */
 /*==============================================================*/
 create table RASPORED_NA_RADNA_MESTA (
-   RASPORED_ID          int                  not null,
+   RASPORED_ID          int                  identity,
    RADNIK_ID            int                  not null,
    MAG_ID               int                  not null,
    RASPORED_RBR         int                  not null,
@@ -1044,7 +1044,7 @@ go
 /* Table: ROBA                                                  */
 /*==============================================================*/
 create table ROBA (
-   ROBA_ID              int                  not null,
+   ROBA_ID              int                  identity,
    JEDINICA_ID          int                  not null,
    GRUPA_ID             int                  not null,
    ROBA_NAZ             varchar(80)          not null,
@@ -1092,9 +1092,9 @@ go
 /* Table: ROBNA_KARTICA                                         */
 /*==============================================================*/
 create table ROBNA_KARTICA (
-   ROB_KART_ID          int                  not null,
-   ROBA_ID              int                  not null,
+   ROB_KART_ID          int                  identity,
    MAG_ID               int                  not null,
+   ROBA_ID              int                  not null,
    POSL_GOD_ID          int                  not null,
    ROB_KART_POC_KOL     numeric(14,4)        null,
    ROB_KART_POC_VRED    numeric(14,4)        null,
@@ -1137,7 +1137,7 @@ go
 /* Table: SEKTOR                                                */
 /*==============================================================*/
 create table SEKTOR (
-   SEKT_ID              int                  not null,
+   SEKT_ID              int                  identity,
    POSL_SIS_ID          int                  not null,
    SEKT_NAZ             varchar(80)          null,
    constraint PK_SEKTOR primary key nonclustered (SEKT_ID)
@@ -1156,7 +1156,7 @@ go
 /* Table: STAVKA_POPISNOG_DOKUMENTA                             */
 /*==============================================================*/
 create table STAVKA_POPISNOG_DOKUMENTA (
-   STAV_POP_DOK_ID      int                  not null,
+   STAV_POP_DOK_ID      int                  identity,
    ROBA_ID              int                  not null,
    POP_DOK_ID           int                  not null,
    STAV_POP_DOK_KOL     numeric(14,4)        not null,
@@ -1184,7 +1184,7 @@ go
 /* Table: STAVKA_PROMETNOG_DOKUMENTA                            */
 /*==============================================================*/
 create table STAVKA_PROMETNOG_DOKUMENTA (
-   STAV_PROM_DOK_ID     int                  not null,
+   STAV_PROM_DOK_ID     int                  identity,
    PROM_DOK_ID          int                  not null,
    ROBA_ID              int                  not null,
    STAV_PROM_DOK_KOL    numeric(14,4)        null,
@@ -1331,13 +1331,13 @@ alter table ROBNA_KARTICA
 go
 
 alter table ROBNA_KARTICA
-   add constraint FK_ROBNA_KA_ROBA_CIJA_ROBA foreign key (ROBA_ID)
-      references ROBA (ROBA_ID)
+   add constraint FK_ROBNA_KA_RELATIONS_MAGACIN foreign key (MAG_ID)
+      references MAGACIN (MAG_ID)
 go
 
 alter table ROBNA_KARTICA
-   add constraint FK_ROBNA_KA_SADRZI_MAGACIN foreign key (MAG_ID)
-      references MAGACIN (MAG_ID)
+   add constraint FK_ROBNA_KA_ROBA_CIJA_ROBA foreign key (ROBA_ID)
+      references ROBA (ROBA_ID)
 go
 
 alter table SEKTOR

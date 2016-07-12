@@ -122,6 +122,8 @@ public class DataPanel extends JPanel {
 				
 					textField = new JTextField(fieldLength);
 					textField.setName(columnDescription.get(i).getCode());
+					if(i == 0)
+						textField.setEnabled(false);
 					textFields.add(textField);
 					
 					if (columnDescription.get(i).getTableParent() != null)

@@ -31,9 +31,10 @@ public class ConcreteDataGetter extends ADataGetter {
 
 	@Override
 	public LinkedHashMap<String, String> getData(JPanel dataPanel) {
-		
+
 		for (Component component : dataPanel.getComponents()) {
 			if (component instanceof JTextField) {
+
 				JTextField txtField = (JTextField) component;
 				if(txtField.getText().trim().equals("") && txtField.getName() != null){
 					data.put(txtField.getName(),null);

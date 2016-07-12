@@ -18,6 +18,7 @@ public class MenuBarButtonAction  implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Form form = new Form(MainFrame.getInstance(),description);
+		form.setModal(false);
 		form.setVisible(true);
 	}
 
