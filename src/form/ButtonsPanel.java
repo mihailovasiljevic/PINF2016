@@ -19,6 +19,7 @@ import main.MainFrame;
 import net.miginfocom.swing.MigLayout;
 import toolbar.actions.CommitAction;
 import toolbar.actions.KnjizenjeAction;
+import toolbar.actions.KnjizenjeNivelacijaAction;
 import toolbar.actions.RollbackAction;
 import toolbar.actions.StorniranjeAction;
 import util.json.JSONModel;
@@ -57,7 +58,7 @@ public class ButtonsPanel extends JPanel {
 		JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
 		poNivelaciji.setText("knjizenje po nivelaciji");
 		poNivelaciji.setToolTipText("Nivelacija");
-		poNivelaciji.addActionListener(new CommitAction((JDialog) form));		
+		poNivelaciji.addActionListener(new KnjizenjeNivelacijaAction(form));		
 
 
 		buttons.add(btnCommit);
@@ -80,9 +81,9 @@ public class ButtonsPanel extends JPanel {
 						}
 					}
 				}
-				for(JButton s : model.getNewFormItems()){
+				for(String s : model.getNewFormItems()){
 					for(JButton but : buttons){
-						if(s.getName().equalsIgnoreCase(but.getToolTipText())){
+						if(s.equalsIgnoreCase(but.getToolTipText())){
 							this.add(but);
 						}
 					}

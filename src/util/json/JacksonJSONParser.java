@@ -85,10 +85,7 @@ public class JacksonJSONParser implements IJSONParser {
 						System.out.println("\tkey --> " + concreteName + " value-->" + concreteArray);
 
 						for (final JsonNode objNode : concreteArray) {
-							JButton button = new JButton(
-									objNode.toString().substring(1, objNode.toString().length() - 1));
-							button.setName(objNode.toString().substring(1, objNode.toString().length() - 1));
-							model.addButton(button);
+							model.addButton(objNode.toString().substring(1, objNode.toString().length() - 1));
 							System.out.println("\t\tIZ PETLJE: "
 									+ objNode.toString().substring(1, objNode.toString().length() - 1));
 						}
@@ -123,8 +120,8 @@ public class JacksonJSONParser implements IJSONParser {
 			}
 			if (model.getNewFormItems().size() > 0) {
 				System.out.println("\t BUTTON ITEMS FOR INCLUSION:\n");
-				for (JButton s : model.getNewFormItems()) {
-					System.out.println("\t"+s.getName());
+				for (String s : model.getNewFormItems()) {
+					System.out.println("\t"+s);
 				}
 			}
 		}
