@@ -33,7 +33,11 @@ public class DataPanel extends JPanel {
 	private Vector<JTextField> textFields = new Vector<JTextField>();
 	private Vector<ColumnDescription> columnDescription=new Vector<ColumnDescription>();
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
+	private Vector<JButton> btnPicks = new Vector<JButton>();
 	private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
+	private Vector<Integer> searchIndices = new Vector<Integer>();
+	private Vector<Integer> btnPickIndices = new Vector<Integer>();
+	private Vector<Integer> zoomBtnIndices = new Vector<Integer>();
 	
 
 	public DataPanel(TableDescription description, Form form) {
@@ -65,37 +69,8 @@ public class DataPanel extends JPanel {
 			//POSTOJE LI JOS NEKI DATUMSKI TIPOVI?
 			if(columnDescription.get(i).getType().equalsIgnoreCase("datetime") || columnDescription.get(i).getType().equalsIgnoreCase("date"))
 			{
-				textField = new JTextField(fieldLength-3);
-				textField.setName(columnDescription.get(i).getCode());
-				textFields.add(textField);
-				JButton datePickBtn = new JButton ("...");
-				datePickBtn.addActionListener(new PickDateAction(form,textField));
-				
-				
-				if (columnDescription.get(i).getTableParent() != null)
-				{
-					String m=columnDescription.get(i).getTableParent();
-			
-					//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
-					JButton zoomBtn = new JButton("...");
-					for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
-						if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
-							TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-							
-							zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
-						}
-	
-					}
-					
-					zoomBtns.add(zoomBtn);
-					this.add(textField,"split 2");
-					this.add(datePickBtn,"w 22!, h 22!");
-					this.add(zoomBtn,"wrap, w 25!, h 22!");
-			}
-				else {
-					this.add(textField,"split 2");
-					this.add(datePickBtn,"wrap, w 22!, h 22!");
-				}
+				addDateField(i,form,true,true);
+				addDateField(i,form,false,true);
 			}
 				
 			
@@ -118,38 +93,15 @@ public class DataPanel extends JPanel {
 					
 				}
 				
-				else{
+				else if(columnDescription.get(i).getType().equalsIgnoreCase("integer") || columnDescription.get(i).getType().equalsIgnoreCase("numeric")){
 				
-					textField = new JTextField(fieldLength);
-					textField.setName(columnDescription.get(i).getCode());
-					textFields.add(textField);
-					
-					if (columnDescription.get(i).getTableParent() != null)
-					{
-						String m=columnDescription.get(i).getTableParent();
+					addField(i,true,true);
+					addField(i,false,true);
 				
-						//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
-						JButton zoomBtn = new JButton("...");
-						for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
-							if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
-								TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-								//Milos: Kakve veze sa kolonama ima brojac koji se odnosi na tabele? Izmenicu to.
-								//zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
-								zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
-							}
-		
-						}
-						
-						zoomBtns.add(zoomBtn);
-						this.add(textField);
-						this.add(zoomBtn,"wrap, w 25!, h 22!");
-					}
-					
-					else {
-						
-						this.add(textField,"wrap");
-					}
+				}
 				
+				else {
+					addField(i,true,false);
 				}
 			}
 		}
@@ -194,5 +146,131 @@ public class DataPanel extends JPanel {
 	public void setZoomBtns(Vector<JButton> zoomBtns) {
 		this.zoomBtns = zoomBtns;
 	}
+	
+	public void addDateField(int i,Form form,boolean visible,boolean opseg){
+		JTextField textField;
+		textField = new JTextField(10-3);
+		textField.setName(columnDescription.get(i).getCode());
+		textFields.add(textField);
+		JButton datePickBtn = new JButton ("...");
+		datePickBtn.addActionListener(new PickDateAction(form,textField));
+		
+		
+		if (columnDescription.get(i).getTableParent() != null)
+		{
+			String m=columnDescription.get(i).getTableParent();
+	
+			//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
+			JButton zoomBtn = new JButton("...");
+			for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+				if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
+					TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
+					
+					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
+				}
+
+			}
+			
+			zoomBtns.add(zoomBtn);
+			this.add(textField,"split 2");
+			this.add(datePickBtn,"w 22!, h 22!");
+			if(opseg)
+				if(!visible)
+					this.add(zoomBtn,"wrap, w 25!, h 22!");
+				else this.add(zoomBtn);
+			else this.add(zoomBtn,"wrap, w 25!, h 22!");
+			zoomBtn.setVisible(visible);
+	}
+		else {
+			this.add(textField,"split 2");
+			if(opseg)
+				if(!visible)
+					this.add(datePickBtn,"wrap, w 22!, h 22!");
+				else this.add(datePickBtn,"w 22!, h 22!");
+			else this.add(datePickBtn,"wrap, w 22!, h 22!");
+		}
+		
+		btnPicks.addElement(datePickBtn);
+		textField.setVisible(visible);
+		datePickBtn.setVisible(visible);
+		
+		
+	}
+	public void addField(int i,boolean visible,boolean opseg){
+		JTextField textField;
+		textField = new JTextField(10);
+		textField.setName(columnDescription.get(i).getCode());
+		textFields.add(textField);
+		
+		if (columnDescription.get(i).getTableParent() != null)
+		{
+			String m=columnDescription.get(i).getTableParent();
+	
+			//primeceno da Sluzba ima dva strana kljuca,treba ispraviti
+			JButton zoomBtn = new JButton("...");
+			for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+				if(MyMenuBar.tDescriptions.get(k).getCode().contains(m)){
+					TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
+					//Milos: Kakve veze sa kolonama ima brojac koji se odnosi na tabele? Izmenicu to.
+					//zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
+					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
+				}
+	
+			}
+			
+			zoomBtns.add(zoomBtn);
+			this.add(textField);
+			if(opseg)
+				if(!visible)
+					this.add(zoomBtn,"wrap, w 25!, h 22!");
+				else this.add(zoomBtn);
+			else this.add(zoomBtn,"wrap, w 25!, h 22!");
+			zoomBtn.setVisible(visible);
+		}
+		
+		else {
+			if(opseg)
+				if(!visible)
+					this.add(textField,"wrap");
+				else this.add(textField);
+			else this.add(textField,"wrap");
+			
+		}
+		
+		textField.setVisible(visible);
+	}
+
+	public Vector<Integer> getSearchIndices() {
+		return searchIndices;
+	}
+
+	public void setSearchIndices(Vector<Integer> searchIndices) {
+		this.searchIndices = searchIndices;
+	}
+
+	public Vector<Integer> getBtnPickIndices() {
+		return btnPickIndices;
+	}
+
+	public void setBtnPickIndices(Vector<Integer> btnPickIndices) {
+		this.btnPickIndices = btnPickIndices;
+	}
+
+	public Vector<Integer> getZoomBtnIndices() {
+		return zoomBtnIndices;
+	}
+
+	public void setZoomBtnIndices(Vector<Integer> zoomBtnIndices) {
+		this.zoomBtnIndices = zoomBtnIndices;
+	}
+
+	public Vector<JButton> getBtnPicks() {
+		return btnPicks;
+	}
+
+	public void setBtnPicks(Vector<JButton> btnPicks) {
+		this.btnPicks = btnPicks;
+	}
+	
 	
 }

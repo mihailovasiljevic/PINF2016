@@ -153,6 +153,13 @@ private String message;
 		
 
 	
+	public FormValidation() {
+		// TODO Auto-generated constructor stub
+		formValid=true;
+	}
+
+
+
 	private boolean isInteger(String str)
 	{
 		if(str.equals(null) || str.equals(""))

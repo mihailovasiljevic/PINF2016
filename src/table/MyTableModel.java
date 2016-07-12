@@ -154,7 +154,7 @@ public class MyTableModel extends DefaultTableModel {
 			query = query.substring(0, query.length() - 2);
 			query += " );";
 			return query;
-		} else {
+		} else if(type.equals("UPDATE")){
 			String query = "UPDATE " + tableName + " SET ";
 			boolean isFirst = true;
 			String _id = "";
@@ -169,6 +169,18 @@ public class MyTableModel extends DefaultTableModel {
 			query = query.substring(0, query.length() - 2);
 			query += " WHERE " + _id + " = ?";
 
+			return query;
+		}
+		
+		else {
+			String query = "SELECT * FROM "+tableName +" WHERE ";
+			
+			for (String key : data.keySet()) {
+				
+				query += key + " LIKE ? AND ";
+			}
+			
+			query = query.substring(0, query.length() - 4);
 			return query;
 		}
 	}
@@ -224,6 +236,48 @@ public class MyTableModel extends DefaultTableModel {
 		// check if update successfuly passed
 		if (rowsAffected > 0)
 			fireTableDataChanged();
+	}
+	
+	public void search(LinkedHashMap<String, String> data)throws SQLException{
+		final String TYPE = "SEARCH";
+		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
+		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
+		
+		
+		int i = 1;
+		for (String key : data.keySet()) {
+			String param="";
+			if(!(data.get(key)==null))
+				param=data.get(key);
+			stmt.setString(i, "%"+param+"%");
+			System.out.println("%"+param+"%");
+			i++;
+		}
+		System.out.println(query);
+		fillDataSearch(stmt);
+		DataBase.getConnection().commit();
+		// check if update successfuly passed
+
+	}
+	
+	private void fillDataSearch(PreparedStatement stmt) throws SQLException {
+		String[] colValues = new String[tdescription.getColumnsDescriptions().size()];
+		setRowCount(0);
+
+	
+		ResultSet rset = stmt.executeQuery();
+
+		while (rset.next()) {
+			for (int i = 0; i < tdescription.getColumnsDescriptions().size(); i++) {
+				colValues[i] = rset.getString(tdescription.getColumnsDescriptions().get(i).getCode());
+			}
+			addRow(prepareRow(colValues));
+		}
+
+		rset.close();
+		stmt.close();
+		fireTableDataChanged();
+
 	}
 
 	private static final int CUSTOM_ERROR_CODE = 50000;
