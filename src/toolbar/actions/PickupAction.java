@@ -13,6 +13,8 @@ import com.sun.jmx.snmp.Timestamp;
 
 import database.ColumnDescription;
 import form.Form;
+import main.MainFrame;
+import states.InsertState;
 
 public class PickupAction extends AbstractAction {
 
@@ -81,7 +83,7 @@ public class PickupAction extends AbstractAction {
 				}
 		
 			}
-			
+			MainFrame.getInstance().getContext().setState(new InsertState());
 			standardForm.dispose();
 			
 		
