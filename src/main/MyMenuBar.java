@@ -6,11 +6,14 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import toolbar.actions.NextFormAction;
 import button.actions.MenuBarButtonAction;
+import button.actions.ReportButtonAction;
 import database.ColumnDescription;
 import database.DataBase;
 import database.TableDescription;
@@ -86,9 +89,17 @@ public class MyMenuBar extends JMenuBar {
 			}
 		}*/
 		
+		JMenu menu1 = new JMenu("Izvestaj");
+		JMenuItem tab = new JMenuItem("Generisi");
+		tab.addActionListener(new ReportButtonAction());
+		menu1.add(tab);
+		
 		
 		this.add(menu);	
-	}	
+		this.add(menu1);	
+	}
+	
+	
 	
 	public static String getTableLabel(String tableCode){
 		for(TableDescription td : tDescriptions){
