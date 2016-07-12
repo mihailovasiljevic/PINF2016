@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="cena" class="java.lang.Integer">
+	<parameter name="magaciniId" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -11,14 +11,20 @@
      ROBNA_KARTICA."ROB_KART_ID" AS ROBNA_KARTICA_ROB_KART_ID,
      ROBNA_KARTICA."ROB_KART_UKVRED" AS ROBNA_KARTICA_ROB_KART_UKVRED,
      ROBNA_KARTICA."ROB_KART_CEBA" AS ROBNA_KARTICA_ROB_KART_CEBA,
-     ROBNA_KARTICA."ROB_KART_UKKOL" AS ROBNA_KARTICA_ROB_KART_UKKOL
+     ROBNA_KARTICA."ROB_KART_UKKOL" AS ROBNA_KARTICA_ROB_KART_UKKOL,
+     MAGACIN."MAG_ID" AS MAGACIN_MAG_ID,
+     MAGACIN."MAG_NAZ" AS MAGACIN_MAG_NAZ
 FROM
-     "dbo"."ROBA" ROBA INNER JOIN "dbo"."ROBNA_KARTICA" ROBNA_KARTICA ON ROBA."ROBA_ID" = ROBNA_KARTICA."ROBA_ID"]]>
+     "dbo"."MAGACIN" MAGACIN INNER JOIN "dbo"."ROBNA_KARTICA" ROBNA_KARTICA ON MAGACIN."MAG_ID" = ROBNA_KARTICA."MAG_ID"
+WHERE
+     ROBNA_KARTICA."MAG_ID" = $P{magaciniId}]]>
 	</queryString>
 	<field name="ROBNA_KARTICA_ROB_KART_ID" class="java.lang.Integer"/>
 	<field name="ROBNA_KARTICA_ROB_KART_UKVRED" class="java.math.BigDecimal"/>
 	<field name="ROBNA_KARTICA_ROB_KART_CEBA" class="java.math.BigDecimal"/>
 	<field name="ROBNA_KARTICA_ROB_KART_UKKOL" class="java.math.BigDecimal"/>
+	<field name="MAGACIN_MAG_ID" class="java.lang.Integer"/>
+	<field name="MAGACIN_MAG_NAZ" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -63,6 +69,14 @@ FROM
 				<reportElement x="350" y="84" width="100" height="20" uuid="5bc3cf83-bf8b-4279-ae72-195222818ed3"/>
 				<text><![CDATA[Cena]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="50" height="20" uuid="dcae8c50-fcd7-4ad0-8c2e-4d3acfd593eb"/>
+				<text><![CDATA[Magacin:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="22" width="100" height="20" uuid="ddede339-ffe5-4ca7-85be-77add67ebb09"/>
+				<textFieldExpression><![CDATA[$F{MAGACIN_MAG_NAZ}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
