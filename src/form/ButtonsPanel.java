@@ -18,6 +18,7 @@ import net.miginfocom.swing.MigLayout;
 import toolbar.actions.CommitAction;
 import toolbar.actions.KnjizenjeAction;
 import toolbar.actions.RollbackAction;
+import toolbar.actions.StorniranjeAction;
 
 @SuppressWarnings("serial")
 public class ButtonsPanel extends JPanel {
@@ -45,22 +46,18 @@ public class ButtonsPanel extends JPanel {
 			JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
 			storniraj.setToolTipText("Storniraj");
 			storniraj.setText("storniranje");
-			storniraj.addActionListener(new CommitAction((JDialog) form));	
+			storniraj.addActionListener(new StorniranjeAction(form));	
 			
 			JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
 			poNivelaciji.setText("knjizenje po nivelaciji");
 			poNivelaciji.setToolTipText("Uknjizi po nivelaciji");
 			poNivelaciji.addActionListener(new CommitAction((JDialog) form));		
-			
-			JButton poKorekciji = new JButton(new ImageIcon(getClass().getResource("/slike/korekcija.png")));
-			poKorekciji.setToolTipText("Uknjizi po korekciji");
-			poKorekciji.setText("knjizenje po korekciji");
-			poKorekciji.addActionListener(new CommitAction((JDialog) form));	
+				
 			
 			this.add(uknjizi);
 			this.add(storniraj);
 			this.add(poNivelaciji);
-			this.add(poKorekciji);
+
 		}
 
 		
