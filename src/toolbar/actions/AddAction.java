@@ -35,24 +35,22 @@ public class AddAction extends AbstractAction {
 			((Form)standardForm).getDataPanel().getTextFields().get(0).requestFocus();
 			
 			Form form = (Form)standardForm;
-			System.out.println(form.getDataPanel().getSearchIndices().size());
-			for(int i=0; i<form.getDataPanel().getSearchIndices().size();i++)
+
+			for(int i=0; i<form.getDataPanel().getAddedTextFields().size();i++)
 			{
-				form.getDataPanel().getTextFields().get(form.getDataPanel().getSearchIndices().get(i)).setVisible(false);
+				form.getDataPanel().getAddedTextFields().get(i).setVisible(false);
 			}
 			
-			for(int i=0; i<form.getDataPanel().getZoomBtnIndices().size();i++)
+			for(int i=0; i<form.getDataPanel().getAddedZoomBtns().size();i++)
 			{
-				form.getDataPanel().getZoomBtns().get(form.getDataPanel().getZoomBtnIndices().get(i)).setVisible(false);
+				form.getDataPanel().getAddedZoomBtns().get(i).setVisible(false);
 			}
 			
-			for(int i=0; i<form.getDataPanel().getBtnPickIndices().size();i++)
+			for(int i=0; i<form.getDataPanel().getAddedPickBtns().size();i++)
 			{
-				form.getDataPanel().getBtnPicks().get(form.getDataPanel().getBtnPickIndices().get(i)).setVisible(false);
+				form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 			}
-			form.getDataPanel().getSearchIndices().clear();
-			form.getDataPanel().getZoomBtnIndices().clear();
-			form.getDataPanel().getBtnPickIndices().clear();
+
 
 			((Form) standardForm).setMode(2);
 		}

@@ -6,13 +6,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Vector;
 
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import database.DataBase;
 import database.TableDescription;
 import database.crud.ConcreteQueryCreator;
 import database.crud.IQueryCreator;
+import main.MainFrame;
 import main.SortUtils;
 
 public class MyTableModel extends DefaultTableModel {
@@ -171,20 +174,31 @@ public class MyTableModel extends DefaultTableModel {
 
 			return query;
 		}
+		return query;
+	}
+	
+	private String makeSearchQuery(LinkedHashMap<String, String> data,String tableName, Vector<JTextField> addedFields){
+		String query = "SELECT * FROM "+tableName +" WHERE ";
 		
-		else {
-			String query = "SELECT * FROM "+tableName +" WHERE ";
-			
-			for (String key : data.keySet()) {
-				
-				query += key + " LIKE ? AND ";
+		for (String key : data.keySet()) {
+			boolean opseg =false;
+			for(int i=0; i<addedFields.size();i++)
+			{
+				if(addedFields.get(i).getName().equals(key))
+				{
+					query+=key+" BETWEEN ? AND ? AND ";
+					opseg=true;
+					break;
+				}
 			}
 			
-			query = query.substring(0, query.length() - 4);
-			return query;
+			if(!opseg)
+			query += key + " LIKE ? AND ";
 		}
+		
+		query = query.substring(0, query.length() - 4);
+		return query;
 	}
-
 	private int sortedInsert(LinkedHashMap<String, String> data) {
 		LinkedHashMap<String, String> dataCopy = new LinkedHashMap<>();
 		dataCopy.putAll(data);
@@ -238,20 +252,42 @@ public class MyTableModel extends DefaultTableModel {
 			fireTableDataChanged();
 	}
 	
-	public void search(LinkedHashMap<String, String> data)throws SQLException{
-		final String TYPE = "SEARCH";
-		String query = makeInsertQuery(data, tdescription.getCode(), TYPE);
+	public void search(LinkedHashMap<String, String> data,Vector<JTextField> addedFields)throws SQLException{
+		String query = makeSearchQuery(data, tdescription.getCode(), addedFields);
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 		
 		
 		int i = 1;
 		for (String key : data.keySet()) {
+			System.out.println(data.get(key));
+			boolean opseg=false;
+			for(int j=0; j<addedFields.size();j++)
+			{
+				if(addedFields.get(j).getName().equals(key))
+				{
+					String param="-9999999999";
+					if(!(data.get(key)==null))
+						param=data.get(key);
+					stmt.setString(i, param);
+					i++;
+					String param2 = "9999999999";
+					if(!addedFields.get(j).getText().equals(""))
+						param2 = addedFields.get(j).getText();
+					stmt.setString(i, param2);
+					opseg=true;
+					i++;
+					break;
+				}
+			}
+			
+			if(!opseg){
 			String param="";
 			if(!(data.get(key)==null))
 				param=data.get(key);
 			stmt.setString(i, "%"+param+"%");
 			System.out.println("%"+param+"%");
 			i++;
+			}
 		}
 		System.out.println(query);
 		fillDataSearch(stmt);

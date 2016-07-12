@@ -35,9 +35,12 @@ public class DataPanel extends JPanel {
 	private Vector<JButton> zoomBtns = new Vector<JButton>();
 	private Vector<JButton> btnPicks = new Vector<JButton>();
 	private Vector<ButtonGroup> btnGroups = new Vector<ButtonGroup>();
-	private Vector<Integer> searchIndices = new Vector<Integer>();
-	private Vector<Integer> btnPickIndices = new Vector<Integer>();
-	private Vector<Integer> zoomBtnIndices = new Vector<Integer>();
+	
+	
+	private Vector<JTextField> addedTextFields = new Vector<JTextField>();
+	private Vector<JButton> addedZoomBtns = new Vector<JButton>();
+	private Vector<JButton> addedPickBtns = new Vector<JButton>();
+	
 	
 
 	public DataPanel(TableDescription description, Form form) {
@@ -151,7 +154,9 @@ public class DataPanel extends JPanel {
 		JTextField textField;
 		textField = new JTextField(10-3);
 		textField.setName(columnDescription.get(i).getCode());
+		if(visible)
 		textFields.add(textField);
+		else addedTextFields.add(textField);
 		JButton datePickBtn = new JButton ("...");
 		datePickBtn.addActionListener(new PickDateAction(form,textField));
 		
@@ -170,8 +175,9 @@ public class DataPanel extends JPanel {
 				}
 
 			}
-			
+			if(visible)
 			zoomBtns.add(zoomBtn);
+			else addedZoomBtns.add(zoomBtn);
 			this.add(textField,"split 2");
 			this.add(datePickBtn,"w 22!, h 22!");
 			if(opseg)
@@ -190,7 +196,9 @@ public class DataPanel extends JPanel {
 			else this.add(datePickBtn,"wrap, w 22!, h 22!");
 		}
 		
+		if(visible)
 		btnPicks.addElement(datePickBtn);
+		else addedPickBtns.add(datePickBtn);
 		textField.setVisible(visible);
 		datePickBtn.setVisible(visible);
 		
@@ -200,8 +208,10 @@ public class DataPanel extends JPanel {
 		JTextField textField;
 		textField = new JTextField(10);
 		textField.setName(columnDescription.get(i).getCode());
+		if(visible)
 		textFields.add(textField);
-		
+		else
+			addedTextFields.add(textField);
 		if (columnDescription.get(i).getTableParent() != null)
 		{
 			String m=columnDescription.get(i).getTableParent();
@@ -217,12 +227,16 @@ public class DataPanel extends JPanel {
 				}
 	
 			}
-			
+			if(visible)
 			zoomBtns.add(zoomBtn);
+			else addedZoomBtns.add(zoomBtn);
 			this.add(textField);
 			if(opseg)
 				if(!visible)
+				{	
+					
 					this.add(zoomBtn,"wrap, w 25!, h 22!");
+				}
 				else this.add(zoomBtn);
 			else this.add(zoomBtn,"wrap, w 25!, h 22!");
 			zoomBtn.setVisible(visible);
@@ -240,29 +254,6 @@ public class DataPanel extends JPanel {
 		textField.setVisible(visible);
 	}
 
-	public Vector<Integer> getSearchIndices() {
-		return searchIndices;
-	}
-
-	public void setSearchIndices(Vector<Integer> searchIndices) {
-		this.searchIndices = searchIndices;
-	}
-
-	public Vector<Integer> getBtnPickIndices() {
-		return btnPickIndices;
-	}
-
-	public void setBtnPickIndices(Vector<Integer> btnPickIndices) {
-		this.btnPickIndices = btnPickIndices;
-	}
-
-	public Vector<Integer> getZoomBtnIndices() {
-		return zoomBtnIndices;
-	}
-
-	public void setZoomBtnIndices(Vector<Integer> zoomBtnIndices) {
-		this.zoomBtnIndices = zoomBtnIndices;
-	}
 
 	public Vector<JButton> getBtnPicks() {
 		return btnPicks;
@@ -270,6 +261,30 @@ public class DataPanel extends JPanel {
 
 	public void setBtnPicks(Vector<JButton> btnPicks) {
 		this.btnPicks = btnPicks;
+	}
+
+	public Vector<JTextField> getAddedTextFields() {
+		return addedTextFields;
+	}
+
+	public void setAddedTextFields(Vector<JTextField> addedTextFields) {
+		this.addedTextFields = addedTextFields;
+	}
+
+	public Vector<JButton> getAddedZoomBtns() {
+		return addedZoomBtns;
+	}
+
+	public void setAddedZoomBtns(Vector<JButton> addedZoomBtns) {
+		this.addedZoomBtns = addedZoomBtns;
+	}
+
+	public Vector<JButton> getAddedPickBtns() {
+		return addedPickBtns;
+	}
+
+	public void setAddedPickBtns(Vector<JButton> addedPickBtns) {
+		this.addedPickBtns = addedPickBtns;
 	}
 	
 	

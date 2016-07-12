@@ -29,29 +29,19 @@ public class SearchAction extends AbstractAction {
 			MainFrame.getInstance().getContext().setState(searchState);
 			searchState.clearAll((Form)standardForm);
 			searchState.setEditable((Form)standardForm, true);
-			for(int i=0; i<((Form)standardForm).getDataPanel().getTextFields().size();i++)
+			for(int i=0; i<((Form)standardForm).getDataPanel().getAddedTextFields().size();i++)
 			{
-				if(!((Form)standardForm).getDataPanel().getTextFields().get(i).isVisible())
-				{
-				((Form)standardForm).getDataPanel().getTextFields().get(i).setVisible(true);
-				((Form)standardForm).getDataPanel().getSearchIndices().add(i);
-				}
+				((Form)standardForm).getDataPanel().getAddedTextFields().get(i).setVisible(true);
 			}
 			
-			for(int i=0; i<((Form)standardForm).getDataPanel().getBtnPicks().size();i++)
+			for(int i=0; i<((Form)standardForm).getDataPanel().getAddedZoomBtns().size();i++)
 			{
-				if(!((Form)standardForm).getDataPanel().getBtnPicks().get(i).isVisible()){
-					((Form)standardForm).getDataPanel().getBtnPicks().get(i).setVisible(true);
-					((Form)standardForm).getDataPanel().getBtnPickIndices().add(i);
-				}
+				((Form)standardForm).getDataPanel().getAddedZoomBtns().get(i).setVisible(true);
 			}
 			
-			for(int i=0; i<((Form)standardForm).getDataPanel().getZoomBtns().size();i++)
+			for(int i=0; i<((Form)standardForm).getDataPanel().getAddedPickBtns().size();i++)
 			{
-				if(!((Form)standardForm).getDataPanel().getZoomBtns().get(i).isVisible()){
-				((Form)standardForm).getDataPanel().getZoomBtns().get(i).setVisible(true);
-				((Form)standardForm).getDataPanel().getZoomBtnIndices().add(i);
-				}
+				((Form)standardForm).getDataPanel().getAddedPickBtns().get(i).setVisible(true);
 			}
 			((Form)standardForm).getDataPanel().getTextFields().get(0).requestFocus();
 			((Form) standardForm).setMode(3);
