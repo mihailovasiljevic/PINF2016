@@ -89,6 +89,14 @@ public class JacksonJSONParser implements IJSONParser {
 							System.out.println("\t\tIZ PETLJE: "
 									+ objNode.toString().substring(1, objNode.toString().length() - 1));
 						}
+					}else if (concreteName.equalsIgnoreCase("DISABLED_FIELDS")) {
+						System.out.println("\tkey --> " + concreteName + " value-->" + concreteArray);
+
+						for (final JsonNode objNode : concreteArray) {
+							model.addDisabledField(objNode.toString().substring(1, objNode.toString().length() - 1));
+							System.out.println("\t\tIZ PETLJE: "
+									+ objNode.toString().substring(1, objNode.toString().length() - 1));
+						}
 					}
 				}
 

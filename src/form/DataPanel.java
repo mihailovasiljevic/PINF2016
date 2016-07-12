@@ -23,6 +23,7 @@ import database.TableDescription;
 import main.MainFrame;
 import main.MyMenuBar;
 import net.miginfocom.swing.MigLayout;
+import util.json.JSONModel;
 
 public class DataPanel extends JPanel {
 	
@@ -124,6 +125,19 @@ public class DataPanel extends JPanel {
 					textField.setName(columnDescription.get(i).getCode());
 					if(i == 0)
 						textField.setEnabled(false);
+					for(JSONModel model : MainFrame.getInstance().getJsonModels()){
+						if(model.getTableName().equalsIgnoreCase(form.getDescription().getCode())){
+							for(String field : model.getDisabledFields()){
+								if(field.equals(textField.getName())){
+									
+									textField.setEnabled(false);
+									break;
+									
+								}
+							}
+							break;
+						}
+					}
 					textFields.add(textField);
 					
 					if (columnDescription.get(i).getTableParent() != null)

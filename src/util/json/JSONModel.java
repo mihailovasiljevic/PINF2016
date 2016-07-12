@@ -9,6 +9,7 @@ public class JSONModel {
 	private ArrayList<String> toolbarItems;
 	private ArrayList<String> formItems;
 	private ArrayList<String> newFormItems;
+	private ArrayList<String> disabledFields;
 	private String tableName;
 
 	public JSONModel(ArrayList<String> toolbarItems, ArrayList<String> formItems, String tableName) {
@@ -22,14 +23,24 @@ public class JSONModel {
 		this.toolbarItems = new ArrayList<>();
 		this.formItems = new ArrayList<>();
 		this.newFormItems = new ArrayList<>();
+		this.disabledFields = new ArrayList<>();
 		this.tableName = tableName;
 	}
 	public JSONModel() {
 		this.toolbarItems = new ArrayList<>();
 		this.formItems = new ArrayList<>();
 		this.newFormItems = new ArrayList<>();
+		this.disabledFields = new ArrayList<>();
 		this.tableName = "";
 	}
+	public ArrayList<String> getDisabledFields() {
+		return disabledFields;
+	}
+
+	public void setDisabledFields(ArrayList<String> disabledFields) {
+		this.disabledFields = disabledFields;
+	}
+
 	public ArrayList<String> getNewFormItems() {
 		return newFormItems;
 	}
@@ -87,6 +98,14 @@ public class JSONModel {
 		newFormItems.add(button);
 		return 0;
 	}
+	
+	public int addDisabledField(String field) {
+		if (check(field, disabledFields))
+			return -1;
+
+		disabledFields.add(field);
+		return 0;
+	}
 
 	@SuppressWarnings("unchecked")
 	private boolean check(String item, ArrayList<String> collection) {
@@ -114,6 +133,9 @@ public class JSONModel {
 			return map;
 		}  else if (collectionName.equalsIgnoreCase("newFormItems")) {
 			map.put(tableName, newFormItems);
+			return map;
+		}else if (collectionName.equalsIgnoreCase("disabledFields")) {
+			map.put(tableName, disabledFields);
 			return map;
 		} else {
 			return null;
