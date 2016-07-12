@@ -41,8 +41,30 @@ public class ButtonsPanel extends JPanel {
 		this.add(btnRollback);
 		
 		btnRollback.addActionListener(new RollbackAction((JDialog) form));
+		JButton uknjizi = new JButton(new ImageIcon(getClass().getResource("/slike/knjizenje.png")));
+		uknjizi.setText("knjizenje");
+		uknjizi.setToolTipText("Knjizenje");
+		
+
+		
+		uknjizi.addActionListener(new KnjizenjeAction(form));		
+		
+		JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
+		storniraj.setToolTipText("STORNIRANJE");
+		storniraj.setText("Storniranje");
+		storniraj.addActionListener(new StorniranjeAction(form));	
+		
+		JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
+		poNivelaciji.setText("knjizenje po nivelaciji");
+		poNivelaciji.setToolTipText("Nivelacija");
+		poNivelaciji.addActionListener(new CommitAction((JDialog) form));		
+
+
 		buttons.add(btnCommit);
 		buttons.add(btnRollback);
+		buttons.add(uknjizi);
+		buttons.add(storniraj);
+		buttons.add(poNivelaciji);
 		
 		/**
 		 * Disable dugmice koji nisu u funkciju za odgovarajucu formu
@@ -58,35 +80,16 @@ public class ButtonsPanel extends JPanel {
 						}
 					}
 				}
+				for(JButton s : model.getNewFormItems()){
+					for(JButton but : buttons){
+						if(s.getName().equalsIgnoreCase(but.getToolTipText())){
+							this.add(but);
+						}
+					}
+				}
 				break;
 			}
 		}
-		if(isPrometni){
-			JButton uknjizi = new JButton(new ImageIcon(getClass().getResource("/slike/knjizenje.png")));
-			uknjizi.setText("knjizenje");
-			uknjizi.setToolTipText("Uknjizi");
-			
 
-			
-			uknjizi.addActionListener(new KnjizenjeAction(form));		
-			
-			JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
-			storniraj.setToolTipText("Storniraj");
-			storniraj.setText("storniranje");
-			storniraj.addActionListener(new StorniranjeAction(form));	
-			
-			JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
-			poNivelaciji.setText("knjizenje po nivelaciji");
-			poNivelaciji.setToolTipText("Uknjizi po nivelaciji");
-			poNivelaciji.addActionListener(new CommitAction((JDialog) form));		
-				
-			
-			this.add(uknjizi);
-			this.add(storniraj);
-			this.add(poNivelaciji);
-
-		}
-
-		
 	}
 }
