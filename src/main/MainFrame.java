@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +17,9 @@ import login.PrijavaLogIn;
 import database.DataBase;
 import states.Context;
 import states.InsertState;
+import util.json.IJSONParser;
+import util.json.JSONModel;
+import util.json.JacksonJSONParser;
 
 public class MainFrame extends JFrame {
 
@@ -25,7 +29,7 @@ public class MainFrame extends JFrame {
 	private JPanel statusBar;
 	private JLabel statusLabel;
 	private PrijavaLogIn plogin;
-	
+	private ArrayList<JSONModel> jsonModels;
 	
 	private MainFrame() {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,6 +58,9 @@ public class MainFrame extends JFrame {
 		
 		System.out.print("Usao");
 		
+		IJSONParser jsonParser = new JacksonJSONParser();
+		jsonModels = jsonParser.parseJSON("config.json", "TABLES");
+		((JacksonJSONParser) jsonParser).printParsed();
 		//plogin = new PrijavaLogIn();
 		
 		//addWindowListener(new MainFrameListener());
@@ -157,6 +164,16 @@ public class MainFrame extends JFrame {
 
 	public void setStatusLabel(JLabel statusLabel) {
 		this.statusLabel = statusLabel;
+	}
+
+
+	public ArrayList<JSONModel> getJsonModels() {
+		return jsonModels;
+	}
+
+
+	public void setJsonModels(ArrayList<JSONModel> jsonModels) {
+		this.jsonModels = jsonModels;
 	}
 	
 	

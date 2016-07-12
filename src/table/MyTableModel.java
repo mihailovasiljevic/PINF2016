@@ -17,6 +17,14 @@ import main.SortUtils;
 
 public class MyTableModel extends DefaultTableModel {
 
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
 	/**
 	 * 
 	 */

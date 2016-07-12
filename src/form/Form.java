@@ -83,8 +83,8 @@ public class Form extends JDialog {
 
 		setSize(width, 400);
 		setLayout(new MigLayout("fill"));
-		this.toolbar = new MyToolBar(this);
-		this.add(this.toolbar,"dock north");
+		
+
 		this.table = new MyTable(this.getDescription());
 
 		this.add(new TablePane(this.table),"grow, wrap");
@@ -119,7 +119,8 @@ public class Form extends JDialog {
 			Context context = MainFrame.getInstance().getContext();
 			context.getState().setEditable(this, false);
 		}
-
+		this.toolbar = new MyToolBar(this);
+		this.add(this.toolbar,"dock north");
 		this.table.getSelectionModel().addListSelectionListener(new TableSelection(this));
 		add(statusBar, "dock south");
 		statusBar.getStatLab1().setText(description.getLabel());

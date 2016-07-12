@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -31,6 +32,7 @@ import toolbar.actions.PickupAction;
 import toolbar.actions.PreviousAction;
 import toolbar.actions.RefreshAction;
 import toolbar.actions.SearchAction;
+import util.json.JSONModel;
 
 @SuppressWarnings("serial")
 public class MyToolBar extends JToolBar {
@@ -42,66 +44,100 @@ public class MyToolBar extends JToolBar {
 
 	@SuppressWarnings("static-access")
 	public MyToolBar(JDialog dialog) {
-
+		
+		Form form = (Form)dialog;
+		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
+		ArrayList<JButton> buttons = new ArrayList<>();
 		JButton button;
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/search.gif")));
 		button.setToolTipText("Pretraga");
 		button.addActionListener(new SearchAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/refresh.gif")));
 		button.setToolTipText("Refresh");
 		button.addActionListener(new RefreshAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/zoom-pickup.gif")));
 		button.setToolTipText("Zoom pickup");
 		button.addActionListener(new PickupAction(dialog));
 		this.pickButton = button;
+		buttons.add(pickButton);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/help.gif")));
-		button.setToolTipText("PomoÄ‡");
+		button.setToolTipText("Pomoc");
 		button.addActionListener(new HelpAction(dialog));
+		buttons.add(button);
 		this.add(button);
 		this.addSeparator();
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/first.gif")));
-		button.setToolTipText("PoÄ�etak");
+		button.setToolTipText("Pocetak");
 		button.addActionListener(new FirstAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/prev.gif")));
 		button.setToolTipText("Prethodni");
 		button.addActionListener(new PreviousAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/next.gif")));
-		button.setToolTipText("SledeÄ‡i");
+		button.setToolTipText("Sledeci");
 		button.addActionListener(new NextAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/last.gif")));
 		button.setToolTipText("Poslednji");
 		button.addActionListener(new LastAction(dialog));
 		this.add(button);
+		buttons.add(button);
 		this.addSeparator();
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/add.gif")));
 		button.setToolTipText("Dodavanje");
 		button.addActionListener(new AddAction(dialog));
+		buttons.add(button);
 		this.add(button);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/remove.gif")));
 		button.setToolTipText("Brisanje");
 		button.addActionListener(new DeleteAction(dialog));
+		buttons.add(button);
 		this.add(button);
 		this.addSeparator();
 
 		final JButton button1 = new JButton(new ImageIcon(getClass().getResource("/slike/nextForm.gif")));
-		button1.setToolTipText("SledeÄ‡a forma");
-
+		button1.setToolTipText("Sledeca forma");
+		buttons.add(button1);
+		
+		/**
+		 * Disable dugmice koji nisu u funkciju za odgovarajucu formu
+		 */
+		System.out.println("ime tabele: "+form.getDescription().getCode());
+		
+		for(JSONModel model : jsonModels){
+			if(form.getDescription().getCode().equalsIgnoreCase(model.getTableName())){
+				for(String s : model.getToolbarItems()){
+					for(JButton but : buttons){
+						if(s.equalsIgnoreCase(but.getToolTipText())){
+							but.setEnabled(false);
+						}
+					}
+				}
+				break;
+			}
+		}
+		
+		
+		
 		final JPopupMenu menu = new JPopupMenu("Menu");
 		
 

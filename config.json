@@ -1,0 +1,31 @@
+{
+  "TABLES": {
+    "ANALITIKA_MAGACINSKE_KARTICE": {
+      "TOOLBAR": [
+        "Dodavanje", "Brisanje"
+      ],
+      "FORM": [
+        "COMMIT",
+        "ROLLBACK"
+      ]
+    },
+    "ROBNA_KARTICA": {
+      "TOOLBAR": [
+        "Dodavanje", "Brisanje"
+      ],
+      "FORM": [
+        "COMMIT",
+        "ROLLBACK"
+      ],
+      "NEW": [
+        "NIVELACIJA"
+      ]
+    },
+    "PROMETNI_DOKUMENT": {
+      "NEW": [
+        "KNJIZENJE",
+        "STORNIRANJE"
+      ]
+    }
+  }
+}
