@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 
 import database.DataBase;
 import form.Form;
@@ -32,9 +33,12 @@ public class KnjizenjeAction extends AbstractAction{
 									    
 				proc.setInt(1, prometniDokumentId);											      
 				proc.execute();
+				DataBase.getConnection().commit();
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				JOptionPane.showMessageDialog(form,
+					    e.getMessage());
 			}
 	}
 

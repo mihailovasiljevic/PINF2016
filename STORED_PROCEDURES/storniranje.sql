@@ -1,12 +1,12 @@
-IF EXISTS (SELECT name
+﻿IF EXISTS (SELECT name
     FROM   sysobjects
-    WHERE  name = '[proknjizi_prometni_dokument]' AND type = 'P')
-    DROP PROCEDURE [proknjizi_prometni_dokument]
+    WHERE  name = '[storniraj_prometni_dokument]' AND type = 'P')
+    DROP PROCEDURE [storniraj_prometni_dokument]
  GO
----------------------------------------------------------
---   Procedura za knjizenje popisnog dokumenta
----------------------------------------------------------
-CREATE PROCEDURE dbo.[proknjizi_prometni_dokument]
+ ---------------------------------------------------------
+ --   Procedura za storniranje popisnog dokumenta
+ ---------------------------------------------------------
+CREATE PROCEDURE dbo.[storniraj_prometni_dokument]
    @PROM_DOK_ID INT
 AS
 
@@ -33,23 +33,12 @@ AS
 		 @POSLOVNA_GODINA_ID = POSL_GOD_ID,
          @MAG_ID = MAG_ID
   FROM dbo.PROMETNI_DOKUMENT WHERE PROM_DOK_ID = @PROM_DOK_ID
-  IF @PROM_DOK_STAT <> 'F'
+  IF @PROM_DOK_STAT <> 'P'
   BEGIN
-    RAISERROR('Nije dozvoljeno knjizene prometnog dokumenta  koji nije u fazi formiranja!',11,2)
+    RAISERROR('Nije dozvoljeno storniranje prometnog dokumenta  koji nije proknjizen!',11,2)
     RETURN
   END
 
-  IF(SELECT COUNT(STAV_PROM_DOK_ID) FROM STAVKA_PROMETNOG_DOKUMENTA WHERE PROM_DOK_ID= @PROM_DOK_ID) = 0
-  BEGIN
-    RAISERROR('Nije dozvoljeno knjizene prometnog dokumenta koji nema najmanje jednu stavku!',11,2)
-    RETURN
-  END
-
-  IF(SELECT count(*) FROM PROMETNI_DOKUMENT WHERE PROM_DOK_DAT_FORM < GETDATE() AND PROM_DOK_ID = @PROM_DOK_ID) = 0
-  BEGIN
-    RAISERROR('Nije dozvoljeno knjizene prometnog dokumenta ciji datum je veci od danasnjeg!',11,2)
-    RETURN
-  END
 ---------------------------------------------------------
 --  Knjizenje dokumenta:
 --  knjizenje dokumenta je uspesno ako su uspesno obradjene sve stavke (u suprotnom se knjizenje ponistava)
@@ -97,24 +86,7 @@ AS
 			@CENA numeric(14,4)		
 
 		-- AKO NE POSTOJI ROBNA KARTICA NAPRAVI JE
-			 
-        IF(SELECT COUNT(*) FROM ROBNA_KARTICA WHERE ROBA_ID = @ROBA_ID AND POSL_GOD_ID = @POSLOVNA_GODINA_ID) = 0
-        BEGIN
-            INSERT INTO ROBNA_KARTICA VALUES(@MAG_ID,@ROBA_ID, @POSLOVNA_GODINA_ID, 0,0,0,0,0,0,0,0,0)
-			
-			IF @@ERROR <> 0
 
-			BEGIN
-				SET @PORUKA = 'Greska pri pokusaju dodavanja nove robne kartice! '
-                                
-				RAISERROR(@PORUKA, 11, 2)
-				IF @BROJ_TRANSAKCIJA = 0
-					ROLLBACK TRANSACTION
-				CLOSE cursPROKNJIZI
-				DEALLOCATE cursPROKNJIZI
-				RETURN
-			END
-        END
 
 		SELECT @UKUPNA_KOLICINA = ROB_KART_UKKOL, 
 			@UKUPNA_VREDNOST = ROB_KART_UKVRED,
@@ -131,8 +103,8 @@ AS
 
 		 IF @PROM_DOK_VRST = 'P'
 		 BEGIN
-			 SET @PROMET_ULAZA_KOLICINSKI = @PROMET_ULAZA_KOLICINSKI + @STAV_PROM_DOK_KOL
-			 SET @PROMET_ULAZA_VREDNOSNO = @PROMET_ULAZA_VREDNOSNO + @STAV_PROM_DOK_VRED
+			 SET @PROMET_ULAZA_KOLICINSKI = @PROMET_ULAZA_KOLICINSKI - @STAV_PROM_DOK_KOL
+			 SET @PROMET_ULAZA_VREDNOSNO = @PROMET_ULAZA_VREDNOSNO - @STAV_PROM_DOK_VRED
 			 SET @UKUPNA_KOLICINA = @POCETNO_STANJE_KOLICINSKI + @PROMET_ULAZA_KOLICINSKI-@PROMET_IZLAZA_KOLICINSKI
 			 SET @UKUPNA_VREDNOST = @POCETNO_STANJE_VREDNOSNO + @PROMET_ULAZA_VREDNOSNO-@PROMET_IZLAZA_KOLICINSKI
 			 SET @CENA = (@UKUPNA_VREDNOST+@STAV_PROM_DOK_KOL*@STAV_PROM_DOK_CEN)/(@UKUPNA_KOLICINA+@STAV_PROM_DOK_KOL)
@@ -140,8 +112,8 @@ AS
 		END
 		IF @PROM_DOK_VRST = 'O'
 		BEGIN
-			 SET @PROMET_IZLAZA_KOLICINSKI = @PROMET_IZLAZA_KOLICINSKI + @STAV_PROM_DOK_KOL
-			 SET @PROMET_IZLAZA_VREDNOSNO = @PROMET_IZLAZA_VREDNOSNO + @STAV_PROM_DOK_VRED
+			 SET @PROMET_IZLAZA_KOLICINSKI = @PROMET_IZLAZA_KOLICINSKI - @STAV_PROM_DOK_KOL
+			 SET @PROMET_IZLAZA_VREDNOSNO = @PROMET_IZLAZA_VREDNOSNO - @STAV_PROM_DOK_VRED
 			 SET @UKUPNA_KOLICINA = @POCETNO_STANJE_KOLICINSKI + @PROMET_ULAZA_KOLICINSKI-@PROMET_IZLAZA_KOLICINSKI
 			 SET @UKUPNA_VREDNOST = @POCETNO_STANJE_VREDNOSNO + @PROMET_ULAZA_VREDNOSNO-@PROMET_IZLAZA_KOLICINSKI
 			 IF(@UKUPNA_KOLICINA < 0)
@@ -236,7 +208,7 @@ AS
 			 UPDATE PROMETNI_DOKUMENT
 			 SET 
 				PROM_DOK_DAT_KNJIZ = GETDATE(),
-				PROM_DOK_STAT = 'P'
+				PROM_DOK_STAT = 'S'
 
 			 WHERE 
 				PROM_DOK_ID = @PROM_DOK_ID
