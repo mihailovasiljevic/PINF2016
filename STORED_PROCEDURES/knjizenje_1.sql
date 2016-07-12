@@ -12,10 +12,10 @@ AS
 
 ---------------------------------------------------------
 --  Provera ispunjenosti uslova:
---	1. status dokumenta mora biti “u fazi formiranja”
+--	1. status dokumenta mora biti â€œu fazi formiranjaâ€�
 --	2. dokument mora imati bar jednu stavku
---	3. poslovna godina dokumenta ne sme biti zaključena
---	4. datum prometnog dokumenta ne sme biti veći od današnjeg
+--	3. poslovna godina dokumenta ne sme biti zakljuÄ�ena
+--	4. datum prometnog dokumenta ne sme biti veÄ‡i od danaÅ¡njeg
 ---------------------------------------------------------
  DECLARE
   @BROJ_ANALITIKA NUMERIC(5),
@@ -48,7 +48,7 @@ AS
   END
 ---------------------------------------------------------
 --  Knjizenje dokumenta:
---  knjiženje dokumenta je uspešno ako su uspešno obrađene sve stavke (u suprotnom se knjiženje poništava)
+--  knjiÅ¾enje dokumenta je uspeÅ¡no ako su uspeÅ¡no obraÄ‘ene sve stavke (u suprotnom se knjiÅ¾enje poniÅ¡tava)
 ---------------------------------------------------------
  DECLARE
   @STAV_PROM_DOK_ID INT,
@@ -79,16 +79,22 @@ AS
 			CLOSE cursPROKNJIZI
 			DEALLOCATE cursPROKNJIZI
 			RETURN
-		  END			
+		  END	
+		DECLARE			 
+			@UKUPNA_KOLICINA numeric(14,4),
+			@UKUPNA_VREDNOST numeric(14,4),
+			@PROMET_ULAZA_KOLICINSKI numeric(14,4),
+			@PROMET_ULAZA_VREDNOSNO numeric(14,4),
+			@PROMET_IZLAZA_KOLICINSKI numeric(14,4),
+			@PROMET_IZLAZA_VREDNOSNO numeric(14,4),
+			@ROBNA_KARTICA_ID INT		
+
+
+			 
+
+
 		 IF @PROM_DOK_VRST = 0
 		 BEGIN
-			 DECLARE			 
-			 @UKUPNA_KOLICINA numeric(14,4),
-			 @UKUPNA_VREDNOST numeric(14,4),
-			 @PROMET_ULAZA_KOLICINSKI numeric(14,4),
-			 @PROMET_ULAZA_VREDNOSNO numeric(14,4),
-			 @ROBNA_KARTICA_ID INT
-			 
 			 SELECT @UKUPNA_KOLICINA = ROB_KART_UKKOL, 
 					@UKUPNA_VREDNOST = ROB_KART_UKVRED,
 					@PROMET_ULAZA_KOLICINSKI = ROB_KART_PRUL_KOL,
@@ -96,14 +102,25 @@ AS
 					@ROBNA_KARTICA_ID = ROB_KART_ID
 			 FROM ROBNA_KARTICA 
 			 WHERE ROBA_ID = @ROBA_ID 
-
-
-
 			 SET @UKUPNA_KOLICINA = @UKUPNA_KOLICINA + @STAV_PROM_DOK_KOL
 			 SET @UKUPNA_VREDNOST = @UKUPNA_VREDNOST + @STAV_PROM_DOK_VRED
 			 SET @PROMET_ULAZA_KOLICINSKI = @PROMET_ULAZA_KOLICINSKI + @STAV_PROM_DOK_KOL
 			 SET @PROMET_ULAZA_VREDNOSNO = @PROMET_ULAZA_VREDNOSNO + @STAV_PROM_DOK_KOL
-
+		END
+		IF @PROM_DOK_VRST = 1
+		BEGIN
+		 	SELECT @UKUPNA_KOLICINA = ROB_KART_UKKOL, 
+					@UKUPNA_VREDNOST = ROB_KART_UKVRED,
+					@PROMET_IZLAZA_KOLICINSKI = ROB_KART_PRIZ_KOL,
+					@PROMET_IZLAZA_VREDNOSNO = ROB_KART_PRIZ_VRED,
+					@ROBNA_KARTICA_ID = ROB_KART_ID
+			 FROM ROBNA_KARTICA 
+			 WHERE ROBA_ID = @ROBA_ID 
+			 SET @UKUPNA_KOLICINA = @UKUPNA_KOLICINA - @STAV_PROM_DOK_KOL
+			 SET @UKUPNA_VREDNOST = @UKUPNA_VREDNOST - @STAV_PROM_DOK_VRED
+			 SET @PROMET_IZLAZA_KOLICINSKI = @PROMET_IZLAZA_KOLICINSKI + @STAV_PROM_DOK_KOL
+			 SET @PROMET_IZLAZA_VREDNOSNO = @PROMET_IZLAZA_VREDNOSNO + @STAV_PROM_DOK_KOL
+		END
 			 UPDATE ROBNA_KARTICA
 			 SET 
 				ROB_KART_UKKOL = @UKUPNA_KOLICINA,
@@ -168,7 +185,6 @@ AS
 				  DEALLOCATE cursPROKNJIZI
 				  RETURN
 			 END
-		 END
 		 FETCH NEXT FROM cursPROKNJIZI INTO @STAV_PROM_DOK_ID,@ROBA_ID,@STAV_PROM_DOK_KOL,@STAV_PROM_DOK_CEN,@STAV_PROM_DOK_VRED
 	   END
 	   

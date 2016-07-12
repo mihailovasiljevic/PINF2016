@@ -3,14 +3,20 @@ package form;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedHashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import org.apache.commons.collections.map.HashedMap;
+
+import form.data.ConcreteDataGetter;
+import form.data.IDataGetter;
 import net.miginfocom.swing.MigLayout;
 import toolbar.actions.CommitAction;
+import toolbar.actions.KnjizenjeAction;
 import toolbar.actions.RollbackAction;
 
 @SuppressWarnings("serial")
@@ -31,7 +37,10 @@ public class ButtonsPanel extends JPanel {
 			JButton uknjizi = new JButton(new ImageIcon(getClass().getResource("/slike/knjizenje.png")));
 			uknjizi.setText("knjizenje");
 			uknjizi.setToolTipText("Uknjizi");
-			uknjizi.addActionListener(new CommitAction((JDialog) form));		
+			
+
+			
+			uknjizi.addActionListener(new KnjizenjeAction(form));		
 			
 			JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
 			storniraj.setToolTipText("Storniraj");
