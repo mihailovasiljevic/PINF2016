@@ -28,15 +28,30 @@ public class ButtonsPanel extends JPanel {
 		this.add(btnRollback);
 		btnRollback.addActionListener(new RollbackAction((JDialog) form));
 		if(isPrometni){
-			JButton uknjizi = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+			JButton uknjizi = new JButton(new ImageIcon(getClass().getResource("/slike/knjizenje.png")));
+			uknjizi.setText("knjizenje");
 			uknjizi.setToolTipText("Uknjizi");
 			uknjizi.addActionListener(new CommitAction((JDialog) form));		
 			
-			JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+			JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
 			storniraj.setToolTipText("Storniraj");
+			storniraj.setText("storniranje");
 			storniraj.addActionListener(new CommitAction((JDialog) form));	
+			
+			JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
+			poNivelaciji.setText("knjizenje po nivelaciji");
+			poNivelaciji.setToolTipText("Uknjizi po nivelaciji");
+			poNivelaciji.addActionListener(new CommitAction((JDialog) form));		
+			
+			JButton poKorekciji = new JButton(new ImageIcon(getClass().getResource("/slike/korekcija.png")));
+			poKorekciji.setToolTipText("Uknjizi po korekciji");
+			poKorekciji.setText("knjizenje po korekciji");
+			poKorekciji.addActionListener(new CommitAction((JDialog) form));	
+			
 			this.add(uknjizi);
 			this.add(storniraj);
+			this.add(poNivelaciji);
+			this.add(poKorekciji);
 		}
 
 		
