@@ -44,6 +44,7 @@ public class OpenYear extends AbstractAction {
 				
 				proc.setDate(3, date);
 				proc.execute();
+				DataBase.getConnection().commit();
 
 			} catch (SQLException ee) {
 				ee.printStackTrace();

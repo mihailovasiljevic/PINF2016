@@ -34,6 +34,24 @@ public class AddAction extends AbstractAction {
 			insertState.setEditable((Form)standardForm, true);
 			((Form)standardForm).getDataPanel().getTextFields().get(0).requestFocus();
 
+			Form form = (Form)standardForm;
+
+			for(int i=0; i<form.getDataPanel().getAddedTextFields().size();i++)
+			{
+				form.getDataPanel().getAddedTextFields().get(i).setVisible(false);
+			}
+			
+			for(int i=0; i<form.getDataPanel().getAddedZoomBtns().size();i++)
+			{
+				form.getDataPanel().getAddedZoomBtns().get(i).setVisible(false);
+			}
+			
+			for(int i=0; i<form.getDataPanel().getAddedPickBtns().size();i++)
+			{
+				form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
+			}
+
+
 
 			((Form) standardForm).setMode(2);
 		}
