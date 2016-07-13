@@ -30,6 +30,7 @@ import util.json.JSONModel;
 public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
 	private JButton closeYear;
+	private boolean btnsEnabled=true;
 	public ButtonsPanel(Form form, boolean isPrometni){
 		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
 		ArrayList<JButton> buttons = new ArrayList<>();
@@ -51,12 +52,12 @@ public class ButtonsPanel extends JPanel {
 		
 
 		
-		uknjizi.addActionListener(new KnjizenjeAction(form));		
+		uknjizi.addActionListener(new KnjizenjeAction(form, 0));		
 		
 		JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
 		storniraj.setToolTipText("STORNIRANJE");
 		storniraj.setText("Storniranje");
-		storniraj.addActionListener(new StorniranjeAction(form));	
+		storniraj.addActionListener(new KnjizenjeAction(form, 1));	
 		
 		JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
 		poNivelaciji.setText("knjizenje po nivelaciji");
@@ -68,7 +69,7 @@ public class ButtonsPanel extends JPanel {
 		openYear.setToolTipText("Otvaranje");
 		openYear.addActionListener(new OpenYear(form));	
 		
-		this.closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
 		closeYear.setText("ZATVARANJE");
 		closeYear.setToolTipText("Zatvaranje");
 		closeYear.addActionListener(new CloseYear(form));	
@@ -88,6 +89,7 @@ public class ButtonsPanel extends JPanel {
 		
 		for(JSONModel model : jsonModels){
 			if(form.getDescription().getCode().equalsIgnoreCase(model.getTableName())){
+				btnsEnabled=false;
 				for(String s : model.getFormItems()){
 					for(JButton but : buttons){
 						if(s.equalsIgnoreCase(but.getToolTipText())){
@@ -107,12 +109,31 @@ public class ButtonsPanel extends JPanel {
 		}
 
 	}
+	public JButton getBtnCommit() {
+		return btnCommit;
+	}
+	public void setBtnCommit(JButton btnCommit) {
+		this.btnCommit = btnCommit;
+	}
+	public JButton getBtnRollback() {
+		return btnRollback;
+	}
+	public void setBtnRollback(JButton btnRollback) {
+		this.btnRollback = btnRollback;
+	}
+	public boolean isBtnsEnabled() {
+		return btnsEnabled;
+	}
+	public void setBtnsEnabled(boolean btnsEnabled) {
+		this.btnsEnabled = btnsEnabled;
+	}
 	public JButton getCloseYear() {
 		return closeYear;
 	}
 	public void setCloseYear(JButton closeYear) {
 		this.closeYear = closeYear;
 	}
+	
 	
 	
 }

@@ -29,6 +29,9 @@ public class SearchAction extends AbstractAction {
 			MainFrame.getInstance().getContext().setState(searchState);
 			searchState.clearAll((Form)standardForm);
 			searchState.setEditable((Form)standardForm, true);
+			
+			((Form)standardForm).getButtonsPanel().getBtnCommit().setEnabled(true);
+			((Form)standardForm).getButtonsPanel().getBtnRollback().setEnabled(true);
 			for(int i=0; i<((Form)standardForm).getDataPanel().getAddedTextFields().size();i++)
 			{
 				((Form)standardForm).getDataPanel().getAddedTextFields().get(i).setVisible(true);

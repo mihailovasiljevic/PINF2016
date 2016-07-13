@@ -18,6 +18,8 @@ public class SearchState  extends AState{
 		// TODO Auto-generated method stub
 		MainFrame.getInstance().getContext().setState(new UpdateState());
 		
+		disableButtons(form);
+		
 		IDataGetter data = new ConcreteDataGetter();
 		LinkedHashMap<String, String> formattedData = data.getData(form.getDataPanel());
 		

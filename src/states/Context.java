@@ -19,10 +19,14 @@ public class Context {
 
 	public void setState(State state) {
 		this.state = state;
-		if(state instanceof InsertState)
+		if(state instanceof InsertState){
 			MainFrame.getInstance().getStatusLabel().setText("Stanje unosa teksta.");
-		else if(state instanceof UpdateState)
+			
+		}
+		else if(state instanceof UpdateState){
 			MainFrame.getInstance().getStatusLabel().setText("Stanje izmene/ pregleda.");
+			
+		}
 		else
 			MainFrame.getInstance().getStatusLabel().setText("Stanje pretrage.");
 	}

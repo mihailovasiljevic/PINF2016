@@ -19,8 +19,10 @@ public class KnjizenjeAction extends AbstractAction{
 	 */
 	private static final long serialVersionUID = 5744503642562068934L;
 	private Form form;
-	public KnjizenjeAction(Form form) {
+	private int storno;
+	public KnjizenjeAction(Form form, int storno) {
 		this.form = form;
+		this.storno = storno;
 	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -29,9 +31,10 @@ public class KnjizenjeAction extends AbstractAction{
 		int prometniDokumentId = Integer.parseInt(formattedData.get("PROM_DOK_ID"));
 		System.out.println("Pokusava da knjizi + " + prometniDokumentId);
 		try {
-			CallableStatement proc = DataBase.getConnection().prepareCall("{ call proknjizi_prometni_dokument(?)}");
+			CallableStatement proc = DataBase.getConnection().prepareCall("{ call proknjizi_prometni_dokument(?, ?)}");
 									    
-				proc.setInt(1, prometniDokumentId);											      
+				proc.setInt(1, prometniDokumentId);	
+				proc.setInt(2, storno);
 				proc.execute();
 				DataBase.getConnection().commit();
 			} catch (SQLException e) {

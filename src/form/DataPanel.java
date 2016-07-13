@@ -85,7 +85,6 @@ public class DataPanel extends JPanel {
 				if(columnDescription.get(i).getType().equalsIgnoreCase("bit"))
 				{
 					ButtonGroup btnGroup = new ButtonGroup();
-					
 					JRadioButton rBtnTrue = new JRadioButton();
 					rBtnTrue.setText("Da");
 					JRadioButton rBtnFalse = new JRadioButton();
@@ -192,7 +191,7 @@ public class DataPanel extends JPanel {
 				if(MyMenuBar.tDescriptions.get(k).getCode().equals(m)){
 					System.out.print("USAAO");
 					TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-
+					
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 			//		
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
