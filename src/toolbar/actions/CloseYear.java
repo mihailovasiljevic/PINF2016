@@ -33,6 +33,7 @@ public class CloseYear extends AbstractAction {
 			proc.setInt(1, Integer.parseInt(sel));
 			proc.registerOutParameter(2, java.sql.Types.INTEGER);
 			proc.executeUpdate();
+			DataBase.getConnection().commit();
 			Integer val = proc.getInt(2);
 			if(val == 1) {
 				JOptionPane.showMessageDialog(null, "NIje moguce zatvaranje poslovne godine", "GRESKA", JOptionPane.ERROR_MESSAGE);			
