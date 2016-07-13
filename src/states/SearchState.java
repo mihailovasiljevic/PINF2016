@@ -3,6 +3,8 @@ package states;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import main.MainFrame;
@@ -46,6 +48,22 @@ public class SearchState  extends AState{
 		for(int i=0; i<form.getDataPanel().getAddedPickBtns().size();i++)
 		{
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
+		}
+		
+		if(form.getDescription().getCode().equals("ROBNA_KARTICA")){
+			for(JButton b : form.getButtonsPanel().getButtons()){
+				if(b.getToolTipText().equalsIgnoreCase("Nivelacija")){
+					for(int i = 0; i < form.getButtonsPanel().getComponentCount(); i++){
+						if(form.getButtonsPanel().getComponent(i) instanceof JButton){
+							if(((JButton)form.getButtonsPanel().getComponent(i)).getToolTipText() != null){
+								if(((JButton)form.getButtonsPanel().getComponent(i)).getToolTipText().equalsIgnoreCase("Nivelacija")){
+									form.getButtonsPanel().remove(form.getButtonsPanel().getComponent(i));
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
