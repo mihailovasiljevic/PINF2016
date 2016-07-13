@@ -153,6 +153,13 @@ WHERE
 				<reportElement x="178" y="0" width="63" height="20" uuid="40ba2f34-fc78-4d32-90f9-a747f7316eb8"/>
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="0" y="28" width="520" height="20" uuid="ba9d556f-71d4-4ecc-bfaf-4b248fdb82ca"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA}.intValue()+$F{ROBNA_KARTICA_ROB_KART_UKVRED}.intValue()]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>

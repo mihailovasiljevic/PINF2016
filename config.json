@@ -1,49 +1,3 @@
-<<<<<<< HEAD
-{
-  "TABLES": {
-    "ANALITIKA_MAGACINSKE_KARTICE": {
-      "TOOLBAR": [
-        "Dodavanje", "Brisanje"
-      ],
-      "FORM": [
-        "COMMIT",
-        "ROLLBACK"
-      ]
-    },
-    "ROBNA_KARTICA": {
-      "TOOLBAR": [
-        "Dodavanje", "Brisanje"
-      ],
-      "FORM": [
-        "COMMIT",
-        "ROLLBACK"
-      ],
-      "NEW": [
-        "NIVELACIJA"
-      ]
-    },
-    "PROMETNI_DOKUMENT": {
-      "NEW": [
-        "KNJIZENJE",
-        "STORNIRANJE"
-      ]
-    },
-    "STAVKA_PROMETNOG_DOKUMENTA":{
-      "DISABLED_FIELDS" : ["STAV_PROM_DOK_VRED"]
-    },
-    "POSLOVNA_GODINA":{
-      "FORM": [
-        "COMMIT",
-        "ROLLBACK"
-      ],
-      "NEW": [
-        "OTVARANJE",
-        "ZATVARANJE"
-      ],
-      "DISABLED_FIELDS" : ["POSL_GOD_DAT_ID", "POSL_GOD_DAT_DO", "POSL_GOD_ZAKLJ"]
-  	}
-  }
-=======
 {
   "TABLES": {
     "ANALITIKA_MAGACINSKE_KARTICE": {
@@ -90,6 +44,5 @@
       ],
       "DISABLED_FIELDS" : ["POSL_GOD_DAT_ID", "POSL_GOD_DAT_DO"]
   	}
-  }
->>>>>>> branch 'master' of https://github.com/remixgit/PINF2016.git
+ }
 }
