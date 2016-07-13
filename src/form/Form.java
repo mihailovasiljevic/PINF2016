@@ -306,4 +306,12 @@ public class Form extends JDialog {
 		this.buttonsPanel = buttonsPanel;
 	}
 
+	public MyToolBar getToolbarr() {
+		return toolbar;
+	}
+
+	public void setToolbarr(MyToolBar toolbar) {
+		this.toolbar = toolbar;
+	}
+	
 }

@@ -32,11 +32,17 @@ public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
 
 	private JButton closeYear;
-
+	private ArrayList<JButton> buttons = new ArrayList<>();
+	public ArrayList<JButton> getButtons() {
+		return buttons;
+	}
+	public void setButtons(ArrayList<JButton> buttons) {
+		this.buttons = buttons;
+	}
 	private boolean btnsEnabled=true;
 	public ButtonsPanel(Form form, boolean isPrometni){
 		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
-		ArrayList<JButton> buttons = new ArrayList<>();
+		
 		
 		btnCommit = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
 		btnCommit.setToolTipText("Commit");

@@ -66,7 +66,7 @@ public class PickupAction extends AbstractAction {
 			System.out.println(code);
 			
 			for(int i=0; i<colDescs.size(); i++){
-				if(colDescs.get(i).getCode().equalsIgnoreCase(code))
+				if(colDescs.get(i).getCode().contains(code) || code.contains(colDescs.get(i).getCode()))
 				{
 					
 					Object obj = ((Vector)datas.get(form.getTable().getSelectedRow())).get(i);
