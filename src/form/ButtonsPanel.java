@@ -29,6 +29,9 @@ import util.json.JSONModel;
 @SuppressWarnings("serial")
 public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
+
+	private JButton closeYear;
+
 	private boolean btnsEnabled=true;
 	public ButtonsPanel(Form form, boolean isPrometni){
 		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
@@ -68,7 +71,7 @@ public class ButtonsPanel extends JPanel {
 		openYear.setToolTipText("Otvaranje");
 		openYear.addActionListener(new OpenYear(form));	
 		
-		JButton closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
 		closeYear.setText("ZATVARANJE");
 		closeYear.setToolTipText("Zatvaranje");
 		closeYear.addActionListener(new CloseYear(form));	
@@ -125,6 +128,13 @@ public class ButtonsPanel extends JPanel {
 	}
 	public void setBtnsEnabled(boolean btnsEnabled) {
 		this.btnsEnabled = btnsEnabled;
+	}
+
+	public JButton getCloseYear() {
+		return closeYear;
+	}
+	public void setCloseYear(JButton closeYear) {
+		this.closeYear = closeYear;
 	}
 	
 	

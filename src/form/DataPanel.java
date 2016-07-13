@@ -207,7 +207,7 @@ public class DataPanel extends JPanel {
 				if(MyMenuBar.tDescriptions.get(k).getCode().equals(m)){
 					System.out.print("USAAO");
 					TableDescription table_zoom=MyMenuBar.tDescriptions.get(k);
-
+					
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 			//		
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
@@ -386,6 +386,7 @@ public class DataPanel extends JPanel {
 		}
 		
 		textField.setVisible(visible);
+		
 	}
 
 
@@ -420,4 +421,6 @@ public class DataPanel extends JPanel {
 	public void setAddedPickBtns(Vector<JButton> addedPickBtns) {
 		this.addedPickBtns = addedPickBtns;
 	}
+	
+	
 }
