@@ -16,6 +16,7 @@ import database.TableDescription;
 import database.crud.ConcreteQueryCreator;
 import database.crud.IQueryCreator;
 import main.MainFrame;
+import main.MyMenuBar;
 import main.SortUtils;
 
 public class MyTableModel extends DefaultTableModel {
@@ -186,14 +187,17 @@ public class MyTableModel extends DefaultTableModel {
 			{
 				if(addedFields.get(i).getName().equals(key))
 				{
+					if(!(data.get(key)==null  && addedFields.get(i).getText().equals(""))){
 					query+=key+" BETWEEN ? AND ? AND ";
+					}
 					opseg=true;
 					break;
 				}
 			}
 			
 			if(!opseg)
-			query += key + " LIKE ? AND ";
+				if(!(data.get(key)==null))
+						query += key + " LIKE ? AND ";
 		}
 		
 		query = query.substring(0, query.length() - 4);
@@ -264,18 +268,27 @@ public class MyTableModel extends DefaultTableModel {
 			for(int j=0; j<addedFields.size();j++)
 			{
 				if(addedFields.get(j).getName().equals(key))
-				{
-					String param="-9999999999";
+				{	
+					String param="";
+					if(!(data.get(key)==null && addedFields.get(j).getText().equals(""))){
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param="-9999999999";
+					else param="12-12-1901";
 					if(!(data.get(key)==null))
 						param=data.get(key);
 					stmt.setString(i, param);
 					i++;
-					String param2 = "9999999999";
+					
+					String param2="";
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param2 = "9999999999";
+					else param2="12-12-2099";
 					if(!addedFields.get(j).getText().equals(""))
 						param2 = addedFields.get(j).getText();
 					stmt.setString(i, param2);
-					opseg=true;
 					i++;
+					}
+					opseg=true;
 					break;
 				}
 			}
@@ -284,9 +297,12 @@ public class MyTableModel extends DefaultTableModel {
 			String param="";
 			if(!(data.get(key)==null))
 				param=data.get(key);
+			
+			if(data.get(key)!=null){
 			stmt.setString(i, "%"+param+"%");
 			System.out.println("%"+param+"%");
 			i++;
+			}
 			}
 		}
 		System.out.println(query);

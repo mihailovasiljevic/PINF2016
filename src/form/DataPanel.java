@@ -154,9 +154,12 @@ public class DataPanel extends JPanel {
 		JTextField textField;
 		textField = new JTextField(10-3);
 		textField.setName(columnDescription.get(i).getCode());
+		textField.setToolTipText("date");
 		if(visible)
 		textFields.add(textField);
 		else addedTextFields.add(textField);
+		
+		textField.setToolTipText("date");
 		JButton datePickBtn = new JButton ("...");
 		datePickBtn.addActionListener(new PickDateAction(form,textField));
 		
