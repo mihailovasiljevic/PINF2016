@@ -17,6 +17,7 @@ import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
 import main.MainFrame;
 import net.miginfocom.swing.MigLayout;
+import slike.LoadImage;
 import toolbar.actions.CloseYear;
 import toolbar.actions.CommitAction;
 import toolbar.actions.KnjizenjeAction;
@@ -66,12 +67,14 @@ public class ButtonsPanel extends JPanel {
 		poNivelaciji.setToolTipText("Nivelacija");
 		poNivelaciji.addActionListener(new KnjizenjeNivelacijaAction(form));		
 
-		JButton openYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		LoadImage image = new LoadImage(new ImageIcon(getClass().getResource("/slike/open.png")), 25, 25);
+		JButton openYear = new JButton(image);
 		openYear.setText("OTVARANJE");
 		openYear.setToolTipText("Otvaranje");
 		openYear.addActionListener(new OpenYear(form));	
 		
-		closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		image = new LoadImage(new ImageIcon(getClass().getResource("/slike/close.jpeg")), 25, 25);
+		closeYear = new JButton(image);
 		closeYear.setText("ZATVARANJE");
 		closeYear.setToolTipText("Zatvaranje");
 		closeYear.addActionListener(new CloseYear(form));	

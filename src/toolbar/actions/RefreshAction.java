@@ -32,7 +32,6 @@ public class RefreshAction extends AbstractAction {
 			try {
 				((Form) standardForm).refresh(0);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				System.out.println("Tabela je najverovatnije prazna a pokusavate da uradite refresh.");
 			}
 			
