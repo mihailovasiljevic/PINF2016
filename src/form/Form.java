@@ -37,6 +37,8 @@ public class Form extends JDialog {
 	private static final int MODE_SEARCH = 3;
 	private static int mode;
 	private static StatusBar statusBar;
+	
+	private ButtonsPanel buttonPanel;
 
 	public static int getMode() {
 		return mode;
@@ -98,7 +100,8 @@ public class Form extends JDialog {
 		boolean isPrometni = false;
 		if(tdescription.getCode().equalsIgnoreCase("PROMETNI_DOKUMENT"))
 			isPrometni = true;
-		bottomPanel.add(new ButtonsPanel(this, isPrometni),"dock east");
+		this.buttonPanel = new ButtonsPanel(this, isPrometni);
+		bottomPanel.add(this.buttonPanel,"dock east");
 
 		add(bottomPanel, "grow, wrap");
 
@@ -259,7 +262,13 @@ public class Form extends JDialog {
 		this.mytmod = mytmod;
 	}
 
+	public ButtonsPanel getButtonPanel() {
+		return buttonPanel;
+	}
 
+	public void setButtonPanel(ButtonsPanel buttonPanel) {
+		this.buttonPanel = buttonPanel;
+	}
 
 
 }
