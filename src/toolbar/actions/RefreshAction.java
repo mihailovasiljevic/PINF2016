@@ -30,27 +30,13 @@ public class RefreshAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		
 		if(standardForm instanceof Form){
-			State state = MainFrame.getInstance().getContext().getState();
-			int selected = ((Form) standardForm).getTable().getSelectedRow();
-			if(selected < 0) selected = 0;
 			try {
-				((Form) standardForm).refresh(selected);
+				((Form) standardForm).refresh(0);
 			} catch (Exception e) {
 				System.out.println("Tabela je najverovatnije prazna a pokusavate da uradite refresh.");
-			}
-			if(state instanceof InsertState) {
-				MainFrame.getInstance().getContext().setState(state);
-				((Form) standardForm).getToolbarr().getAddAction().actionPerformed(null);
-			}
-			if(state instanceof SearchState) {
-				MainFrame.getInstance().getContext().setState(state);
-				((Form) standardForm).getToolbarr().getSearchAction().actionPerformed(null);
 			}			
 		}
-			
-				
 			
 	}
 		
