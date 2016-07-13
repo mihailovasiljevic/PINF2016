@@ -292,31 +292,36 @@ public class MyTableModel extends DefaultTableModel {
 		int i = 1;
 		for (String key : data.keySet()) {
 			System.out.println(data.get(key));
-			boolean opseg = false;
-			for (int j = 0; j < addedFields.size(); j++) {
-				if (addedFields.get(j).getName().equals(key)) {
-					String param = "";
-					if (!(data.get(key) == null && addedFields.get(j).getText().equals(""))) {
-						if (addedFields.get(j).getToolTipText() != null)
-							if (!addedFields.get(j).getToolTipText().equals("date"))
-								param = "-9999999999";
-							else
-								param = "12-12-1901";
-						if (!(data.get(key) == null))
-							param = data.get(key);
-						stmt.setString(i, param);
-						i++;
 
-						String param2 = "";
-						if (addedFields.get(j).getToolTipText() != null)
-							if (!addedFields.get(j).getToolTipText().equals("date"))
-								param2 = "9999999999";
-							else
-								param2 = "12-12-2099";
-						if (!addedFields.get(j).getText().equals(""))
-							param2 = addedFields.get(j).getText();
-						stmt.setString(i, param2);
-						i++;
+			boolean opseg=false;
+			for(int j=0; j<addedFields.size();j++)
+			{
+				if(addedFields.get(j).getName().equals(key))
+				{	
+					String param="";
+					if(!(data.get(key)==null && addedFields.get(j).getText().equals(""))){
+						
+					if(addedFields.get(j).getToolTipText()!=null)
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param="-9999999999";
+					else param="12-12-1901";
+					else param="-9999999999";
+					if(!(data.get(key)==null))
+						param=data.get(key);
+					stmt.setString(i, param);
+					i++;
+					
+					String param2="";
+					if(addedFields.get(j).getToolTipText()!=null)
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param2 = "9999999999";
+					else param2="12-12-2099";
+					else param2="9999999999";
+					if(!addedFields.get(j).getText().equals(""))
+						param2 = addedFields.get(j).getText();
+					stmt.setString(i, param2);
+					i++;
+
 					}
 					opseg = true;
 					break;
