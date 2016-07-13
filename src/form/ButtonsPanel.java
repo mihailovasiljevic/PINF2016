@@ -17,9 +17,11 @@ import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
 import main.MainFrame;
 import net.miginfocom.swing.MigLayout;
+import toolbar.actions.CloseYear;
 import toolbar.actions.CommitAction;
 import toolbar.actions.KnjizenjeAction;
 import toolbar.actions.KnjizenjeNivelacijaAction;
+import toolbar.actions.OpenYear;
 import toolbar.actions.RollbackAction;
 import toolbar.actions.StorniranjeAction;
 import util.json.JSONModel;
@@ -60,12 +62,23 @@ public class ButtonsPanel extends JPanel {
 		poNivelaciji.setToolTipText("Nivelacija");
 		poNivelaciji.addActionListener(new KnjizenjeNivelacijaAction(form));		
 
-
+		JButton openYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		openYear.setText("OTVARANJE");
+		openYear.setToolTipText("Otvaranje");
+		openYear.addActionListener(new OpenYear(form));	
+		
+		JButton closeYear = new JButton(new ImageIcon(getClass().getResource("/slike/commit.gif")));
+		closeYear.setText("ZATVARANJE");
+		closeYear.setToolTipText("Zatvaranje");
+		closeYear.addActionListener(new CloseYear(form));	
+		
 		buttons.add(btnCommit);
 		buttons.add(btnRollback);
 		buttons.add(uknjizi);
 		buttons.add(storniraj);
 		buttons.add(poNivelaciji);
+		buttons.add(openYear);
+		buttons.add(closeYear);
 		
 		/**
 		 * Disable dugmice koji nisu u funkciju za odgovarajucu formu
