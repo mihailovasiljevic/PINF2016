@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Vector;
 
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import database.DataBase;
@@ -259,6 +261,109 @@ public class MyTableModel extends DefaultTableModel {
 		if (rowsAffected > 0)
 			fireTableDataChanged();
 	}
+	
+	private String makeSearchQuery(LinkedHashMap<String, String> data,String tableName, Vector<JTextField> addedFields){
+		String query = "SELECT * FROM "+tableName +" WHERE ";
+		
+		for (String key : data.keySet()) {
+			boolean opseg =false;
+			for(int i=0; i<addedFields.size();i++)
+			{
+				if(addedFields.get(i).getName().equals(key))
+				{
+					if(!(data.get(key)==null  && addedFields.get(i).getText().equals(""))){
+					query+=key+" BETWEEN ? AND ? AND ";
+					}
+					opseg=true;
+					break;
+				}
+			}
+			
+			if(!opseg)
+				if(!(data.get(key)==null))
+						query += key + " LIKE ? AND ";
+		}
+		
+		query = query.substring(0, query.length() - 4);
+		return query;
+	}
+	
+	public void search(LinkedHashMap<String, String> data,Vector<JTextField> addedFields)throws SQLException{
+		String query = makeSearchQuery(data, tdescription.getCode(), addedFields);
+		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
+		
+		
+		int i = 1;
+		for (String key : data.keySet()) {
+			System.out.println(data.get(key));
+			boolean opseg=false;
+			for(int j=0; j<addedFields.size();j++)
+			{
+				if(addedFields.get(j).getName().equals(key))
+				{	
+					String param="";
+					if(!(data.get(key)==null && addedFields.get(j).getText().equals(""))){
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param="-9999999999";
+					else param="12-12-1901";
+					if(!(data.get(key)==null))
+						param=data.get(key);
+					stmt.setString(i, param);
+					i++;
+					
+					String param2="";
+					if(!addedFields.get(j).getToolTipText().equals("date"))
+						param2 = "9999999999";
+					else param2="12-12-2099";
+					if(!addedFields.get(j).getText().equals(""))
+						param2 = addedFields.get(j).getText();
+					stmt.setString(i, param2);
+					i++;
+					}
+					opseg=true;
+					break;
+				}
+			}
+			
+			if(!opseg){
+			String param="";
+			if(!(data.get(key)==null))
+				param=data.get(key);
+			
+			if(data.get(key)!=null){
+			stmt.setString(i, "%"+param+"%");
+			System.out.println("%"+param+"%");
+			i++;
+			}
+			}
+		}
+		System.out.println(query);
+		fillDataSearch(stmt);
+		DataBase.getConnection().commit();
+		// check if update successfuly passed
+
+	}
+	
+	private void fillDataSearch(PreparedStatement stmt) throws SQLException {
+		String[] colValues = new String[tdescription.getColumnsDescriptions().size()];
+		setRowCount(0);
+
+	
+		ResultSet rset = stmt.executeQuery();
+
+		while (rset.next()) {
+			for (int i = 0; i < tdescription.getColumnsDescriptions().size(); i++) {
+				colValues[i] = rset.getString(tdescription.getColumnsDescriptions().get(i).getCode());
+			}
+			addRow(prepareRow(colValues));
+		}
+
+		rset.close();
+		stmt.close();
+		fireTableDataChanged();
+
+	}
+	
 
 	private static final int CUSTOM_ERROR_CODE = 50000;
 	private static final String ERROR_RECORD_WAS_CHANGED = "Slog je promenjen od strane drugog korisnika. Molim vas, pogledajte njegovu trenutnu vrednost";

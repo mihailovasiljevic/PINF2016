@@ -19,6 +19,7 @@ import form.data.IDataGetter;
 import main.MainFrame;
 import states.Context;
 import states.InsertState;
+import states.SearchState;
 import states.State;
 import states.UpdateState;
 import sun.applet.Main;
@@ -47,10 +48,19 @@ public class CommitAction extends AbstractAction {
 				txtFields.get(i).setBackground(Color.white);
 			}
 			
-			FormValidation frmVldtn=new FormValidation(standardForm);
+			FormValidation frmVldtn;
+			Context context = MainFrame.getInstance().getContext();
+			if(context.getState() instanceof SearchState)
+			{
+				frmVldtn = new FormValidation();
+	
+			}
+			
+			else frmVldtn = new FormValidation(standardForm);
+				
 			if(frmVldtn.isFormValid())
 			{
-				Context context = MainFrame.getInstance().getContext();
+				
 				
 				if(context.getState() instanceof InsertState){
 					InsertState insertState = new InsertState();
@@ -59,9 +69,12 @@ public class CommitAction extends AbstractAction {
 				}else if (context.getState() instanceof UpdateState){
 					UpdateState udateState = new UpdateState();
 					udateState.doAction(context, (Form)standardForm);					
-				}else{
-					//search mode
+				}else if (context.getState() instanceof SearchState){
+					SearchState searchState = new SearchState();
+					searchState.doAction(context, (Form)standardForm);
 				}
+					//search mode
+				
 
 				
 				/*JOptionPane.showMessageDialog(standardForm, "SVE JE OK!!!");*/
