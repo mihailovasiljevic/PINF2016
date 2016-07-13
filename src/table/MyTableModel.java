@@ -436,7 +436,27 @@ public class MyTableModel extends DefaultTableModel {
 		this.tdescription = tdescription;
 	}
 	
-	
+	public String[] getRowData(int rowIndex){
+        if (rowIndex  >  getRowCount() || rowIndex  <  0){
+            return null;
+        }	
+        ArrayList <String>  data = new ArrayList < String > ();
+        for (int c = 0; c  <  getColumnCount(); c++)
+        {
+            data.add((String) getValueforCell(rowIndex, c));
+        }
+        String[] retVal = new String[data.size()];
+        for (int i = 0; i  <  retVal.length; i++)
+        {
+            retVal[i] = data.get(i);
+        }
+        return retVal;
+	}
+    public String getValueforCell(int row, int col)
+    {
+        return (String) super.getValueAt(row, col).toString();
+    }
+
 
 	// method tester
 	/*
