@@ -41,6 +41,9 @@ public class MyToolBar extends JToolBar {
 	MyMenuBar mbar;
 	
 	private JButton pickButton;
+	private SearchAction searchAction;
+	private AddAction addAction;
+	private JButton addButton;
 
 	@SuppressWarnings("static-access")
 	public MyToolBar(JDialog dialog) {
@@ -52,7 +55,8 @@ public class MyToolBar extends JToolBar {
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/search.gif")));
 		button.setToolTipText("Pretraga");
-		button.addActionListener(new SearchAction(dialog));
+		this.searchAction = new SearchAction(dialog);
+		button.addActionListener(this.searchAction);
 		buttons.add(button);
 		this.add(button);
 
@@ -97,15 +101,16 @@ public class MyToolBar extends JToolBar {
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/last.gif")));
 		button.setToolTipText("Poslednji");
 		button.addActionListener(new LastAction(dialog));
-		this.add(button);
 		buttons.add(button);
+		this.add(button);
 		this.addSeparator();
 
-		button = new JButton(new ImageIcon(getClass().getResource("/slike/add.gif")));
-		button.setToolTipText("Dodavanje");
-		button.addActionListener(new AddAction(dialog));
-		buttons.add(button);
-		this.add(button);
+		addButton = new JButton(new ImageIcon(getClass().getResource("/slike/add.gif")));
+		addButton.setToolTipText("Dodavanje");
+		this.addAction = new AddAction(dialog); 
+		addButton.addActionListener(this.addAction);
+		buttons.add(addButton);
+		this.add(addButton);
 
 		button = new JButton(new ImageIcon(getClass().getResource("/slike/remove.gif")));
 		button.setToolTipText("Brisanje");
@@ -206,4 +211,28 @@ public class MyToolBar extends JToolBar {
 		this.pickButton.setEnabled(false);
 	}
 
+	public SearchAction getSearchAction() {
+		return searchAction;
+	}
+
+	public void setSearchAction(SearchAction searchAction) {
+		this.searchAction = searchAction;
+	}
+
+	public AddAction getAddAction() {
+		return addAction;
+	}
+
+	public void setAddAction(AddAction addAction) {
+		this.addAction = addAction;
+	}
+
+	public JButton getAddButton() {
+		return addButton;
+	}
+
+	public void setAddButton(JButton addButton) {
+		this.addButton = addButton;
+	}
+	
 }

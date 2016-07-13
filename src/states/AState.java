@@ -12,6 +12,7 @@ import form.Form;
 import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
 import main.MainFrame;
+import util.json.JSONModel;
 
 public abstract class AState implements State{
 
@@ -73,10 +74,19 @@ public abstract class AState implements State{
 	
 	@Override
 	public void disableButtons(Form form){
-		if(!form.getButtonsPanel().isBtnsEnabled()){
-			form.getButtonsPanel().getBtnCommit().setEnabled(false);
-			form.getButtonsPanel().getBtnRollback().setEnabled(false);
+		for(JSONModel model : MainFrame.getInstance().getJsonModels()){
+			if(form.getDescription().getCode().equalsIgnoreCase(model.getTableName())){
+
+				for(String s : model.getFormItems()){
+					for(JButton but : form.getButtonsPanel().getButtons()){
+						if(s.equalsIgnoreCase(but.getToolTipText())){
+							but.setEnabled(false);
+						}
+					}
+				}
+				break;
 			}
+		}
 	}
 	
 	

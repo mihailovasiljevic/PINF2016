@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import states.InsertState;
 import states.State;
 import states.UpdateState;
+import table.MyTableModel;
 import main.MainFrame;
 import form.Form;
 
@@ -47,5 +48,7 @@ public class RollbackAction extends AbstractAction {
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 		}
 		
+
+		MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 	}
 }
