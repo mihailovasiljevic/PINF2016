@@ -14,6 +14,7 @@ import javax.swing.JMenuItem;
 import table.MyTable;
 import toolbar.actions.NextFormAction;
 import button.actions.MenuBarButtonAction;
+import button.actions.ReportAnalitikaAction;
 import button.actions.ReportButtonAction;
 import database.ColumnDescription;
 import database.DataBase;
@@ -126,9 +127,46 @@ public class MyMenuBar extends JMenuBar {
 				}
 			}
 		}
+		
+		JMenu menu2 = new JMenu("Izvestaj-Analitika");
+		/*JMenuItem item = new JMenuItem("Generate");
+		item.addActionListener(new ReportAnalitikaAction());
+		menu2.add(item);*/
+		
+		for(int k=0;k<MyMenuBar.tDescriptions.size();k++){
+
+			Vector<ColumnDescription> cdescription = DataBase.getDescriptions(MyMenuBar.tDescriptions.get(k).getCode());
+
+
+			if(MyMenuBar.tDescriptions.get(k).getCode().equals(trenutna)){
+
+				table = new MyTable(MyMenuBar.tDescriptions.get(k));
+
+				int br_redova= this.table.getRowCount();
+
+
+
+				for(int i=0;i<br_redova;i++){
+
+						String id = (String) this.table.getValueAt(i, 0);
+						String naziv = (String) this.table.getValueAt(i, 2);
+						
+						int iden=Integer.parseInt(id);
+
+						JMenuItem item = new JMenuItem(naziv);
+						item.addActionListener(new ReportAnalitikaAction(iden));
+						menu2.add(item);
+
+
+				
+				}
+			}
+		}
+		
 
 		this.add(menu);	
 		this.add(menu1);	
+		this.add(menu2);
 	}
 
 

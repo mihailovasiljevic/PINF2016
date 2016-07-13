@@ -29,7 +29,7 @@ public class KnjizenjeAction extends AbstractAction{
 		int prometniDokumentId = Integer.parseInt(formattedData.get("PROM_DOK_ID"));
 		System.out.println("Pokusava da knjizi + " + prometniDokumentId);
 		try {
-			CallableStatement proc = DataBase.getConnection().prepareCall("{ call proknjizi_popisni_dokument(?)}");
+			CallableStatement proc = DataBase.getConnection().prepareCall("{ call proknjizi_prometni_dokument(?)}");
 									    
 				proc.setInt(1, prometniDokumentId);											      
 				proc.execute();

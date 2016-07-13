@@ -25,25 +25,6 @@ public class ReportButtonAction extends AbstractAction  {
 		putValue(SHORT_DESCRIPTION, "Report");
 		this.id=id;
 	}
-
-	/*@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-		try {
-	          System.out.println(getClass().getResource("/jasper/LagerLista.jasper"));
-		  JasperPrint jp = JasperFillManager.fillReport(
-		  getClass().getResource("/jasper/LagerLista.jasper").openStream(),
-		  null, DataBase.getConn());
-		  JasperViewer.viewReport(jp, false);
-
-		} catch (Exception ex) {
-		  ex.printStackTrace();
-		}
-
-		
-	}*/
-	
 	
 	public void actionPerformed(ActionEvent evt) {
 		try {

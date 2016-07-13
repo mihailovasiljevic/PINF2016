@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Analitika" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80c8e285-e5d8-45e9-924d-d382a0a021b3">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="DatumOd" class="java.util.Date"/>
+	<parameter name="DatumDo" class="java.util.Date"/>
+	<parameter name="magaciniId" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_ID" AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID,
+     ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_CENA" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA,
+     ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_VRED" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED,
+     ROBNA_KARTICA."ROB_KART_ID" AS ROBNA_KARTICA_ROB_KART_ID,
+     ROBNA_KARTICA."ROB_KART_PRIZ_VRED" AS ROBNA_KARTICA_ROB_KART_PRIZ_VRED,
+     ROBNA_KARTICA."ROB_KART_UKVRED" AS ROBNA_KARTICA_ROB_KART_UKVRED,
+     ROBNA_KARTICA."ROB_KART_CEBA" AS ROBNA_KARTICA_ROB_KART_CEBA,
+     ROBNA_KARTICA."ROB_KART_PRUL_VRED" AS ROBNA_KARTICA_ROB_KART_PRUL_VRED,
+     PROMETNI_DOKUMENT."PROM_DOK_DAT_FORM" AS PROMETNI_DOKUMENT_PROM_DOK_DAT_FORM,
+     PROMETNI_DOKUMENT."PROM_DOK_DAT_KNJIZ" AS PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ,
+     MAGACIN."MAG_NAZ" AS MAGACIN_MAG_NAZ
+FROM
+     "dbo"."ROBNA_KARTICA" ROBNA_KARTICA INNER JOIN "dbo"."ANALITIKA_MAGACINSKE_KARTICE" ANALITIKA_MAGACINSKE_KARTICE ON ROBNA_KARTICA."ROB_KART_ID" = ANALITIKA_MAGACINSKE_KARTICE."ROB_KART_ID"
+     INNER JOIN "dbo"."MAGACIN" MAGACIN ON ROBNA_KARTICA."MAG_ID" = MAGACIN."MAG_ID"
+     INNER JOIN "dbo"."PROMETNI_DOKUMENT" PROMETNI_DOKUMENT ON MAGACIN."MAG_ID" = PROMETNI_DOKUMENT."MAG_ID"
+WHERE
+     ROBNA_KARTICA."MAG_ID" = $P{magaciniId}
+ AND PROMETNI_DOKUMENT."PROM_DOK_DAT_FORM" BETWEEN  $P{DatumOd} and $P{DatumDo}]]>
+	</queryString>
+	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID" class="java.lang.Integer"/>
+	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA" class="java.math.BigDecimal"/>
+	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED" class="java.math.BigDecimal"/>
+	<field name="ROBNA_KARTICA_ROB_KART_ID" class="java.lang.Integer"/>
+	<field name="ROBNA_KARTICA_ROB_KART_PRIZ_VRED" class="java.math.BigDecimal"/>
+	<field name="ROBNA_KARTICA_ROB_KART_UKVRED" class="java.math.BigDecimal"/>
+	<field name="ROBNA_KARTICA_ROB_KART_CEBA" class="java.math.BigDecimal"/>
+	<field name="ROBNA_KARTICA_ROB_KART_PRUL_VRED" class="java.math.BigDecimal"/>
+	<field name="PROMETNI_DOKUMENT_PROM_DOK_DAT_FORM" class="java.sql.Timestamp"/>
+	<field name="PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ" class="java.sql.Timestamp"/>
+	<field name="MAGACIN_MAG_NAZ" class="java.lang.String"/>
+	<variable name="ukupno" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_UKVRED}]]></variableExpression>
+	</variable>
+	<variable name="adding" class="java.lang.Double" resetType="None">
+		<variableExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_PRUL_VRED}.add( $F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED} )]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="73" y="56" width="188" height="20" uuid="ce95155f-1275-4485-ae9a-a948d2f15726"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Robna kartica u periodu:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="4" width="42" height="20" uuid="980e4652-635e-4bcb-85af-ac17ed501f4c"/>
+				<text><![CDATA[Datum:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="4" width="40" height="20" uuid="7838e4e3-9c67-43d4-85d1-16f550574087"/>
+				<text><![CDATA[Strana:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="488" y="4" width="67" height="20" uuid="698c0219-2f34-46a7-b332-003a103880fd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="42" y="4" width="100" height="20" uuid="d0785fd6-592d-4b33-9b38-7fb842a20e7d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="101" width="73" height="20" uuid="7989567b-c744-467e-8a14-2e0c3fb3602d"/>
+				<text><![CDATA[Id analitike]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="101" width="63" height="20" uuid="7e4937af-b46d-4f04-b51b-ea6d246f1d74"/>
+				<text><![CDATA[Vr.ulaza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="101" width="58" height="20" uuid="b411e98d-4feb-4af2-8c46-dbecfb1410e1"/>
+				<text><![CDATA[Vr.izlaza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="101" width="91" height="20" uuid="8524db85-67f4-4083-8828-3f6d5b908941"/>
+				<text><![CDATA[Ukupna vrednost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="101" width="70" height="20" uuid="8a5168e9-7dc2-455f-abfe-81f8a2dedf91"/>
+				<text><![CDATA[Datum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="101" width="63" height="20" uuid="340691b3-cb84-403a-a893-850464b1ca4c"/>
+				<text><![CDATA[Cena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="24" width="42" height="20" uuid="740ac4a5-09c5-42a8-a431-51091ea22665"/>
+				<text><![CDATA[Magacin]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="42" y="24" width="100" height="20" uuid="2cb09bf4-8113-4ff1-a598-df9cd529674c"/>
+				<textFieldExpression><![CDATA[$F{MAGACIN_MAG_NAZ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="56" width="100" height="20" uuid="a4f0ee0f-3e44-42b5-ab98-8fcf8a78f7ec"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DatumOd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="402" y="56" width="100" height="20" uuid="263a2aae-30c0-4e54-9392-f940baef3936"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DatumDo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="361" y="56" width="41" height="20" uuid="8f6ca80f-1c15-4eda-bc34-2db3eeb250b6"/>
+				<textElement textAlignment="Justified">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[do]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="73" height="20" uuid="83b043b7-f2f6-4463-8513-70fc8c879092"/>
+				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="278" y="0" width="63" height="20" uuid="0fcc8b7d-2e4c-497a-968f-25297ce0e374"/>
+				<textFieldExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_PRUL_VRED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="359" y="0" width="58" height="20" uuid="9198fe1d-0c46-4e44-a33b-b12ebb08a666"/>
+				<textFieldExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_PRIZ_VRED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="91" height="20" uuid="d116be9d-d96f-4564-899b-b5696f1980dd"/>
+				<textFieldExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_UKVRED}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="83" y="0" width="70" height="20" uuid="f70fe5d9-a59a-4535-8228-088b5d02441a"/>
+				<textFieldExpression><![CDATA[$F{PROMETNI_DOKUMENT_PROM_DOK_DAT_FORM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="0" width="63" height="20" uuid="40ba2f34-fc78-4d32-90f9-a747f7316eb8"/>
+				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="50">
+			<textField pattern="">
+				<reportElement x="448" y="13" width="100" height="20" uuid="b5afc4a3-37dc-417a-ab28-21e3747af57a"/>
+				<textElement textAlignment="Left">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ukupno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="13" width="58" height="20" uuid="14da15a4-21bd-4419-a210-659dba0d6896"/>
+				<text><![CDATA[Ukupno:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
