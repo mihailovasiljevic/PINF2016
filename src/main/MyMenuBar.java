@@ -93,8 +93,10 @@ public class MyMenuBar extends JMenuBar {
 				System.out.println(MyMenuBar.tDescriptions.get(i).getNextTables().get(j));
 			}
 		}*/
-
-		JMenu menu1 = new JMenu("Izvestaj-Lager lista");
+		
+		JMenu report = new JMenu("Izvestaji");
+		JMenu menu1 = new JMenu("Lager lista");
+		report.add(menu1);
 
 
 		String trenutna="MAGACIN";
@@ -129,7 +131,8 @@ public class MyMenuBar extends JMenuBar {
 			}
 		}
 		
-		JMenu menu2 = new JMenu("Izvestaj-Analitika");
+		JMenu menu2 = new JMenu("Analitika");
+		report.add(menu2);
 		/*JMenuItem item = new JMenuItem("Generate");
 		item.addActionListener(new ReportAnalitikaAction());
 		menu2.add(item);*/
@@ -166,8 +169,9 @@ public class MyMenuBar extends JMenuBar {
 		
 
 		this.add(menu);	
-		this.add(menu1);	
-		this.add(menu2);
+		this.add(report);	
+		/*this.add(menu1);	
+		this.add(menu2);*/
 	}
 
 
