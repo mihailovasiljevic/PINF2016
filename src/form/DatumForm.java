@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 
+import button.actions.PickDateAction;
 import button.actions.ReportDatumAction;
 
 
@@ -37,6 +38,12 @@ public class DatumForm extends JDialog{
 	private JButton btnOk;
 	private JPanel pan;
 	
+	
+	
+	public DatumForm() {
+	}
+
+
 	public DatumForm(int id){
 		this.id=id;
 		
@@ -59,14 +66,23 @@ public class DatumForm extends JDialog{
 		DatumOd = new JTextField(15);
 		panDatumOd.add(lblDatumOd);
 		panDatumOd.add(DatumOd);
+		JButton datePickBtn = new JButton ("...");
+		datePickBtn.addActionListener(new PickDateAction(DatumOd));
+		panDatumOd.add(datePickBtn);
 		boxCentar.add(panDatumOd);
+		
 		
 		JPanel panDatumDo = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel lblDatumDo = new JLabel("Datum do:");
 		DatumDo = new JTextField(15);
 		panDatumDo.add(lblDatumDo);
 		panDatumDo.add(DatumDo);
+		JButton datePickBtn1 = new JButton ("...");
+		datePickBtn1.addActionListener(new PickDateAction(DatumDo));
+		panDatumDo.add(datePickBtn1);
 		boxCentar.add(panDatumDo);
+		
+		
 		
 		JPanel dugmad = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		

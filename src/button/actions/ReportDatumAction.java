@@ -58,10 +58,10 @@ public class ReportDatumAction extends AbstractAction{
 
 			if(!ProveraIspravnosti(dateString1, dateString2))
 		      {
-					JOptionPane.showMessageDialog(null, "Mora biti u formatu dd-MM-yyyy.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Mora biti u formatu MM-dd-yyyy.", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 		      }
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); 
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
 			Date od = dateFormat.parse(dateString1); 
 			Date doo = dateFormat.parse(dateString2); 
 
@@ -84,7 +84,7 @@ public class ReportDatumAction extends AbstractAction{
 	
 	private boolean ProveraIspravnosti(String dateFrom, String dateTo)
 	{
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		try {
 			Date inputDate = dateFormat.parse(dateFrom);
 			inputDate = dateFormat.parse(dateTo);
