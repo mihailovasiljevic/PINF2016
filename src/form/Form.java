@@ -3,8 +3,10 @@ package form;
 import java.awt.Color;
 import java.awt.Window;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -37,6 +39,8 @@ public class Form extends JDialog {
 	private static final int MODE_SEARCH = 3;
 	private static int mode;
 	private static StatusBar statusBar;
+	
+	private ButtonsPanel buttonPanel;
 
 	public static int getMode() {
 		return mode;
@@ -51,8 +55,8 @@ public class Form extends JDialog {
 	private Form parentForm;
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
-	private ButtonsPanel buttonsPanel;
 
+	private ButtonsPanel buttonsPanel;
 
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
 		super(parent,tdescription.getLabel());
@@ -99,6 +103,7 @@ public class Form extends JDialog {
 		boolean isPrometni = false;
 		if(tdescription.getCode().equalsIgnoreCase("PROMETNI_DOKUMENT"))
 			isPrometni = true;
+
 		setButtonsPanel(new ButtonsPanel(this,isPrometni));
 		bottomPanel.add(buttonsPanel, "dock east");
 
@@ -128,6 +133,22 @@ public class Form extends JDialog {
 		statusBar.getStatLab1().setText(description.getLabel());
 		statusBar.getStatLab2().setText("Rezim za izmenu");
 
+		if(this.getTitle().equalsIgnoreCase("poslovna godina")) {
+			Enumeration<AbstractButton> enumeration = this.getDataPanel().getBtnGroups().get(0).getElements();
+			while (enumeration.hasMoreElements()) {
+			    while(enumeration.hasMoreElements()) {
+			    	enumeration.nextElement().setEnabled(false);
+			    }
+			}
+			int selected = this.getTable().getSelectedRow();
+			if(selected != -1) {
+				String val = (String) this.getTable().getModel().getValueAt(selected, 5);
+				if(val.equals("1")) {
+					this.getButtonsPanel().getCloseYear().setEnabled(false);
+				}
+			}
+		}
+		
 	}
 
 	public void nextFilter(String sifra,String column) throws SQLException{
@@ -261,6 +282,14 @@ public class Form extends JDialog {
 		this.mytmod = mytmod;
 	}
 
+	public void setButtonPanel(ButtonsPanel buttonPanel) {
+		this.buttonPanel = buttonPanel;
+	}
+	
+	public ButtonsPanel getButtonPanel() {
+		return buttonPanel;
+	}
+
 	public ButtonsPanel getButtonsPanel() {
 		return buttonsPanel;
 	}
@@ -268,8 +297,5 @@ public class Form extends JDialog {
 	public void setButtonsPanel(ButtonsPanel buttonsPanel) {
 		this.buttonsPanel = buttonsPanel;
 	}
-
-
-
 
 }
