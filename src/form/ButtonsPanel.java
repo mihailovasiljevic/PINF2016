@@ -50,12 +50,12 @@ public class ButtonsPanel extends JPanel {
 		
 
 		
-		uknjizi.addActionListener(new KnjizenjeAction(form));		
+		uknjizi.addActionListener(new KnjizenjeAction(form, 0));		
 		
 		JButton storniraj = new JButton(new ImageIcon(getClass().getResource("/slike/storniranje.png")));
 		storniraj.setToolTipText("STORNIRANJE");
 		storniraj.setText("Storniranje");
-		storniraj.addActionListener(new StorniranjeAction(form));	
+		storniraj.addActionListener(new KnjizenjeAction(form, 1));	
 		
 		JButton poNivelaciji = new JButton(new ImageIcon(getClass().getResource("/slike/nivelacija.png")));
 		poNivelaciji.setText("knjizenje po nivelaciji");
