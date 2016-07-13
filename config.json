@@ -26,6 +26,19 @@
         "KNJIZENJE",
         "STORNIRANJE"
       ]
-    }
+    },
+    "STAVKA_PROMETNOG_DOKUMENTA":{
+      "DISABLED_FIELDS" : ["STAV_PROM_DOK_VRED"]
+    },
+    "POSLOVNA_GODINA":{
+      "FORM": [
+        "COMMIT",
+        "ROLLBACK"
+      ],
+      "NEW": [
+        "OTVARANJE",
+        "ZATVARANJE"
+      ]
+  	}
   }
 }

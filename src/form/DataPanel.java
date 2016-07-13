@@ -13,7 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import button.actions.MenuBarButtonAction;
 import button.actions.PickDateAction;
@@ -23,6 +24,7 @@ import database.TableDescription;
 import main.MainFrame;
 import main.MyMenuBar;
 import net.miginfocom.swing.MigLayout;
+import util.json.JSONModel;
 
 public class DataPanel extends JPanel {
 	
@@ -70,7 +72,19 @@ public class DataPanel extends JPanel {
 				textFields.add(textField);
 				JButton datePickBtn = new JButton ("...");
 				datePickBtn.addActionListener(new PickDateAction(form,textField));
-				
+				for(JSONModel model : MainFrame.getInstance().getJsonModels()){
+					if(model.getTableName().equalsIgnoreCase(form.getDescription().getCode())){
+						for(String field : model.getDisabledFields()){
+							if(field.equals(textField.getName())){
+								
+								textField.setEnabled(false);
+								break;
+								
+							}
+						}
+						break;
+					}
+				}
 				
 				if (columnDescription.get(i).getTableParent() != null)
 				{
@@ -122,8 +136,93 @@ public class DataPanel extends JPanel {
 				
 					textField = new JTextField(fieldLength);
 					textField.setName(columnDescription.get(i).getCode());
+					if(columnDescription.get(i).getCode().equals("STAV_PROM_DOK_CEN")){
+						textField.addCaretListener(new CaretListener() {
+							
+							@Override
+							public void caretUpdate(CaretEvent e) {
+								double kolicina = -1;
+								double cena;
+								for(JTextField txt : textFields){
+									if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_KOL") && txt.getText()!="" && txt.getText()!=null){
+										try{
+											kolicina = Double.parseDouble(txt.getText());
+										}catch(Exception ex){}
+										break;
+									}
+								}
+								try{
+									cena = Double.parseDouble(textField.getText());
+									if(kolicina != -1){
+										for(JTextField txt : textFields){
+											if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_VRED")){
+												txt.setText((kolicina*cena)+"");
+											}
+										}										
+									}else{
+										for(JTextField txt : textFields){
+											if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_VRED")){
+												txt.setText("");
+											}
+										}										
+									}
+								}catch(Exception ex){
+									
+								}
+							}
+						});
+					}
+					if(columnDescription.get(i).getCode().equals("STAV_PROM_DOK_KOL")){
+						textField.addCaretListener(new CaretListener() {
+							
+							@Override
+							public void caretUpdate(CaretEvent e) {
+								double kolicina;
+								double cena = -1;
+								for(JTextField txt : textFields){
+									if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_CEN") && txt.getText()!="" && txt.getText()!=null){
+										try{
+											cena = Double.parseDouble(txt.getText());
+										}catch(Exception ex){}
+										break;
+									}
+								}
+								try{
+									kolicina = Double.parseDouble(textField.getText());
+									if(cena != -1){
+										for(JTextField txt : textFields){
+											if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_VRED")){
+												txt.setText((kolicina*cena)+"");
+											}
+										}										
+									}else{
+										for(JTextField txt : textFields){
+											if(txt.getName().equalsIgnoreCase("STAV_PROM_DOK_VRED")){
+												txt.setText("");
+											}
+										}										
+									}
+								}catch(Exception ex){
+									
+								}
+							}
+						});
+					}
 					if(i == 0)
 						textField.setEnabled(false);
+					for(JSONModel model : MainFrame.getInstance().getJsonModels()){
+						if(model.getTableName().equalsIgnoreCase(form.getDescription().getCode())){
+							for(String field : model.getDisabledFields()){
+								if(field.equals(textField.getName())){
+									
+									textField.setEnabled(false);
+									break;
+									
+								}
+							}
+							break;
+						}
+					}
 					textFields.add(textField);
 					
 					if (columnDescription.get(i).getTableParent() != null)

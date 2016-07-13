@@ -8,7 +8,8 @@ import javax.swing.JButton;
 public class JSONModel {
 	private ArrayList<String> toolbarItems;
 	private ArrayList<String> formItems;
-	private ArrayList<JButton> newFormItems;
+	private ArrayList<String> newFormItems;
+	private ArrayList<String> disabledFields;
 	private String tableName;
 
 	public JSONModel(ArrayList<String> toolbarItems, ArrayList<String> formItems, String tableName) {
@@ -22,19 +23,29 @@ public class JSONModel {
 		this.toolbarItems = new ArrayList<>();
 		this.formItems = new ArrayList<>();
 		this.newFormItems = new ArrayList<>();
+		this.disabledFields = new ArrayList<>();
 		this.tableName = tableName;
 	}
 	public JSONModel() {
 		this.toolbarItems = new ArrayList<>();
 		this.formItems = new ArrayList<>();
 		this.newFormItems = new ArrayList<>();
+		this.disabledFields = new ArrayList<>();
 		this.tableName = "";
 	}
-	public ArrayList<JButton> getNewFormItems() {
+	public ArrayList<String> getDisabledFields() {
+		return disabledFields;
+	}
+
+	public void setDisabledFields(ArrayList<String> disabledFields) {
+		this.disabledFields = disabledFields;
+	}
+
+	public ArrayList<String> getNewFormItems() {
 		return newFormItems;
 	}
 
-	public void setNewFormItems(ArrayList<JButton> newFormItems) {
+	public void setNewFormItems(ArrayList<String> newFormItems) {
 		this.newFormItems = newFormItems;
 	}
 
@@ -64,7 +75,7 @@ public class JSONModel {
 
 	public int addToolbarItem(String item) {
 
-		if (check(item, toolbarItems, "String"))
+		if (check(item, toolbarItems))
 			return -1;
 
 		toolbarItems.add(item);
@@ -73,41 +84,40 @@ public class JSONModel {
 
 	public int addFormItem(String item) {
 
-		if (check(item, formItems, "String"))
+		if (check(item, formItems))
 			return -1;
 
 		formItems.add(item);
 		return 0;
 	}
 
-	public int addButton(JButton button) {
-		if (check(button, newFormItems, "JButton"))
+	public int addButton(String button) {
+		if (check(button, newFormItems))
 			return -1;
 
 		newFormItems.add(button);
 		return 0;
 	}
+	
+	public int addDisabledField(String field) {
+		if (check(field, disabledFields))
+			return -1;
+
+		disabledFields.add(field);
+		return 0;
+	}
 
 	@SuppressWarnings("unchecked")
-	private boolean check(Object item, ArrayList<?> collection, String itemType) {
+	private boolean check(String item, ArrayList<String> collection) {
 
-		if (itemType.equalsIgnoreCase("JButton")) {
-			ArrayList<JButton> buttons = (ArrayList<JButton>) collection;
-			for (JButton s : buttons) {
-				if (s.getName().equalsIgnoreCase(((JButton) item).getName()))
-					return true;
-			}
-			return false;
-		} else if (itemType.equalsIgnoreCase("String")) {
-			ArrayList<String> strings = (ArrayList<String>) collection;
-			for (String s : strings) {
-				if (s.equalsIgnoreCase((String) item))
-					return true;
-			}
-			return false;
+
+		ArrayList<String> strings = collection;
+		for (String s : strings) {
+			if (s.equalsIgnoreCase(item))
+				return true;
 		}
-
 		return false;
+
 
 	}
 
@@ -121,20 +131,15 @@ public class JSONModel {
 		} else if (collectionName.equalsIgnoreCase("formItems")) {
 			map.put(tableName, formItems);
 			return map;
-		} else {
-			return null;
-		}
-	}
-
-	private LinkedHashMap<String, ArrayList<JButton>> getButtonMap(String collectionName) {
-
-		LinkedHashMap<String, ArrayList<JButton>> map = new LinkedHashMap<>();
-
-		if (collectionName.equalsIgnoreCase("newFormItems")) {
+		}  else if (collectionName.equalsIgnoreCase("newFormItems")) {
 			map.put(tableName, newFormItems);
+			return map;
+		}else if (collectionName.equalsIgnoreCase("disabledFields")) {
+			map.put(tableName, disabledFields);
 			return map;
 		} else {
 			return null;
 		}
 	}
+
 }
