@@ -133,13 +133,12 @@ public class Form extends JDialog {
 		statusBar.getStatLab1().setText(description.getLabel());
 		statusBar.getStatLab2().setText("Rezim za izmenu");
 
-		if(this.getButtonsPanel().getBtnRollback().isEnabled() == false) {
-			System.out.println("dis");
+		/*if(this.getButtonsPanel().getBtnRollback().isEnabled() == false) {
 			this.toolbar.getAddAction().actionPerformed(null);
 		}
 		if(this.toolbar.getAddButton().isEnabled() == false) {
 			this.toolbar.getSearchAction().actionPerformed(null);
-		}
+		}*/
 		
 		if(this.getTitle().equalsIgnoreCase("poslovna godina")) {
 			Enumeration<AbstractButton> enumeration = this.getDataPanel().getBtnGroups().get(0).getElements();
