@@ -94,6 +94,22 @@ public class DataPanel extends JPanel {
 					btnGroup.add(rBtnTrue);
 					btnGroup.add(rBtnFalse);
 					btnGroups.add(btnGroup);
+					
+					for(JSONModel model : MainFrame.getInstance().getJsonModels()){
+						if(model.getTableName().equalsIgnoreCase(form.getDescription().getCode())){
+							for(String field : model.getDisabledFields()){
+								if(field.equals(columnDescription.get(i).getCode())){
+									System.out.println("Disable button grupe.");
+									rBtnFalse.setEnabled(false);
+									rBtnTrue.setEnabled(false);
+									break;
+
+								}
+							}
+							break;
+						}
+					}
+					
 					this.add(rBtnTrue);
 					this.add(rBtnFalse, "wrap");
 

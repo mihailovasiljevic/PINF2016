@@ -4,20 +4,12 @@ import java.awt.event.ActionEvent;
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
 
-import states.InsertState;
-import main.MainFrame;
 import database.DataBase;
 import form.Form;
-import form.FormValidation;
 
 public class OpenYear extends AbstractAction {
 
@@ -30,29 +22,6 @@ public class OpenYear extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		/*Enumeration<AbstractButton> enumeration = form.getDataPanel().getBtnGroups().get(0).getElements();
-		while (enumeration.hasMoreElements()) {
-		    while(enumeration.hasMoreElements()) {
-		    	enumeration.nextElement().setEnabled(false);
-		    }
-		}*/
-		
-		if(MainFrame.getInstance().getContext().getState() instanceof InsertState) {
-			
-		} else {
-			JOptionPane.showMessageDialog(null, "Niste u stanju dodavanja", "GRESKA", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		FormValidation validation = new FormValidation(form);
-		if(!validation.isFormValid()) {
-			JOptionPane.showMessageDialog(null, "Nevalidna forma", "GRESKA", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-
-		
-		
 		
 		String POSL_GOD_GOD = form.getDataPanel().getField("POSL_GOD_GOD").getText();
 		String POSL_GOD_DAT_ID = form.getDataPanel().getField("POSL_GOD_DAT_ID").getText();
@@ -60,8 +29,9 @@ public class OpenYear extends AbstractAction {
 		String POSL_GOD_ID = form.getDataPanel().getField("POSL_GOD_ID").getText();
 		
 		System.out.println("poslovna " + POSL_GOD_ID + " " + POSL_GOD_DAT_ID + " " + POSL_SIS_ID + " " + POSL_GOD_GOD );
+		
 		try {
-			CallableStatement proc = DataBase.getConnection().prepareCall("{ call otvaranje_poslovne_godine(?,?,?,?)}");
+			CallableStatement proc = DataBase.getConnection().prepareCall("{ call otvaranje_poslovne_godine(?,?,?)}");
 				proc.setInt(1, Integer.parseInt(POSL_SIS_ID));
 				proc.setString(2, POSL_GOD_GOD);
 				
@@ -73,28 +43,17 @@ public class OpenYear extends AbstractAction {
 				Date date = new Date(Integer.parseInt(year)-1900, Integer.parseInt(month)-1, Integer.parseInt(day));
 				
 				proc.setDate(3, date);
-				proc.registerOutParameter(4, java.sql.Types.INTEGER);
 				proc.execute();
-				Integer val = proc.getInt(4);
-				
 				DataBase.getConnection().commit();
-				
-				Vector vector = new Vector();
-				vector.add(val.toString());
-				vector.add(POSL_SIS_ID);
-				vector.add(POSL_GOD_GOD);
-				vector.add(POSL_GOD_DAT_ID);
-				vector.add("");
-				vector.add("0");
-				
-				form.getTable().getModel().addRow(vector);
 
 			} catch (SQLException ee) {
 				ee.printStackTrace();
 				return;
 			}
 		
-
+		Vector adding = new Vector();
+		
+		//form.getTable().getModel().addRow(rowData);
 		
 	}
 

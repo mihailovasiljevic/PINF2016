@@ -1,10 +1,8 @@
 package toolbar.actions;
 
 import java.awt.event.ActionEvent;
-import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -54,14 +52,7 @@ public class AddAction extends AbstractAction {
 				form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 			}
 
-			if(form.getTitle().equalsIgnoreCase("poslovna godina")) {
-				Enumeration<AbstractButton> enumeration = form.getDataPanel().getBtnGroups().get(0).getElements();
-				while (enumeration.hasMoreElements()) {
-				    while(enumeration.hasMoreElements()) {
-				    	enumeration.nextElement().setEnabled(false);
-				    }
-				}
-			}
+
 
 			((Form) standardForm).setMode(2);
 		}
