@@ -61,16 +61,43 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setLabel(bundC.getString(key));
 				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
-				if(foreignTables.containsKey(cdescription.get(j).getCode())) {
-					cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
-					//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
-					//Milos2: koji je smisao ovoga? uzmemo neku kolonu i setujemo joj njen sopstveni Code kao codeInParent?
-					cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
-
-				} else {				
-					cdescription.get(j).setTableParent(null);
-					cdescription.get(j).setCodeInParent(null);
+				String childKey = null;
+				for(String s : foreignTables.keySet()){
+					if(cdescription.get(j).getCode().contains(s)){
+						childKey = s;
+						break;
+					}
 				}
+				if(childKey == null)
+					if(foreignTables.containsKey(cdescription.get(j).getCode())) {
+						if(childKey != null)
+							cdescription.get(j).setTableParent(childKey);
+						else
+							cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
+							
+						//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
+						//Milos2: koji je smisao ovoga? uzmemo neku kolonu i setujemo joj njen sopstveni Code kao codeInParent?
+						cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
+	
+					} else {				
+						cdescription.get(j).setTableParent(null);
+						cdescription.get(j).setCodeInParent(null);
+					}
+				else
+					if(foreignTables.containsKey(childKey)) {
+						if(childKey != null)
+							cdescription.get(j).setTableParent(childKey);
+						else
+							cdescription.get(j).setTableParent(foreignTables.get(cdescription.get(j).getCode()));
+							
+						//Milos: Umesto setTableParent cu napisati setCodeInParent posto pretpostavljam da je to Nemanja hteo
+						//Milos2: koji je smisao ovoga? uzmemo neku kolonu i setujemo joj njen sopstveni Code kao codeInParent?
+						cdescription.get(j).setCodeInParent(cdescription.get(j).getCode());
+	
+					} else {				
+						cdescription.get(j).setTableParent(null);
+						cdescription.get(j).setCodeInParent(null);
+					}				
 			}
 			tdescription.setColumnsDescriptions(cdescription);
 			button = new JMenuItem(tdescription.getLabel());

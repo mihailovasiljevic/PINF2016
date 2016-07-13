@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     12.07.2016. 16:48:15                         */
+/* Created on:     13.07.2016. 11:27:50                         */
 /*==============================================================*/
 
 
@@ -121,6 +121,13 @@ if exists (select 1
    where r.fkeyid = object_id('PROMETNI_DOKUMENT') and o.name = 'FK_PROMETNI_LOKACIJA__MAGACIN')
 alter table PROMETNI_DOKUMENT
    drop constraint FK_PROMETNI_LOKACIJA__MAGACIN
+go
+
+if exists (select 1
+   from sys.sysreferences r join sys.sysobjects o on (o.id = r.constid and o.type = 'F')
+   where r.fkeyid = object_id('PROMETNI_DOKUMENT') and o.name = 'FK_PROMETNI_RELATIONS_MAGACIN')
+alter table PROMETNI_DOKUMENT
+   drop constraint FK_PROMETNI_RELATIONS_MAGACIN
 go
 
 if exists (select 1
@@ -445,6 +452,15 @@ if exists (select 1
            where  id = object_id('POSLOVNI_SISTEM')
             and   type = 'U')
    drop table POSLOVNI_SISTEM
+go
+
+if exists (select 1
+            from  sysindexes
+           where  id    = object_id('PROMETNI_DOKUMENT')
+            and   name  = 'RELATIONSHIP_30_FK'
+            and   indid > 0
+            and   indid < 255)
+   drop index PROMETNI_DOKUMENT.RELATIONSHIP_30_FK
 go
 
 if exists (select 1
@@ -950,16 +966,17 @@ go
 create table PROMETNI_DOKUMENT (
    PROM_DOK_ID          int                  identity,
    POSL_SIS_ID          int                  not null,
-   MAG_ID               int                  not null,
+   MAG_ID               int                  null,
+   MAG_MAG_ID           int                  null,
    POSL_GOD_ID          int                  not null,
    PROM_DOK_NAZ         varchar(80)          not null,
    PROM_DOK_RBR         int                  not null,
-   PROM_DOK_DAT_FORM    datetime             null,
+   PROM_DOK_DAT_FORM    datetime             not null,
    PROM_DOK_DAT_KNJIZ   datetime             null,
-   PROM_DOK_STAT        char(1)              null
-      constraint CKC_PROM_DOK_STAT_PROMETNI check (PROM_DOK_STAT is null or (PROM_DOK_STAT in ('F','P','S'))),
-   PROM_DOK_VRST        char(1)              null
-      constraint CKC_PROM_DOK_VRST_PROMETNI check (PROM_DOK_VRST is null or (PROM_DOK_VRST in ('P','O','M'))),
+   PROM_DOK_STAT        char(1)              not null
+      constraint CKC_PROM_DOK_STAT_PROMETNI check (PROM_DOK_STAT in ('F','P','S')),
+   PROM_DOK_VRST        char(1)              not null
+      constraint CKC_PROM_DOK_VRST_PROMETNI check (PROM_DOK_VRST in ('P','O','M')),
    constraint PK_PROMETNI_DOKUMENT primary key nonclustered (PROM_DOK_ID)
 )
 go
@@ -985,6 +1002,14 @@ go
 /*==============================================================*/
 create index LOKACIJA_U_PROMETU_FK on PROMETNI_DOKUMENT (
 MAG_ID ASC
+)
+go
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_30_FK                                    */
+/*==============================================================*/
+create index RELATIONSHIP_30_FK on PROMETNI_DOKUMENT (
+MAG_MAG_ID ASC
 )
 go
 
@@ -1292,6 +1317,11 @@ go
 
 alter table PROMETNI_DOKUMENT
    add constraint FK_PROMETNI_LOKACIJA__MAGACIN foreign key (MAG_ID)
+      references MAGACIN (MAG_ID)
+go
+
+alter table PROMETNI_DOKUMENT
+   add constraint FK_PROMETNI_RELATIONS_MAGACIN foreign key (MAG_MAG_ID)
       references MAGACIN (MAG_ID)
 go
 
