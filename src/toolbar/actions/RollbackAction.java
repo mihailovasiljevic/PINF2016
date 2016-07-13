@@ -47,7 +47,7 @@ public class RollbackAction extends AbstractAction {
 		{
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 		}
-		updateState.doAction(MainFrame.getInstance().getContext(), form);
+		((UpdateState)updateState).addButton(form);
 		MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 	}
 }

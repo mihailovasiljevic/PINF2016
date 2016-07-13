@@ -50,6 +50,9 @@ public class SearchState  extends AState{
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 		}
 		
+	}
+	
+	public void removeButton(Form form){
 		if(form.getDescription().getCode().equals("ROBNA_KARTICA")){
 			for(JButton b : form.getButtonsPanel().getButtons()){
 				if(b.getToolTipText().equalsIgnoreCase("Nivelacija")){

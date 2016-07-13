@@ -48,5 +48,16 @@ public class UpdateState extends AState {
 			}
 		}
 	}
+	
+	public void addButton(Form form){
+		if (form.getDescription().getCode().equals("ROBNA_KARTICA")) {
+			for (JButton b : form.getButtonsPanel().getButtons()) {
+				if (b.getToolTipText().equalsIgnoreCase("Nivelacija")) {
+					form.getButtonsPanel().add(b);
+					break;
+				}
+			}
+		}
+	}
 
 }
