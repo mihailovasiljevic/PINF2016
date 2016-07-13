@@ -144,9 +144,7 @@ public class Form extends JDialog {
 		if(this.getTitle().equalsIgnoreCase("poslovna godina")) {
 			Enumeration<AbstractButton> enumeration = this.getDataPanel().getBtnGroups().get(0).getElements();
 			while (enumeration.hasMoreElements()) {
-			    while(enumeration.hasMoreElements()) {
 			    	enumeration.nextElement().setEnabled(false);
-			    }
 			}
 			int selected = this.getTable().getSelectedRow();
 			if(selected != -1) {

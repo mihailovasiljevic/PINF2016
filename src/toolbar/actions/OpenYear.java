@@ -13,6 +13,7 @@ import states.InsertState;
 import main.MainFrame;
 import database.DataBase;
 import form.Form;
+import form.FormValidation;
 
 public class OpenYear extends AbstractAction {
 
@@ -25,6 +26,11 @@ public class OpenYear extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		FormValidation validation = new FormValidation(form);
+		if(validation.isFormValid() == false) {
+			JOptionPane.showMessageDialog(null, "Neispravna forma ", "GRESKA", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
 		String POSL_GOD_GOD = form.getDataPanel().getField("POSL_GOD_GOD").getText();
 		String POSL_GOD_DAT_ID = form.getDataPanel().getField("POSL_GOD_DAT_ID").getText();
