@@ -31,7 +31,7 @@ public class OpenYear extends AbstractAction {
 		System.out.println("poslovna " + POSL_GOD_ID + " " + POSL_GOD_DAT_ID + " " + POSL_SIS_ID + " " + POSL_GOD_GOD );
 		
 		try {
-			CallableStatement proc = DataBase.getConnection().prepareCall("{ call otvaranje_poslovne_godine(?,?,?)}");
+			CallableStatement proc = DataBase.getConnection().prepareCall("{ call otvaranje_poslovne_godine(?,?,?,?)}");
 				proc.setInt(1, Integer.parseInt(POSL_SIS_ID));
 				proc.setString(2, POSL_GOD_GOD);
 				
@@ -43,7 +43,9 @@ public class OpenYear extends AbstractAction {
 				Date date = new Date(Integer.parseInt(year)-1900, Integer.parseInt(month)-1, Integer.parseInt(day));
 				
 				proc.setDate(3, date);
+				proc.registerOutParameter(4, java.sql.Types.INTEGER);
 				proc.execute();
+				//proc.getString(4);
 				DataBase.getConnection().commit();
 
 			} catch (SQLException ee) {
