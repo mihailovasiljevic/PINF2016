@@ -303,18 +303,23 @@ public class MyTableModel extends DefaultTableModel {
 				{	
 					String param="";
 					if(!(data.get(key)==null && addedFields.get(j).getText().equals(""))){
+						
+					if(addedFields.get(j).getToolTipText()!=null)
 					if(!addedFields.get(j).getToolTipText().equals("date"))
 						param="-9999999999";
 					else param="12-12-1901";
+					else param="-9999999999";
 					if(!(data.get(key)==null))
 						param=data.get(key);
 					stmt.setString(i, param);
 					i++;
 					
 					String param2="";
+					if(addedFields.get(j).getToolTipText()!=null)
 					if(!addedFields.get(j).getToolTipText().equals("date"))
 						param2 = "9999999999";
 					else param2="12-12-2099";
+					else param2="9999999999";
 					if(!addedFields.get(j).getText().equals(""))
 						param2 = addedFields.get(j).getText();
 					stmt.setString(i, param2);
