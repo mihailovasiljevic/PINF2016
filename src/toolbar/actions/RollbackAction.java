@@ -7,6 +7,10 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
+import states.InsertState;
+import states.State;
+import states.UpdateState;
+import main.MainFrame;
 import form.Form;
 
 public class RollbackAction extends AbstractAction {
@@ -24,9 +28,10 @@ public class RollbackAction extends AbstractAction {
 		if(standardForm instanceof Form){
 			((Form) standardForm).setMode(1);
 		}
-		
+		State updateState = new UpdateState();
+		MainFrame.getInstance().getContext().setState(updateState);
 		Form form = (Form)standardForm;
-
+		updateState.disableButtons(((Form)standardForm));
 		for(int i=0; i<form.getDataPanel().getAddedTextFields().size();i++)
 		{
 			form.getDataPanel().getAddedTextFields().get(i).setVisible(false);

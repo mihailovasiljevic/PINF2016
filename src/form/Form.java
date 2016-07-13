@@ -51,6 +51,7 @@ public class Form extends JDialog {
 	private Form parentForm;
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
+	private ButtonsPanel buttonsPanel;
 
 
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
@@ -98,7 +99,8 @@ public class Form extends JDialog {
 		boolean isPrometni = false;
 		if(tdescription.getCode().equalsIgnoreCase("PROMETNI_DOKUMENT"))
 			isPrometni = true;
-		bottomPanel.add(new ButtonsPanel(this, isPrometni),"dock east");
+		setButtonsPanel(new ButtonsPanel(this,isPrometni));
+		bottomPanel.add(buttonsPanel, "dock east");
 
 		add(bottomPanel, "grow, wrap");
 
@@ -257,6 +259,14 @@ public class Form extends JDialog {
 
 	public void setMytmod(MyTableModel mytmod) {
 		this.mytmod = mytmod;
+	}
+
+	public ButtonsPanel getButtonsPanel() {
+		return buttonsPanel;
+	}
+
+	public void setButtonsPanel(ButtonsPanel buttonsPanel) {
+		this.buttonsPanel = buttonsPanel;
 	}
 
 

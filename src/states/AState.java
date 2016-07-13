@@ -71,6 +71,14 @@ public abstract class AState implements State{
 		form.getDataPanel().getTextFields().get(0).setEditable(isEditable);
 	}
 	
+	@Override
+	public void disableButtons(Form form){
+		if(!form.getButtonsPanel().isBtnsEnabled()){
+			form.getButtonsPanel().getBtnCommit().setEnabled(false);
+			form.getButtonsPanel().getBtnRollback().setEnabled(false);
+			}
+	}
+	
 	
 
 	

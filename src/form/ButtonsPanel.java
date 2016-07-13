@@ -29,6 +29,7 @@ import util.json.JSONModel;
 @SuppressWarnings("serial")
 public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
+	private boolean btnsEnabled=true;
 	public ButtonsPanel(Form form, boolean isPrometni){
 		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
 		ArrayList<JButton> buttons = new ArrayList<>();
@@ -87,6 +88,7 @@ public class ButtonsPanel extends JPanel {
 		
 		for(JSONModel model : jsonModels){
 			if(form.getDescription().getCode().equalsIgnoreCase(model.getTableName())){
+				btnsEnabled=false;
 				for(String s : model.getFormItems()){
 					for(JButton but : buttons){
 						if(s.equalsIgnoreCase(but.getToolTipText())){
@@ -106,4 +108,25 @@ public class ButtonsPanel extends JPanel {
 		}
 
 	}
+	public JButton getBtnCommit() {
+		return btnCommit;
+	}
+	public void setBtnCommit(JButton btnCommit) {
+		this.btnCommit = btnCommit;
+	}
+	public JButton getBtnRollback() {
+		return btnRollback;
+	}
+	public void setBtnRollback(JButton btnRollback) {
+		this.btnRollback = btnRollback;
+	}
+	public boolean isBtnsEnabled() {
+		return btnsEnabled;
+	}
+	public void setBtnsEnabled(boolean btnsEnabled) {
+		this.btnsEnabled = btnsEnabled;
+	}
+	
+	
+	
 }
