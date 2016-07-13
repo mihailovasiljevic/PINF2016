@@ -170,7 +170,7 @@ public class DataPanel extends JPanel {
 			if(model.getTableName().equalsIgnoreCase(form.getDescription().getCode())){
 				for(String field : model.getDisabledFields()){
 					if(field.equals(textField.getName())){
-
+						datePickBtn.setEnabled(false);
 						textField.setEnabled(false);
 						break;
 

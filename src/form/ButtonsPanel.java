@@ -29,7 +29,9 @@ import util.json.JSONModel;
 @SuppressWarnings("serial")
 public class ButtonsPanel extends JPanel {
 	private JButton btnCommit,  btnRollback;
+
 	private JButton closeYear;
+
 	private boolean btnsEnabled=true;
 	public ButtonsPanel(Form form, boolean isPrometni){
 		ArrayList<JSONModel> jsonModels = MainFrame.getInstance().getJsonModels();
@@ -127,6 +129,7 @@ public class ButtonsPanel extends JPanel {
 	public void setBtnsEnabled(boolean btnsEnabled) {
 		this.btnsEnabled = btnsEnabled;
 	}
+
 	public JButton getCloseYear() {
 		return closeYear;
 	}

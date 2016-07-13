@@ -41,9 +41,9 @@ public class TableSelection implements ListSelectionListener {
 			if(selected != -1) {
 				String zatvoreno = (String) form.getTable().getModel().getValueAt(selected, 5);
 				if(zatvoreno.equals("1")) {
-					form.getButtonPanel().getCloseYear().setEnabled(false);
+					form.getButtonsPanel().getCloseYear().setEnabled(false);
 				} else {
-					form.getButtonPanel().getCloseYear().setEnabled(true);
+					form.getButtonsPanel().getCloseYear().setEnabled(true);
 				}
 			}
 		}

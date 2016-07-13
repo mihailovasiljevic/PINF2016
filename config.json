@@ -42,7 +42,7 @@
        "TOOLBAR": [
         "Brisanje"
       ],
-      "DISABLED_FIELDS" : ["POSL_GOD_DAT_DO"]
+      "DISABLED_FIELDS" : ["POSL_GOD_DAT_ID", "POSL_GOD_DAT_DO"]
   	}
   }
 }

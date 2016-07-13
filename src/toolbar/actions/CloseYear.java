@@ -42,7 +42,7 @@ public class CloseYear extends AbstractAction {
 				if(sela != -1) {
 					form.getTable().getModel().setValueAt(new Date().toString(), sela, 4);
 					form.getTable().getModel().setValueAt("1", sela, 5);
-					form.getButtonPanel().getCloseYear().setEnabled(false);
+					form.getButtonsPanel().getCloseYear().setEnabled(false);
 				}
 				DataBase.getConnection().commit();
 			}

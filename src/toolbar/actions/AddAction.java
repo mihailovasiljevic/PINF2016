@@ -34,6 +34,7 @@ public class AddAction extends AbstractAction {
 			MainFrame.getInstance().getContext().setState(insertState);
 			insertState.clearAll((Form)standardForm);
 			insertState.setEditable((Form)standardForm, true);
+			insertState.disableButtons(((Form)standardForm));
 			((Form)standardForm).getDataPanel().getTextFields().get(0).requestFocus();
 
 			Form form = (Form)standardForm;

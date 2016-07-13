@@ -55,6 +55,7 @@ public class Form extends JDialog {
 	private Form parentForm;
 	private MyTableModel mytmod;
 	private MyToolBar toolbar;
+
 	private ButtonsPanel buttonsPanel;
 
 	public Form(Window parent, TableDescription tdescription, JTextField field, String code) {
@@ -102,9 +103,9 @@ public class Form extends JDialog {
 		boolean isPrometni = false;
 		if(tdescription.getCode().equalsIgnoreCase("PROMETNI_DOKUMENT"))
 			isPrometni = true;
-		this.buttonPanel = new ButtonsPanel(this, isPrometni);
+
 		setButtonsPanel(new ButtonsPanel(this,isPrometni));
-		bottomPanel.add(this.buttonPanel,"dock east");
+		bottomPanel.add(buttonsPanel, "dock east");
 
 		add(bottomPanel, "grow, wrap");
 
@@ -143,7 +144,7 @@ public class Form extends JDialog {
 			if(selected != -1) {
 				String val = (String) this.getTable().getModel().getValueAt(selected, 5);
 				if(val.equals("1")) {
-					this.getButtonPanel().getCloseYear().setEnabled(false);
+					this.getButtonsPanel().getCloseYear().setEnabled(false);
 				}
 			}
 		}
@@ -281,12 +282,12 @@ public class Form extends JDialog {
 		this.mytmod = mytmod;
 	}
 
-	public ButtonsPanel getButtonPanel() {
-		return buttonPanel;
-	}
-
 	public void setButtonPanel(ButtonsPanel buttonPanel) {
 		this.buttonPanel = buttonPanel;
+	}
+	
+	public ButtonsPanel getButtonPanel() {
+		return buttonPanel;
 	}
 
 	public ButtonsPanel getButtonsPanel() {
