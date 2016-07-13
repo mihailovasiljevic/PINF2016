@@ -36,7 +36,7 @@ public class MyTableModel extends DefaultTableModel {
 	private String orderBy;
 	private TableDescription tdescription;
 	private String query;
-	
+
 	public MyTableModel(Object[] colNames, int rowCount) {
 		super(colNames, rowCount);
 	}
@@ -61,15 +61,11 @@ public class MyTableModel extends DefaultTableModel {
 		this.query = "SELECT * FROM " + tableName;
 	}
 
-
 	@Override
-    public boolean isCellEditable(int row, int column) {
-       //all cells false
-       return false;
-    }
-	
-
-
+	public boolean isCellEditable(int row, int column) {
+		// all cells false
+		return false;
+	}
 
 	// otvaranje upita
 	public void open() throws SQLException {
@@ -113,7 +109,7 @@ public class MyTableModel extends DefaultTableModel {
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
 		String _id = (String) getValueAt(index, 0);
 		// Deleting from the database
-		stmt.setString(1,_id);
+		stmt.setString(1, _id);
 		int rowsAffected = stmt.executeUpdate();
 		stmt.close();
 		DataBase.getConnection().commit();
@@ -136,21 +132,23 @@ public class MyTableModel extends DefaultTableModel {
 		int i = 1;
 		boolean first = true;
 		for (String key : data.keySet()) {
-			if(first){
+			if (first) {
 				first = false;
 				continue;
-			}	
+			}
 			stmt.setString(i, data.get(key));
 			i++;
 		}
 
 		int rowsAffected = stmt.executeUpdate();
-		String select = "SELECT * FROM "+tdescription.getCode()+" WHERE "+tdescription.getColumnsDescriptions().get(0).getCode()+"=(select max("+tdescription.getColumnsDescriptions().get(0).getCode()+") from "+tdescription.getCode()+");";
+		String select = "SELECT * FROM " + tdescription.getCode() + " WHERE "
+				+ tdescription.getColumnsDescriptions().get(0).getCode() + "=(select max("
+				+ tdescription.getColumnsDescriptions().get(0).getCode() + ") from " + tdescription.getCode() + ");";
 		System.out.println("select: " + select);
 		stmt = DataBase.getConnection().prepareStatement(select);
 		ResultSet rs = stmt.executeQuery();
 		String id = null;
-		while(rs.next()){
+		while (rs.next()) {
 			id = rs.getString(1);
 		}
 		data.put(tdescription.getColumnsDescriptions().get(0).getCode(), id);
@@ -261,80 +259,80 @@ public class MyTableModel extends DefaultTableModel {
 		if (rowsAffected > 0)
 			fireTableDataChanged();
 	}
-	
-	private String makeSearchQuery(LinkedHashMap<String, String> data,String tableName, Vector<JTextField> addedFields){
-		String query = "SELECT * FROM "+tableName +" WHERE ";
-		
+
+	private String makeSearchQuery(LinkedHashMap<String, String> data, String tableName,
+			Vector<JTextField> addedFields) {
+		String query = "SELECT * FROM " + tableName + " WHERE ";
+
 		for (String key : data.keySet()) {
-			boolean opseg =false;
-			for(int i=0; i<addedFields.size();i++)
-			{
-				if(addedFields.get(i).getName().equals(key))
-				{
-					if(!(data.get(key)==null  && addedFields.get(i).getText().equals(""))){
-					query+=key+" BETWEEN ? AND ? AND ";
+			boolean opseg = false;
+			for (int i = 0; i < addedFields.size(); i++) {
+				if (addedFields.get(i).getName().equals(key)) {
+					if (!(data.get(key) == null && addedFields.get(i).getText().equals(""))) {
+						query += key + " BETWEEN ? AND ? AND ";
 					}
-					opseg=true;
+					opseg = true;
 					break;
 				}
 			}
-			
-			if(!opseg)
-				if(!(data.get(key)==null))
-						query += key + " LIKE ? AND ";
+
+			if (!opseg)
+				if (!(data.get(key) == null))
+					query += key + " LIKE ? AND ";
 		}
-		
+
 		query = query.substring(0, query.length() - 4);
 		return query;
 	}
-	
-	public void search(LinkedHashMap<String, String> data,Vector<JTextField> addedFields)throws SQLException{
+
+	public void search(LinkedHashMap<String, String> data, Vector<JTextField> addedFields) throws SQLException {
 		String query = makeSearchQuery(data, tdescription.getCode(), addedFields);
 		PreparedStatement stmt = DataBase.getConnection().prepareStatement(query);
-		
-		
+
 		int i = 1;
 		for (String key : data.keySet()) {
 			System.out.println(data.get(key));
-			boolean opseg=false;
-			for(int j=0; j<addedFields.size();j++)
-			{
-				if(addedFields.get(j).getName().equals(key))
-				{	
-					String param="";
-					if(!(data.get(key)==null && addedFields.get(j).getText().equals(""))){
-					if(!addedFields.get(j).getToolTipText().equals("date"))
-						param="-9999999999";
-					else param="12-12-1901";
-					if(!(data.get(key)==null))
-						param=data.get(key);
-					stmt.setString(i, param);
-					i++;
-					
-					String param2="";
-					if(!addedFields.get(j).getToolTipText().equals("date"))
-						param2 = "9999999999";
-					else param2="12-12-2099";
-					if(!addedFields.get(j).getText().equals(""))
-						param2 = addedFields.get(j).getText();
-					stmt.setString(i, param2);
-					i++;
+			boolean opseg = false;
+			for (int j = 0; j < addedFields.size(); j++) {
+				if (addedFields.get(j).getName().equals(key)) {
+					String param = "";
+					if (!(data.get(key) == null && addedFields.get(j).getText().equals(""))) {
+						if (addedFields.get(j).getToolTipText() != null)
+							if (!addedFields.get(j).getToolTipText().equals("date"))
+								param = "-9999999999";
+							else
+								param = "12-12-1901";
+						if (!(data.get(key) == null))
+							param = data.get(key);
+						stmt.setString(i, param);
+						i++;
+
+						String param2 = "";
+						if (addedFields.get(j).getToolTipText() != null)
+							if (!addedFields.get(j).getToolTipText().equals("date"))
+								param2 = "9999999999";
+							else
+								param2 = "12-12-2099";
+						if (!addedFields.get(j).getText().equals(""))
+							param2 = addedFields.get(j).getText();
+						stmt.setString(i, param2);
+						i++;
 					}
-					opseg=true;
+					opseg = true;
 					break;
 				}
 			}
-			
-			if(!opseg){
-			String param="";
-			if(!(data.get(key)==null))
-				param=data.get(key);
-			
-			if(data.get(key)!=null){
-			stmt.setString(i, "%"+param+"%");
-			System.out.println("%"+param+"%");
-			i++;
-			}
+
+			if (!opseg) {
+				String param = "";
+				if (!(data.get(key) == null))
+					param = data.get(key);
+
+				if (data.get(key) != null) {
+					stmt.setString(i, "%" + param + "%");
+					System.out.println("%" + param + "%");
+					i++;
+				}
 			}
 		}
 		System.out.println(query);
@@ -343,12 +341,11 @@ public class MyTableModel extends DefaultTableModel {
 		// check if update successfuly passed
 
 	}
-	
+
 	private void fillDataSearch(PreparedStatement stmt) throws SQLException {
 		String[] colValues = new String[tdescription.getColumnsDescriptions().size()];
 		setRowCount(0);
 
-	
 		ResultSet rset = stmt.executeQuery();
 
 		while (rset.next()) {
@@ -363,7 +360,6 @@ public class MyTableModel extends DefaultTableModel {
 		fireTableDataChanged();
 
 	}
-	
 
 	private static final int CUSTOM_ERROR_CODE = 50000;
 	private static final String ERROR_RECORD_WAS_CHANGED = "Slog je promenjen od strane drugog korisnika. Molim vas, pogledajte njegovu trenutnu vrednost";
@@ -374,15 +370,14 @@ public class MyTableModel extends DefaultTableModel {
 		// assumption: first column in list of column is always primary key or
 		// semantic unique identifier!
 		String sql = query + " WHERE " + tdescription.getColumnsDescriptions().get(0).getCode() + " = ?";
-		
+
 		PreparedStatement selectStmt = DataBase.getConnection().prepareStatement(sql);
-		try{
+		try {
 			String _id = (String) getValueAt(index, 0);
 			selectStmt.setString(1, _id);
-		}catch (ArrayIndexOutOfBoundsException e) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Tabela je prazna nema s cim da se poredi.");
 		}
-		
 
 		ResultSet rset = selectStmt.executeQuery();
 		String[] newValues = new String[tdescription.getColumnsDescriptions().size()];
@@ -416,12 +411,13 @@ public class MyTableModel extends DefaultTableModel {
 	private Boolean identicalValues(String[] newValues, int index) {
 		boolean retVal = true;
 		for (int i = 0; i < newValues.length; i++) {
-			try{
-				if ((SortUtils.getLatCyrCollator().compare(newValues[i], ((String) getValueAt(index, i)).trim()) != 0)) {
+			try {
+				if ((SortUtils.getLatCyrCollator().compare(newValues[i],
+						((String) getValueAt(index, i)).trim()) != 0)) {
 					retVal = false;
 					break;
 				}
-			}catch (Exception e) {
+			} catch (Exception e) {
 				System.out.println("Null vrednost u koloni: " + e.getMessage());
 			}
 		}
@@ -435,28 +431,25 @@ public class MyTableModel extends DefaultTableModel {
 	public void setTdescription(TableDescription tdescription) {
 		this.tdescription = tdescription;
 	}
-	
-	public String[] getRowData(int rowIndex){
-        if (rowIndex  >  getRowCount() || rowIndex  <  0){
-            return null;
-        }	
-        ArrayList <String>  data = new ArrayList < String > ();
-        for (int c = 0; c  <  getColumnCount(); c++)
-        {
-            data.add((String) getValueforCell(rowIndex, c));
-        }
-        String[] retVal = new String[data.size()];
-        for (int i = 0; i  <  retVal.length; i++)
-        {
-            retVal[i] = data.get(i);
-        }
-        return retVal;
-	}
-    public String getValueforCell(int row, int col)
-    {
-        return (String) super.getValueAt(row, col).toString();
-    }
 
+	public String[] getRowData(int rowIndex) {
+		if (rowIndex > getRowCount() || rowIndex < 0) {
+			return null;
+		}
+		ArrayList<String> data = new ArrayList<String>();
+		for (int c = 0; c < getColumnCount(); c++) {
+			data.add((String) getValueforCell(rowIndex, c));
+		}
+		String[] retVal = new String[data.size()];
+		for (int i = 0; i < retVal.length; i++) {
+			retVal[i] = data.get(i);
+		}
+		return retVal;
+	}
+
+	public String getValueforCell(int row, int col) {
+		return (String) super.getValueAt(row, col).toString();
+	}
 
 	// method tester
 	/*
