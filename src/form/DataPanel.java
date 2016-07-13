@@ -3,10 +3,12 @@ package form;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.text.Format;
+import java.util.Enumeration;
 import java.util.Formatter;
 import java.util.Properties;
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -83,6 +85,7 @@ public class DataPanel extends JPanel {
 				if(columnDescription.get(i).getType().equalsIgnoreCase("bit"))
 				{
 					ButtonGroup btnGroup = new ButtonGroup();
+					
 					JRadioButton rBtnTrue = new JRadioButton();
 					rBtnTrue.setText("Da");
 					JRadioButton rBtnFalse = new JRadioButton();
@@ -368,6 +371,7 @@ public class DataPanel extends JPanel {
 		}
 		
 		textField.setVisible(visible);
+		
 	}
 
 
@@ -402,4 +406,6 @@ public class DataPanel extends JPanel {
 	public void setAddedPickBtns(Vector<JButton> addedPickBtns) {
 		this.addedPickBtns = addedPickBtns;
 	}
+	
+	
 }

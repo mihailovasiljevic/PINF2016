@@ -35,15 +35,16 @@ public class TableSelection implements ListSelectionListener {
 			*/
 			MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 		}
-		
+		System.out.println("here");
 		if(form.getTitle().equalsIgnoreCase("Poslovna godina")) {
 			int selected = form.getTable().getSelectedRow();
-			String zatvoreno = (String) form.getTable().getModel().getValueAt(selected, 5);
-			if(zatvoreno.equals("1")) {
-				System.out.println("ulaznica");
-				form.getButtonPanel().getCloseYear().setEnabled(false);
-			} else {
-				form.getButtonPanel().getCloseYear().setEnabled(true);
+			if(selected != -1) {
+				String zatvoreno = (String) form.getTable().getModel().getValueAt(selected, 5);
+				if(zatvoreno.equals("1")) {
+					form.getButtonPanel().getCloseYear().setEnabled(false);
+				} else {
+					form.getButtonPanel().getCloseYear().setEnabled(true);
+				}
 			}
 		}
 

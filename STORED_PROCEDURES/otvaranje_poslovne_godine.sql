@@ -9,7 +9,8 @@ GO
 CREATE PROCEDURE dbo.[otvaranje_poslovne_godine]
    @POSL_SIS_ID INT,
    @POSL_GOD_GOD char(4),
-   @POSL_GOD_DAT_ID datetime
+   @POSL_GOD_DAT_ID datetime,
+   @ID INT OUTPUT
 AS
   
   declare @POSL_GOD_ID INT,
@@ -20,7 +21,9 @@ AS
   INSERT INTO POSLOVNA_GODINA values (@POSL_SIS_ID, @POSL_GOD_GOD, @POSL_GOD_DAT_ID, null, 0);
 
   select top 1 @POSL_GOD_ID_NEW = POSL_GOD_ID from POSLOVNA_GODINA order by POSL_GOD_ID desc;
-
+	
+  SET @ID = @POSL_GOD_ID_NEW;
+	
   declare @ROB_KART_ID INT,
 		  @MAG_ID INT,
 		  @ROBA_ID INT,

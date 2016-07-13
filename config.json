@@ -38,7 +38,11 @@
       "NEW": [
         "OTVARANJE",
         "ZATVARANJE"
-      ]
+      ],
+       "TOOLBAR": [
+        "Brisanje"
+      ],
+      "DISABLED_FIELDS" : ["POSL_GOD_DAT_DO"]
   	}
   }
 }
