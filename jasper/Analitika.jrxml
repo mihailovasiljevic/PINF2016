@@ -13,15 +13,28 @@
      MAGACIN."MAG_NAZ" AS MAGACIN_MAG_NAZ,
      ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_SMER" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_SMER,
      ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_KOL" AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_KOL,
+<<<<<<< HEAD
+     PROMETNI_DOKUMENT."PROM_DOK_ID" AS PROMETNI_DOKUMENT_PROM_DOK_ID,
+     PROMETNI_DOKUMENT."PROM_DOK_DAT_KNJIZ" AS PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ,
+     ROBNA_KARTICA."ROB_KART_ID" AS ROBNA_KARTICA_ROB_KART_ID,
+     (ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_ID") AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID,
+     ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_RBR" AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_RBR
+=======
      ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_VRS_PROM" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRS_PROM,
      PROMETNI_DOKUMENT."PROM_DOK_ID" AS PROMETNI_DOKUMENT_PROM_DOK_ID
 
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 FROM
      "dbo"."ROBNA_KARTICA" ROBNA_KARTICA INNER JOIN "dbo"."ANALITIKA_MAGACINSKE_KARTICE" ANALITIKA_MAGACINSKE_KARTICE ON ROBNA_KARTICA."ROB_KART_ID" = ANALITIKA_MAGACINSKE_KARTICE."ROB_KART_ID"
      INNER JOIN "dbo"."MAGACIN" MAGACIN ON ROBNA_KARTICA."MAG_ID" = MAGACIN."MAG_ID"
      INNER JOIN "dbo"."PROMETNI_DOKUMENT" PROMETNI_DOKUMENT ON MAGACIN."MAG_ID" = PROMETNI_DOKUMENT."MAG_ID"
 WHERE
+<<<<<<< HEAD
+     PROMETNI_DOKUMENT."MAG_ID" = $P{magaciniId}
+ AND PROMETNI_DOKUMENT."PROM_DOK_DAT_KNJIZ" BETWEEN $P{DatumOd}and$P{DatumDo}]]>
+=======
      ROBNA_KARTICA."MAG_ID" = $P{magaciniId}]]>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 	</queryString>
 	<field name="ANALTIKA_ID" class="java.lang.Integer"/>
 	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA" class="java.math.BigDecimal"/>
@@ -29,10 +42,13 @@ WHERE
 	<field name="MAGACIN_MAG_NAZ" class="java.lang.String"/>
 	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_SMER" class="java.lang.String"/>
 	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_KOL" class="java.math.BigDecimal"/>
-	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRS_PROM" class="java.lang.String"/>
 	<field name="PROMETNI_DOKUMENT_PROM_DOK_ID" class="java.lang.Integer"/>
+	<field name="PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ" class="java.sql.Timestamp"/>
+	<field name="ROBNA_KARTICA_ROB_KART_ID" class="java.lang.Integer"/>
+	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID" class="java.lang.Integer"/>
+	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_RBR" class="java.lang.Integer"/>
 	<variable name="ukupno" class="java.lang.Double" calculation="Sum">
-		<variableExpression><![CDATA[]]></variableExpression>
+		<variableExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED}]]></variableExpression>
 	</variable>
 	<variable name="adding" class="java.lang.Double" resetType="None">
 		<variableExpression><![CDATA[]]></variableExpression>
@@ -70,19 +86,27 @@ WHERE
 				<text><![CDATA[Id prometa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="241" y="101" width="63" height="20" uuid="7e4937af-b46d-4f04-b51b-ea6d246f1d74"/>
+				<reportElement x="339" y="101" width="63" height="20" uuid="7e4937af-b46d-4f04-b51b-ea6d246f1d74"/>
 				<text><![CDATA[Kolicina]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="322" y="101" width="58" height="20" uuid="b411e98d-4feb-4af2-8c46-dbecfb1410e1"/>
+				<reportElement x="415" y="101" width="58" height="20" uuid="b411e98d-4feb-4af2-8c46-dbecfb1410e1"/>
 				<text><![CDATA[Cena]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="397" y="101" width="62" height="20" uuid="8524db85-67f4-4083-8828-3f6d5b908941"/>
+				<reportElement x="486" y="101" width="62" height="20" uuid="8524db85-67f4-4083-8828-3f6d5b908941"/>
 				<text><![CDATA[Vrednost]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
+				<reportElement x="73" y="101" width="82" height="20" uuid="8a5168e9-7dc2-455f-abfe-81f8a2dedf91"/>
+				<text><![CDATA[Datum knjizenja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="101" width="63" height="20" uuid="340691b3-cb84-403a-a893-850464b1ca4c"/>
+=======
 				<reportElement x="165" y="101" width="63" height="20" uuid="340691b3-cb84-403a-a893-850464b1ca4c"/>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 				<text><![CDATA[Smer]]></text>
 			</staticText>
 			<staticText>
@@ -115,50 +139,62 @@ WHERE
 				<text><![CDATA[do]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="101" width="85" height="20" uuid="55e884cd-91b0-4af1-9717-947353bc8d14"/>
-				<text><![CDATA[Vrsta prometa]]></text>
+				<reportElement x="171" y="101" width="75" height="20" uuid="a49ce070-9d60-449e-8f83-83cfcc7f0730"/>
+				<text><![CDATA[Analitika Rbr]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="48" splitType="Stretch">
 			<textField>
+<<<<<<< HEAD
+				<reportElement x="261" y="0" width="63" height="20" uuid="e55a8893-344e-4345-b31c-d3a3d732402b"/>
+=======
 				<reportElement x="0" y="0" width="60" height="20" uuid="df299050-4ddc-4ae6-b027-cf61d0ad401b"/>
 				<textFieldExpression><![CDATA[$F{PROMETNI_DOKUMENT_PROM_DOK_ID}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="165" y="0" width="63" height="20" uuid="e55a8893-344e-4345-b31c-d3a3d732402b"/>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_SMER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="241" y="0" width="63" height="20" uuid="293aad0a-77a3-44d0-aaf7-e9a0181c2bcf"/>
+				<reportElement x="339" y="0" width="63" height="20" uuid="293aad0a-77a3-44d0-aaf7-e9a0181c2bcf"/>
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_KOL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="322" y="0" width="58" height="20" uuid="0b82e845-ddfa-4985-af65-e6f32a2ffd22"/>
+				<reportElement x="415" y="0" width="58" height="20" uuid="0b82e845-ddfa-4985-af65-e6f32a2ffd22"/>
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="397" y="0" width="62" height="20" uuid="8621dd16-816c-430b-9e5a-58b6248ac588"/>
+				<reportElement x="486" y="0" width="62" height="20" uuid="8621dd16-816c-430b-9e5a-58b6248ac588"/>
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="470" y="0" width="85" height="20" uuid="6a5d0b85-e7e4-4e67-9850-99a43785b387"/>
-				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRS_PROM}]]></textFieldExpression>
+				<reportElement x="73" y="0" width="82" height="20" uuid="c070c3fe-b577-4af8-9c5f-91befaacbf1e"/>
+				<textFieldExpression><![CDATA[$F{PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="60" height="20" uuid="c9f7a417-99b1-4c82-a1a0-927f36f269b1"/>
+				<textFieldExpression><![CDATA[$F{PROMETNI_DOKUMENT_PROM_DOK_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="171" y="0" width="75" height="20" uuid="f346b4fe-62c4-40e5-85ac-86c190e9aac4"/>
+				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_RBR}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="50">
 			<textField pattern="">
-				<reportElement x="448" y="13" width="100" height="20" uuid="b5afc4a3-37dc-417a-ab28-21e3747af57a"/>
+				<reportElement x="488" y="13" width="60" height="20" uuid="b5afc4a3-37dc-417a-ab28-21e3747af57a"/>
 				<textElement textAlignment="Left">
 					<font isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{ukupno}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="380" y="13" width="58" height="20" uuid="14da15a4-21bd-4419-a210-659dba0d6896"/>
+				<reportElement x="415" y="13" width="58" height="20" uuid="14da15a4-21bd-4419-a210-659dba0d6896"/>
 				<text><![CDATA[Ukupno:]]></text>
 			</staticText>
 		</band>
