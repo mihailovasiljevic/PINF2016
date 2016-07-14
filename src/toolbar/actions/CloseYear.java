@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
+import main.MainFrame;
+import states.InsertState;
 import database.DataBase;
 import form.Form;
 
@@ -23,7 +25,12 @@ public class CloseYear extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		System.out.println("close");
+		if(MainFrame.getInstance().getContext().getState() instanceof InsertState) {
+			
+		} else {
+			JOptionPane.showMessageDialog(null, "Nije moguce otvaranje poslovne godine ", "GRESKA", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
 		int selected = form.getTable().getSelectedRow();
 		String sel = (String) form.getTable().getModel().getValueAt(selected, 0);
