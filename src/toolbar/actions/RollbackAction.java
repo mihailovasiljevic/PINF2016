@@ -50,6 +50,8 @@ public class RollbackAction extends AbstractAction {
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 		}
 
+		((UpdateState)updateState).addButton(form);
+
 		MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 		
 		if(form.getTitle().equalsIgnoreCase("poslovna godina")) {

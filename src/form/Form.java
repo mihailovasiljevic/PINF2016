@@ -136,6 +136,7 @@ public class Form extends JDialog {
 		/*if(this.getButtonsPanel().getBtnRollback().isEnabled() == false) {
 			this.toolbar.getAddAction().actionPerformed(null);
 		}
+		
 		if(this.toolbar.getAddButton().isEnabled() == false) {
 			this.toolbar.getSearchAction().actionPerformed(null);
 		}*/

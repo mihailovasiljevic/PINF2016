@@ -59,6 +59,7 @@ public class OpenYear extends AbstractAction {
 				proc.setDate(3, date);
 				proc.registerOutParameter(4, java.sql.Types.INTEGER);
 				proc.execute();
+
 				Integer id = proc.getInt(4);
 				Vector adding = new Vector();
 				adding.add(id.toString());
@@ -68,6 +69,7 @@ public class OpenYear extends AbstractAction {
 				adding.add("");
 				adding.add("0");
 				form.getTable().getModel().addRow(adding);
+
 				DataBase.getConnection().commit();
 			} catch (SQLException ee) {
 				ee.printStackTrace();

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.SQLType;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.AbstractAction;
@@ -47,7 +48,12 @@ public class CloseYear extends AbstractAction {
 			} else {
 				int sela = form.getTable().getSelectedRow();
 				if(sela != -1) {
-					form.getTable().getModel().setValueAt(new Date().toString(), sela, 4);
+					Calendar cal = Calendar.getInstance();
+					Integer day = cal.get(Calendar.DAY_OF_MONTH);
+					Integer month = cal.get(Calendar.MONTH) + 1;
+					Integer year = cal.get(Calendar.YEAR);
+					String date = year.toString() + "-" + month.toString() + "-" + day.toString();
+					form.getTable().getModel().setValueAt(date, sela, 4);
 					form.getTable().getModel().setValueAt("1", sela, 5);
 					form.getButtonsPanel().getCloseYear().setEnabled(false);
 				}

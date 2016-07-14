@@ -62,12 +62,10 @@ public class MyMenuBar extends JMenuBar {
 				cdescription.get(j).setPrimary_key(DataBase.isPrimaryKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				cdescription.get(j).setForeign_key(DataBase.isForeignKey(tableCodes.get(i),cdescription.get(j).getCode()));
 				String child = "";
-				for(String s : foreignTables.keySet()){
-					if(cdescription.get(j).getCode().contains(s)){
-						child = s;
-						break;
-					}
+				if(cdescription.get(j).getCode().equalsIgnoreCase("MAG_MAG_ID")){
+					child = "MAG_ID";
 				}
+
 				if(foreignTables.containsKey(cdescription.get(j).getCode()) || foreignTables.containsKey(child)) {
 					if(!child.equalsIgnoreCase(""))
 						cdescription.get(j).setTableParent(foreignTables.get(child));
