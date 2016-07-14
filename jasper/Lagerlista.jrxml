@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Lagerlista" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4897bc03-366c-44a3-9ffc-85c0f4e2e192">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="magaciniId" class="java.lang.Integer">
@@ -14,10 +14,13 @@
      ROBNA_KARTICA."ROB_KART_UKKOL" AS ROBNA_KARTICA_ROB_KART_UKKOL,
      MAGACIN."MAG_ID" AS MAGACIN_MAG_ID,
      MAGACIN."MAG_NAZ" AS MAGACIN_MAG_NAZ,
-     ROBA."ROBA_NAZ" AS ROBA_ROBA_NAZ
+     ROBA."ROBA_NAZ" AS ROBA_ROBA_NAZ,
+     POSLOVNI_SISTEM."POSL_SIS_NAZ" AS POSLOVNI_SISTEM_POSL_SIS_NAZ
 FROM
      "dbo"."MAGACIN" MAGACIN INNER JOIN "dbo"."ROBNA_KARTICA" ROBNA_KARTICA ON MAGACIN."MAG_ID" = ROBNA_KARTICA."MAG_ID"
      INNER JOIN "dbo"."ROBA" ROBA ON ROBNA_KARTICA."ROBA_ID" = ROBA."ROBA_ID"
+     INNER JOIN "dbo"."SEKTOR" SEKTOR ON MAGACIN."SEKT_ID" = SEKTOR."SEKT_ID"
+     INNER JOIN "dbo"."POSLOVNI_SISTEM" POSLOVNI_SISTEM ON SEKTOR."POSL_SIS_ID" = POSLOVNI_SISTEM."POSL_SIS_ID"
 WHERE
      ROBNA_KARTICA."MAG_ID" = $P{magaciniId}]]>
 	</queryString>
@@ -28,6 +31,7 @@ WHERE
 	<field name="MAGACIN_MAG_ID" class="java.lang.Integer"/>
 	<field name="MAGACIN_MAG_NAZ" class="java.lang.String"/>
 	<field name="ROBA_ROBA_NAZ" class="java.lang.String"/>
+	<field name="POSLOVNI_SISTEM_POSL_SIS_NAZ" class="java.lang.String"/>
 	<variable name="ukupno" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{ROBNA_KARTICA_ROB_KART_UKVRED}]]></variableExpression>
 	</variable>
@@ -35,58 +39,66 @@ WHERE
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="104" splitType="Stretch">
+		<band height="154" splitType="Stretch">
 			<staticText>
-				<reportElement x="188" y="32" width="189" height="35" uuid="4e5ae55b-c5fe-4426-bd7b-1bfc986e0a42"/>
+				<reportElement x="180" y="42" width="189" height="35" uuid="4e5ae55b-c5fe-4426-bd7b-1bfc986e0a42"/>
 				<textElement textAlignment="Center">
 					<font size="24"/>
 				</textElement>
 				<text><![CDATA[Lager Lista]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="2" width="50" height="20" uuid="1110959d-3b11-41ef-89ca-8106a63e23b1"/>
+				<reportElement x="0" y="2" width="80" height="20" uuid="1110959d-3b11-41ef-89ca-8106a63e23b1"/>
 				<text><![CDATA[Datum:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="389" y="2" width="45" height="20" uuid="f1a3cbbb-58ea-4cc9-ba00-0571e745d4ee"/>
+				<reportElement x="405" y="2" width="45" height="20" uuid="f1a3cbbb-58ea-4cc9-ba00-0571e745d4ee"/>
 				<text><![CDATA[Strana:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="434" y="2" width="100" height="20" uuid="17cfa883-62b7-49bb-acff-3b7eb3b45dba"/>
+				<reportElement x="450" y="2" width="100" height="20" uuid="17cfa883-62b7-49bb-acff-3b7eb3b45dba"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="50" y="2" width="100" height="20" uuid="f0d19f44-9dc6-4ddb-81f6-a5c4f763933a"/>
+				<reportElement x="80" y="2" width="100" height="20" uuid="f0d19f44-9dc6-4ddb-81f6-a5c4f763933a"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="84" width="100" height="20" uuid="6965c59b-53a3-49e0-9b50-331525d66312"/>
+				<reportElement x="9" y="134" width="100" height="20" uuid="6965c59b-53a3-49e0-9b50-331525d66312"/>
 				<text><![CDATA[ID Robne kartice]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="233" y="84" width="100" height="20" uuid="34ea22f5-8f77-455d-820e-1ed94a0c0f29"/>
+				<reportElement x="233" y="134" width="100" height="20" uuid="34ea22f5-8f77-455d-820e-1ed94a0c0f29"/>
 				<text><![CDATA[Kolicina]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="450" y="84" width="100" height="20" uuid="c6679b4d-6e53-4832-83b7-357ae167e780"/>
+				<reportElement x="450" y="134" width="100" height="20" uuid="c6679b4d-6e53-4832-83b7-357ae167e780"/>
 				<text><![CDATA[Vrednost]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="350" y="84" width="84" height="20" uuid="5bc3cf83-bf8b-4279-ae72-195222818ed3"/>
+				<reportElement x="350" y="134" width="84" height="20" uuid="5bc3cf83-bf8b-4279-ae72-195222818ed3"/>
 				<text><![CDATA[Cena]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="22" width="50" height="20" uuid="dcae8c50-fcd7-4ad0-8c2e-4d3acfd593eb"/>
+				<reportElement x="0" y="82" width="80" height="20" uuid="dcae8c50-fcd7-4ad0-8c2e-4d3acfd593eb"/>
 				<text><![CDATA[Magacin:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="50" y="22" width="100" height="20" uuid="ddede339-ffe5-4ca7-85be-77add67ebb09"/>
+				<reportElement x="80" y="82" width="100" height="20" uuid="ddede339-ffe5-4ca7-85be-77add67ebb09"/>
 				<textFieldExpression><![CDATA[$F{MAGACIN_MAG_NAZ}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="121" y="84" width="100" height="20" uuid="cec6f675-39e7-4f99-913d-6be04df595e7"/>
+				<reportElement x="121" y="134" width="100" height="20" uuid="cec6f675-39e7-4f99-913d-6be04df595e7"/>
 				<text><![CDATA[Naziv robe]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="80" height="20" uuid="bb68e732-ce78-4e3b-8fc7-14a5c2ef3b87"/>
+				<text><![CDATA[Poslovni sistem:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="22" width="100" height="20" uuid="8c012f0a-bc32-4941-90b0-797e3e9256e5"/>
+				<textFieldExpression><![CDATA[$F{POSLOVNI_SISTEM_POSL_SIS_NAZ}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
