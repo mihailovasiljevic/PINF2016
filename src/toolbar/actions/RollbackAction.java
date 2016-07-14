@@ -2,8 +2,10 @@
 package toolbar.actions;
 
 import java.awt.event.ActionEvent;
+import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
@@ -47,7 +49,10 @@ public class RollbackAction extends AbstractAction {
 		{
 			form.getDataPanel().getAddedPickBtns().get(i).setVisible(false);
 		}
+
 		((UpdateState)updateState).addButton(form);
+
 		MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
+		
 	}
 }

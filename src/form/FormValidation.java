@@ -123,6 +123,9 @@ private String message;
 		
 		for(int i=0; i<btnGroups.size();i++)
 		{
+			if(form.getTitle().equalsIgnoreCase("poslovna godina")) {
+				break;
+			}
 			while(!colDescs.get(k).getType().equalsIgnoreCase("bit"))
 			{
 				//pomeramo brojac za colDescs

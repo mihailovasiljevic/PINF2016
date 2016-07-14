@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      Microsoft SQL Server 2012                    */
-/* Created on:     13.07.2016. 11:27:50                         */
+/* Created on:     14.07.2016. 13:13:15                         */
 /*==============================================================*/
 
 
@@ -712,8 +712,8 @@ go
 create table CLAN_KOMISIJE (
    CLAN_ID              int                  identity,
    RASPORED_ID          int                  not null,
-   CLAN_VRSTA           bit                  null
-      constraint CKC_CLAN_VRSTA_CLAN_KOM check (CLAN_VRSTA is null or (CLAN_VRSTA in (0,1))),
+   CLAN_VRSTA           character(1)         null
+      constraint CKC_CLAN_VRSTA_CLAN_KOM check (CLAN_VRSTA is null or (CLAN_VRSTA in ('C','P'))),
    constraint PK_CLAN_KOMISIJE primary key nonclustered (CLAN_ID)
 )
 go
@@ -966,11 +966,10 @@ go
 create table PROMETNI_DOKUMENT (
    PROM_DOK_ID          int                  identity,
    POSL_SIS_ID          int                  not null,
-   MAG_ID               int                  null,
+   MAG_ID               int                  not null,
    MAG_MAG_ID           int                  null,
    POSL_GOD_ID          int                  not null,
    PROM_DOK_NAZ         varchar(80)          not null,
-   PROM_DOK_RBR         int                  not null,
    PROM_DOK_DAT_FORM    datetime             not null,
    PROM_DOK_DAT_KNJIZ   datetime             null,
    PROM_DOK_STAT        char(1)              not null
