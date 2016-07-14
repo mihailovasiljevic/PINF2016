@@ -26,4 +26,16 @@ ROLLBACK TRANSACTION;
 RETURN   
 END;  
 
+IF NOT EXISTS (SELECT *  
+           FROM INSERTED AS pd  
+           JOIN POSLOVNA_GODINA AS pg   
+           ON pd.POSL_GOD_ID = pg.POSL_GOD_ID
+		   WHERE pg.POSL_GOD_ZAKLJ = 0
+          )  
+BEGIN  
+RAISERROR ('Prometni dokument ne mozete dodati u zakljucenoj poslovnoj godini.', 16, 1);  
+ROLLBACK TRANSACTION;  
+RETURN   
+END;  
+
 GO  
