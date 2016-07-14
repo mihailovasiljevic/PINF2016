@@ -48,6 +48,8 @@ public class SearchAction extends AbstractAction {
 			}
 			((Form)standardForm).getDataPanel().getTextFields().get(0).requestFocus();
 			((Form) standardForm).setMode(3);
+			//searchState.doAction(MainFrame.getInstance().getContext(), (Form)standardForm);
+			((SearchState)searchState).removeButton(((Form)standardForm));
 		}
 
 	}

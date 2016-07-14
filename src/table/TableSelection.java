@@ -35,7 +35,7 @@ public class TableSelection implements ListSelectionListener {
 			*/
 			MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 		}
-		System.out.println("here");
+
 		if(form.getTitle().equalsIgnoreCase("Poslovna godina")) {
 			int selected = form.getTable().getSelectedRow();
 			if(selected != -1) {

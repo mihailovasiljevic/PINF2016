@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Analitika" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="80c8e285-e5d8-45e9-924d-d382a0a021b3">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="DatumOd" class="java.util.Date"/>
 	<parameter name="DatumDo" class="java.util.Date"/>
 	<parameter name="magaciniId" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT DISTINCT
+		<![CDATA[SELECT DISTINCT(ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_ID"),
      ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_CENA" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA,
      ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_VRED" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED,
      MAGACIN."MAG_NAZ" AS MAGACIN_MAG_NAZ,
      ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_SMER" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_SMER,
      ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_KOL" AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_KOL,
+<<<<<<< HEAD
      PROMETNI_DOKUMENT."PROM_DOK_ID" AS PROMETNI_DOKUMENT_PROM_DOK_ID,
      PROMETNI_DOKUMENT."PROM_DOK_DAT_KNJIZ" AS PROMETNI_DOKUMENT_PROM_DOK_DAT_KNJIZ,
      ROBNA_KARTICA."ROB_KART_ID" AS ROBNA_KARTICA_ROB_KART_ID,
      (ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_ID") AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_ID,
      ANALITIKA_MAGACINSKE_KARTICE."ANALTIKA_RBR" AS ANALITIKA_MAGACINSKE_KARTICE_ANALTIKA_RBR
+=======
+     ANALITIKA_MAGACINSKE_KARTICE."ANALITIKA_VRS_PROM" AS ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRS_PROM,
+     PROMETNI_DOKUMENT."PROM_DOK_ID" AS PROMETNI_DOKUMENT_PROM_DOK_ID
+
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 FROM
      "dbo"."ROBNA_KARTICA" ROBNA_KARTICA INNER JOIN "dbo"."ANALITIKA_MAGACINSKE_KARTICE" ANALITIKA_MAGACINSKE_KARTICE ON ROBNA_KARTICA."ROB_KART_ID" = ANALITIKA_MAGACINSKE_KARTICE."ROB_KART_ID"
      INNER JOIN "dbo"."MAGACIN" MAGACIN ON ROBNA_KARTICA."MAG_ID" = MAGACIN."MAG_ID"
      INNER JOIN "dbo"."PROMETNI_DOKUMENT" PROMETNI_DOKUMENT ON MAGACIN."MAG_ID" = PROMETNI_DOKUMENT."MAG_ID"
 WHERE
+<<<<<<< HEAD
      PROMETNI_DOKUMENT."MAG_ID" = $P{magaciniId}
  AND PROMETNI_DOKUMENT."PROM_DOK_DAT_KNJIZ" BETWEEN $P{DatumOd}and$P{DatumDo}]]>
+=======
+     ROBNA_KARTICA."MAG_ID" = $P{magaciniId}]]>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 	</queryString>
+	<field name="ANALTIKA_ID" class="java.lang.Integer"/>
 	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_CENA" class="java.math.BigDecimal"/>
 	<field name="ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_VRED" class="java.math.BigDecimal"/>
 	<field name="MAGACIN_MAG_NAZ" class="java.lang.String"/>
@@ -87,11 +98,15 @@ WHERE
 				<text><![CDATA[Vrednost]]></text>
 			</staticText>
 			<staticText>
+<<<<<<< HEAD
 				<reportElement x="73" y="101" width="82" height="20" uuid="8a5168e9-7dc2-455f-abfe-81f8a2dedf91"/>
 				<text><![CDATA[Datum knjizenja]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="261" y="101" width="63" height="20" uuid="340691b3-cb84-403a-a893-850464b1ca4c"/>
+=======
+				<reportElement x="165" y="101" width="63" height="20" uuid="340691b3-cb84-403a-a893-850464b1ca4c"/>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 				<text><![CDATA[Smer]]></text>
 			</staticText>
 			<staticText>
@@ -132,7 +147,15 @@ WHERE
 	<detail>
 		<band height="48" splitType="Stretch">
 			<textField>
+<<<<<<< HEAD
 				<reportElement x="261" y="0" width="63" height="20" uuid="e55a8893-344e-4345-b31c-d3a3d732402b"/>
+=======
+				<reportElement x="0" y="0" width="60" height="20" uuid="df299050-4ddc-4ae6-b027-cf61d0ad401b"/>
+				<textFieldExpression><![CDATA[$F{PROMETNI_DOKUMENT_PROM_DOK_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="0" width="63" height="20" uuid="e55a8893-344e-4345-b31c-d3a3d732402b"/>
+>>>>>>> 0fa3f78ccd873cb6a89fa41a98275e04ef557624
 				<textFieldExpression><![CDATA[$F{ANALITIKA_MAGACINSKE_KARTICE_ANALITIKA_SMER}]]></textFieldExpression>
 			</textField>
 			<textField>
