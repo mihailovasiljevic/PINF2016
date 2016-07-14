@@ -79,14 +79,14 @@ public class PrijavaLogIn extends JDialog {
 		
 		
 		JPanel panKorisnickoIme = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel lblKorisnickoIme = new JLabel("Username");
+		JLabel lblKorisnickoIme = new JLabel("Ime");
 		txtUsername = new JTextField(15);
 		panKorisnickoIme.add(lblKorisnickoIme);
 		panKorisnickoIme.add(txtUsername);
 		boxCentar.add(panKorisnickoIme);
 		
 		JPanel panLozinka = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JLabel lblLozinka = new JLabel("Password");
+		JLabel lblLozinka = new JLabel("JMBG");
 		txtPassword = new JPasswordField(15);
 		panLozinka.add(lblLozinka);
 		panLozinka.add(txtPassword);
@@ -193,23 +193,18 @@ public class PrijavaLogIn extends JDialog {
 		@SuppressWarnings("deprecation")
 		String password = getTxtPassword().getText();
 		
-		ResultSet kor= DataBase.getStmt().executeQuery("SELECT * FROM KORISNICI where Username='"+username+"'");
+		ResultSet kor= DataBase.getStmt().executeQuery("SELECT * FROM RADNIK where RADNIK_IME='"+username+"' AND JMBG='"+password+"'");
 
 		
 
 		if(kor.next()){
 
-				if(kor.getString(2).equals(password)){
+				if(kor.isFirst()){
 					dispose();
-					return;
-				}
-				else{
-					JOptionPane.showMessageDialog(PrijavaLogIn.this,"Wrong Password");
-
 				}
 		}
 		else{
-				JOptionPane.showMessageDialog(PrijavaLogIn.this,"Wrong Username");
+				JOptionPane.showMessageDialog(PrijavaLogIn.this,"Pogresno ime ili jmbg");
 
 		}
 			

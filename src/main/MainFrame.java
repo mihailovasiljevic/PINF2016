@@ -62,9 +62,9 @@ public class MainFrame extends JFrame {
 		IJSONParser jsonParser = new JacksonJSONParser();
 		jsonModels = jsonParser.parseJSON("config.json", "TABLES");
 		((JacksonJSONParser) jsonParser).printParsed();
-		//plogin = new PrijavaLogIn();
-		
-		//addWindowListener(new MainFrameListener());
+		plogin = new PrijavaLogIn();
+	
+		addWindowListener(new MainFrameListener());
 		
 		ImageIcon logo = new ImageIcon("src/slike/main.png");
 		setIconImage(logo.getImage());
