@@ -155,7 +155,7 @@ public class MyToolBar extends JToolBar {
 			meni_pop++;
 			String tableLabel = MyMenuBar.getTableLabel(key);
 			JMenuItem tab = new JMenuItem(tableLabel);
-			tab.addActionListener(new NextFormAction(dialog,tableLabel));
+			tab.addActionListener(new NextFormAction(dialog,key));
 			menu.add(tab);			
 		}
 /*

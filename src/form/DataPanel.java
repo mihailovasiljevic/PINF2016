@@ -211,7 +211,7 @@ public class DataPanel extends JPanel {
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 			//		
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
-
+					zoomBtn.setName(columnDescription.get(i).getCode());
 			
 				}
 
@@ -357,6 +357,7 @@ public class DataPanel extends JPanel {
 					//Milos: Kakve veze sa kolonama ima brojac koji se odnosi na tabele? Izmenicu to.
 					//	zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,table_zoom.getColumnsDescriptions().get(k)));
 					zoomBtn.addActionListener(new ZoomButtonAction(table_zoom,textField,columnDescription.get(i)));
+					zoomBtn.setName(columnDescription.get(i).getCode());
 				}
 
 			}

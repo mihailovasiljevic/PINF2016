@@ -19,7 +19,17 @@ public class TableDescription {
 		}
 		return null;
 	}
-	
+	public String getCode(String label){
+		for(int i = 0; i < columnsDescriptions.size(); i++) {
+			if(columnsDescriptions.get(i).getLabel().equals(label)) {
+				return columnsDescriptions.get(i).getCode();
+			}
+		}
+		return label;		
+	}
+	public ColumnDescription getColumnDescription(int i) {
+		return columnsDescriptions.get(i);
+	}	
 	public String getCode() {
 		return code;
 	}

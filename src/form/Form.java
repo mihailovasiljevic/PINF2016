@@ -2,6 +2,9 @@ package form;
 
 import java.awt.Color;
 import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -20,6 +23,7 @@ import states.State;
 import states.UpdateState;
 import table.MyTable;
 import table.TableSelection;
+import toolbar.actions.NextFormAction;
 import table.MyTableModel;
 import database.ColumnDescription;
 import database.DataBase;
@@ -155,6 +159,60 @@ public class Form extends JDialog {
 			}
 		}
 		
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("-------- PROZOR OTVOREN");
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println("Prozorse zatvara");
+				if(NextFormAction.openedFromNext)
+					NextFormAction.openedFromNext = false;
+				if(NextFormAction.selectedId != -1){
+					NextFormAction.selectedId = -1;
+					NextFormAction.colName = "";
+				}
+				
+				dispose();
+				System.out.println("Zatvoren " + NextFormAction.openedFromNext);
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	public void nextFilter(String sifra,String column) throws SQLException{
@@ -311,5 +369,5 @@ public class Form extends JDialog {
 	public void setToolbarr(MyToolBar toolbar) {
 		this.toolbar = toolbar;
 	}
-	
+
 }

@@ -67,6 +67,31 @@ public class AddAction extends AbstractAction {
 					}
 				}
 			}
+			
+			if(NextFormAction.openedFromNext){
+				try{
+					int id = NextFormAction.selectedId;
+					for(int i=0; i<((Form)standardForm).getDataPanel().getTextFields().size();i++)
+					{
+						if(((Form)standardForm).getDataPanel().getTextFields().get(i).getName().equalsIgnoreCase(NextFormAction.colName)){
+							((Form)standardForm).getDataPanel().getTextFields().get(i).setEnabled(false);
+							((Form)standardForm).getDataPanel().getTextFields().get(i).setText(""+id);
+							break;
+						}
+						
+					}
+					for(int i=0; i<((Form)standardForm).getDataPanel().getZoomBtns().size();i++)
+					{
+						if(((Form)standardForm).getDataPanel().getZoomBtns().get(i).getName().equalsIgnoreCase(NextFormAction.colName)){
+							((Form)standardForm).getDataPanel().getZoomBtns().get(i).setEnabled(false);
+							break;
+						}
+						
+					}
+				}catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 
 
 			((Form) standardForm).setMode(2);
