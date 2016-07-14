@@ -34,6 +34,22 @@ public class KnjizenjeNivelacijaAction extends AbstractAction{
 				proc.setInt(1, robnaKarticaID);											      
 				proc.execute();
 				DataBase.getConnection().commit();
+				
+				for(int i = 0; i < form.getTable().getModel().getRowCount(); i++){
+					int id = -1;
+					try{
+						id = Integer.parseInt((String) form.getTable().getModel().getValueAt(i, 0));
+						if(id == robnaKarticaID){
+							try{
+								(form).refresh(i);
+							}catch(Exception ex){}
+							form.getTable().setColumnSelectionInterval(i, i);
+						}
+						//MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
+					}catch(Exception ex){
+						
+					}
+				}
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 				//e.printStackTrace();

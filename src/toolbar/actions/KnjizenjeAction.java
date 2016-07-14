@@ -3,6 +3,7 @@ package toolbar.actions;
 import java.awt.event.ActionEvent;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import javax.swing.AbstractAction;
@@ -12,6 +13,8 @@ import database.DataBase;
 import form.Form;
 import form.data.ConcreteDataGetter;
 import form.data.IDataGetter;
+import main.MainFrame;
+import states.UpdateState;
 
 public class KnjizenjeAction extends AbstractAction{
 	/**
@@ -37,6 +40,29 @@ public class KnjizenjeAction extends AbstractAction{
 				proc.setInt(2, storno);
 				proc.execute();
 				DataBase.getConnection().commit();
+				//int index = form.getTable().getSelectedRow();
+
+
+				ArrayList<String> columnValues = new ArrayList<>();
+				
+				for(int i = 0; i < form.getTable().getModel().getRowCount(); i++){
+					int id = -1;
+					try{
+						id = Integer.parseInt((String) form.getTable().getModel().getValueAt(i, 0));
+						if(id == prometniDokumentId){
+							try{
+								(form).refresh(i);
+							}catch(Exception ex){}
+							form.getTable().setColumnSelectionInterval(i, i);
+						}
+						//MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
+					}catch(Exception ex){
+						
+					}
+				}
+
+				
+				
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 				//e.printStackTrace();
