@@ -9,6 +9,7 @@ import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -64,6 +65,10 @@ public class MainFrame extends JFrame {
 		//plogin = new PrijavaLogIn();
 		
 		//addWindowListener(new MainFrameListener());
+		
+		ImageIcon logo = new ImageIcon("src/slike/main.png");
+		setIconImage(logo.getImage());
+		setTitle("Materijalno knjigovodstvo");
 	}
 	
 

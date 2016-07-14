@@ -54,18 +54,5 @@ public class RollbackAction extends AbstractAction {
 
 		MainFrame.getInstance().getContext().getState().sync(MainFrame.getInstance().getContext(), form);
 		
-		if(form.getTitle().equalsIgnoreCase("poslovna godina")) {
-			Enumeration<AbstractButton> enumeration = form.getDataPanel().getBtnGroups().get(0).getElements();
-			while (enumeration.hasMoreElements()) {
-			    	enumeration.nextElement().setEnabled(false);
-			}
-			int selected = form.getTable().getSelectedRow();
-			if(selected != -1) {
-				String val = (String) form.getTable().getModel().getValueAt(selected, 5);
-				if(val.equals("1")) {
-					form.getButtonsPanel().getCloseYear().setEnabled(false);
-				}
-			}
-		}
 	}
 }
